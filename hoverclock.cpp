@@ -35,15 +35,23 @@ void HoverClock::paintEvent(QPaintEvent * event)
 
     QPainter painter(this);
     QPainterPath path;
-    QFont drawFont("Montserrat Medium", 9);
-    drawFont.setLetterSpacing(QFont::AbsoluteSpacing, 1.5);
+    QFont timeFont("Montserrat Medium", 9);
+    timeFont.setLetterSpacing(QFont::AbsoluteSpacing, 1.5);
+
+    QFont dateFont("Montserrat Medium", 7);
+    dateFont.setLetterSpacing(QFont::AbsoluteSpacing, 1.5);
 
     painter.setOpacity(0.5);
 
     path.addText(PAINT_OFFSET,
-                 drawFont.pointSize() + PAINT_OFFSET,
-                 drawFont,
+                 timeFont.pointSize() + PAINT_OFFSET,
+                 timeFont,
                  QTime::currentTime().toString("hh:mm"));
+
+    path.addText(PAINT_OFFSET / 2,
+                 timeFont.pointSize() * 2 + PAINT_OFFSET * 1.5,
+                 dateFont,
+                 QDate::currentDate().toString("dd/MM/yy"));
 
     painter.setRenderHints(QPainter::Antialiasing |
                            QPainter::TextAntialiasing |
