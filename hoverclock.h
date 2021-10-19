@@ -3,9 +3,12 @@
 
 #include <QMainWindow>
 #include <QTime>
+#include <QMenu>
 #include <QScreen>
 #include <QPainter>
+#include <QPalette>
 #include <QPainterPath>
+#include <QSystemTrayIcon>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class HoverClock; }
@@ -28,6 +31,10 @@ class HoverClock : public QMainWindow
 
     private:
         Ui::HoverClock *ui;
+
+    private slots:
+        void toggleVisibility();
+        void showOptions();
 };
 
 #endif // HOVERCLOCK_H

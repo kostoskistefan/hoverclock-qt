@@ -15,12 +15,50 @@ HoverClock::HoverClock(QWidget *parent) : QMainWindow(parent), ui(new Ui::HoverC
     move(QGuiApplication::primaryScreen()->geometry().width() - PADDING * 2,
          QGuiApplication::primaryScreen()->geometry().height() - PADDING);
 
+    QAction *exitAction = new QAction("Quit", this);
+    connect(exitAction, &QAction::triggered, this, &QCoreApplication::quit);
+
+    QAction *hideAction = new QAction("Toggle visibility", this);
+    connect(hideAction, &QAction::triggered, this, &HoverClock::toggleVisibility);
+
+    QAction *optionsAction = new QAction("Options", this);
+    connect(optionsAction, &QAction::triggered, this, &HoverClock::showOptions);
+
+    QMenu *trayMenu = new QMenu(this);
+    trayMenu->addAction(hideAction);
+    trayMenu->addAction(optionsAction);
+    trayMenu->addSeparator();
+    trayMenu->addAction(exitAction);
+
+    QColor systemColor = QColor(QPalette().color(QPalette::Window).name());
+    bool darkTheme = (0.299 *systemColor.red() + 0.587 *systemColor.green() + 0.114 *systemColor.blue()) / 255 >= 0.5;
+
+    QSystemTrayIcon *tray = new QSystemTrayIcon(this);
+    tray->setContextMenu(trayMenu);
+
+    if(darkTheme)
+        tray->setIcon(QIcon(":/icons/resources/icon_dark.png"));
+
+    else tray->setIcon(QIcon(":/icons/resources/icon_light.png"));
+
+    tray->show();
+
     startTimer(1000);
 }
 
 HoverClock::~HoverClock()
 {
     delete ui;
+}
+
+void HoverClock::toggleVisibility()
+{
+    setVisible(!isVisible());
+}
+
+void HoverClock::showOptions()
+{
+
 }
 
 void HoverClock::timerEvent(QTimerEvent * event)
