@@ -4,18 +4,22 @@
 #include <QMainWindow>
 #include <QTime>
 #include <QMenu>
+#include <QTimer>
 #include <QScreen>
 #include <QPainter>
 #include <QPalette>
+#include <QSettings>
 #include <QPainterPath>
 #include <QSystemTrayIcon>
+
+#include "clockPosition.h"
+#include "settingsdialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class HoverClock; }
 QT_END_NAMESPACE
 
-#define PADDING 55
-#define PAINT_OFFSET 8
+#define PAINT_OFFSET 5
 
 class HoverClock : public QMainWindow
 {
@@ -30,11 +34,17 @@ class HoverClock : public QMainWindow
         void paintEvent(QPaintEvent *event);
 
     private:
+        QSettings settings;
         Ui::HoverClock *ui;
+
+        void showOptions();
+        void createSystemTray();
+        void initializeSettings();
+        void updateClockPosition();
+        float getTextWidth(QString text, QFont font);
 
     private slots:
         void toggleVisibility();
-        void showOptions();
 };
 
 #endif // HOVERCLOCK_H

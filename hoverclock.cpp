@@ -1,20 +1,92 @@
 #include "hoverclock.h"
 #include "ui_hoverclock.h"
+#include <QThread>
 
 HoverClock::HoverClock(QWidget *parent) : QMainWindow(parent), ui(new Ui::HoverClock)
 {
     ui->setupUi(this);
+    initializeSettings();
 
     setStyleSheet("background:transparent;");
 
     setAttribute(Qt::WA_TransparentForMouseEvents);
     setAttribute(Qt::WA_TranslucentBackground, true);
+
     setWindowFlags(Qt::FramelessWindowHint);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint);
+    setWindowFlags(Qt::FramelessWindowHint |
+                   Qt::WindowStaysOnTopHint |
+                   Qt::X11BypassWindowManagerHint);
 
-    move(QGuiApplication::primaryScreen()->geometry().width() - PADDING * 2,
-         QGuiApplication::primaryScreen()->geometry().height() - PADDING);
+    startTimer(1000);
 
+    int timeWidth = getTextWidth(settings.value("timeFormat").toString(),
+                                 settings.value("timeFont").value<QFont>());
+
+    int dateWidth = getTextWidth(settings.value("dateFormat").toString(),
+                                 settings.value("dateFont").value<QFont>());
+
+    resize(qMax(timeWidth, dateWidth) + PAINT_OFFSET * 2,
+           settings.value("timeFont").value<QFont>().pointSize() +
+           settings.value("dateFont").value<QFont>().pointSize() * 2 + PAINT_OFFSET * 2);
+
+    updateClockPosition();
+    createSystemTray();
+}
+
+HoverClock::~HoverClock()
+{
+    delete ui;
+}
+
+void HoverClock::initializeSettings()
+{
+    QFont timeFont("Montserrat Medium", 9);
+    timeFont.setLetterSpacing(QFont::AbsoluteSpacing, 1.5);
+
+    QFont dateFont("Montserrat Medium", 7);
+    dateFont.setLetterSpacing(QFont::AbsoluteSpacing, 1.5);
+
+    settings.setValue("opacity", settings.value("opacity", 0.5).toFloat());
+    settings.setValue("timeFont", settings.value("timeFont", timeFont).value<QFont>());
+    settings.setValue("dateFont", settings.value("dateFont", dateFont).value<QFont>());
+    settings.setValue("position", settings.value("position", ClockPosition::BOTTOM_RIGHT).toInt());
+    settings.setValue("fillColor", settings.value("fillColor", QColor("white")).value<QColor>());
+    settings.setValue("timeFormat", settings.value("timeFormat", "hh:mm").toString());
+    settings.setValue("dateFormat", settings.value("dateFormat", "dd.MM.yyyy").toString());
+    settings.setValue("strokeColor", settings.value("strokeColor", QColor("darkGray")).value<QColor>());
+    settings.setValue("strokeThickness", settings.value("strokeThickness", 1.5).toFloat());
+    settings.setValue("verticalPadding", settings.value("verticalPadding", 50).toInt());
+    settings.setValue("horizontalPadding", settings.value("horizontalPadding", 50).toInt());
+}
+
+void HoverClock::updateClockPosition()
+{
+    int screenWidth = QGuiApplication::primaryScreen()->geometry().width();
+    int screenHeight = QGuiApplication::primaryScreen()->geometry().height();
+
+    switch (settings.value("position").toInt())
+    {
+        case ClockPosition::TOP_LEFT:
+            move(settings.value("horizontalPadding").toInt(),
+                 settings.value("verticalPadding").toInt());
+            break;
+        case ClockPosition::TOP_RIGHT:
+            move(screenWidth - width() - settings.value("horizontalPadding").toInt(),
+                 settings.value("verticalPadding").toInt());
+            break;
+        case ClockPosition::BOTTOM_LEFT:
+            move(settings.value("horizontalPadding").toInt(),
+                 screenHeight - height() - settings.value("verticalPadding").toInt());
+            break;
+        case ClockPosition::BOTTOM_RIGHT:
+            move(screenWidth - width() - settings.value("horizontalPadding").toInt(),
+                 screenHeight - height() - settings.value("verticalPadding").toInt());
+            break;
+    }
+}
+
+void HoverClock::createSystemTray()
+{
     QAction *exitAction = new QAction("Quit", this);
     connect(exitAction, &QAction::triggered, this, &QCoreApplication::quit);
 
@@ -30,35 +102,34 @@ HoverClock::HoverClock(QWidget *parent) : QMainWindow(parent), ui(new Ui::HoverC
     trayMenu->addSeparator();
     trayMenu->addAction(exitAction);
 
-    QColor systemColor = QColor(QPalette().color(QPalette::Window).name());
-    bool darkTheme = (0.299 *systemColor.red() + 0.587 *systemColor.green() + 0.114 *systemColor.blue()) / 255 >= 0.5;
-
     QSystemTrayIcon *tray = new QSystemTrayIcon(this);
     tray->setContextMenu(trayMenu);
 
-    if(darkTheme)
-        tray->setIcon(QIcon(":/icons/resources/icon_dark.png"));
+    QPixmap iconPixmap(":/icons/resources/icon.svg");
+    QIcon icon(iconPixmap);
+    icon.setIsMask(true);
 
-    else tray->setIcon(QIcon(":/icons/resources/icon_light.png"));
-
+    tray->setIcon(icon);
     tray->show();
 
-    startTimer(1000);
+    connect(tray, &QSystemTrayIcon::activated, this, [=]() {
+        setVisible(!isVisible());
+    });
 }
 
-HoverClock::~HoverClock()
+void HoverClock::showOptions()
 {
-    delete ui;
+    SettingsDialog *settingsDialog = new SettingsDialog(nullptr, &settings);
+    settingsDialog->setModal(true);
+
+    connect(settingsDialog, &SettingsDialog::updateClock, this, &HoverClock::updateClockPosition);
+
+    settingsDialog->exec();
 }
 
 void HoverClock::toggleVisibility()
 {
     setVisible(!isVisible());
-}
-
-void HoverClock::showOptions()
-{
-
 }
 
 void HoverClock::timerEvent(QTimerEvent * event)
@@ -71,34 +142,40 @@ void HoverClock::paintEvent(QPaintEvent * event)
 {
     Q_UNUSED(event);
 
+    QString time = QTime::currentTime().toString(settings.value("timeFormat").toString());
+    QString date = QDate::currentDate().toString(settings.value("dateFormat").toString());
+
     QPainter painter(this);
-    QPainterPath path;
-    QFont timeFont("Montserrat Medium", 9);
-    timeFont.setLetterSpacing(QFont::AbsoluteSpacing, 1.5);
-
-    QFont dateFont("Montserrat Medium", 7);
-    dateFont.setLetterSpacing(QFont::AbsoluteSpacing, 1.5);
-
-    painter.setOpacity(0.5);
-
-    path.addText(PAINT_OFFSET,
-                 timeFont.pointSize() + PAINT_OFFSET,
-                 timeFont,
-                 QTime::currentTime().toString("hh:mm"));
-
-    path.addText(PAINT_OFFSET / 2,
-                 timeFont.pointSize() * 2 + PAINT_OFFSET * 1.5,
-                 dateFont,
-                 QDate::currentDate().toString("dd/MM/yy"));
-
+    painter.setOpacity(settings.value("opacity").toFloat());
     painter.setRenderHints(QPainter::Antialiasing |
                            QPainter::TextAntialiasing |
                            QPainter::SmoothPixmapTransform |
                            QPainter::HighQualityAntialiasing);
 
-    painter.fillPath(path, QBrush(Qt::white));
-    painter.strokePath(path, QPen(Qt::darkGray, 1.5));
+    QPainterPath path;
 
-    resize(path.boundingRect().size().toSize().width() + PAINT_OFFSET * 2,
-           path.boundingRect().size().toSize().height() + PAINT_OFFSET * 2);
+    int timeStringWidth = getTextWidth(time, settings.value("timeFont").value<QFont>());
+    int dateStringWidth = getTextWidth(date, settings.value("dateFont").value<QFont>());
+
+    int textPadding = qMax(timeStringWidth, dateStringWidth) + PAINT_OFFSET * 2;
+
+    path.addText(textPadding  / 2 - timeStringWidth / 2,
+                 settings.value("timeFont").value<QFont>().pointSize() + PAINT_OFFSET,
+                 settings.value("timeFont").value<QFont>(),
+                 time);
+
+    path.addText(textPadding  / 2 - dateStringWidth / 2,
+                 settings.value("dateFont").value<QFont>().pointSize() * 3 + PAINT_OFFSET,
+                 settings.value("dateFont").value<QFont>(),
+                 date);
+
+    painter.fillPath(path, QBrush(QColor(settings.value("fillColor").value<QColor>())));
+    painter.strokePath(path, QPen(QColor(settings.value("strokeColor").value<QColor>()),
+                                  settings.value("strokeThickness").toFloat()));
+}
+
+float HoverClock::getTextWidth(QString text, QFont font)
+{
+    QFontMetrics metrics(font);
+    return metrics.horizontalAdvance(text);
 }

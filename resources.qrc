@@ -2,5 +2,6 @@
     <qresource prefix="/icons">
         <file>resources/icon_dark.png</file>
         <file>resources/icon_light.png</file>
+        <file>resources/icon.svg</file>
     </qresource>
 </RCC>
