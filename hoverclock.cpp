@@ -1,6 +1,5 @@
 #include "hoverclock.h"
 #include "ui_hoverclock.h"
-#include <QThread>
 
 HoverClock::HoverClock(QWidget *parent) : QMainWindow(parent), ui(new Ui::HoverClock)
 {
@@ -19,15 +18,15 @@ HoverClock::HoverClock(QWidget *parent) : QMainWindow(parent), ui(new Ui::HoverC
 
     startTimer(1000);
 
-    int timeWidth = getTextWidth(settings.value("timeFormat").toString(),
-                                 settings.value("timeFont").value<QFont>());
+    int timeWidth = getTextWidth(settingsHash["timeFormat"].toString(),
+                                 settingsHash["timeFont"].value<QFont>());
 
-    int dateWidth = getTextWidth(settings.value("dateFormat").toString(),
-                                 settings.value("dateFont").value<QFont>());
+    int dateWidth = getTextWidth(settingsHash["dateFormat"].toString(),
+                                 settingsHash["dateFont"].value<QFont>());
 
     resize(qMax(timeWidth, dateWidth) + PAINT_OFFSET * 2,
-           settings.value("timeFont").value<QFont>().pointSize() +
-           settings.value("dateFont").value<QFont>().pointSize() * 2 + PAINT_OFFSET * 2);
+           settingsHash["timeFont"].value<QFont>().pointSize() +
+           settingsHash["dateFont"].value<QFont>().pointSize() * 2 + PAINT_OFFSET * 2);
 
     updateClockPosition();
     createSystemTray();
@@ -40,6 +39,8 @@ HoverClock::~HoverClock()
 
 void HoverClock::initializeSettings()
 {
+    QSettings settings;
+
     QFont timeFont("Montserrat Medium", 9);
     timeFont.setLetterSpacing(QFont::AbsoluteSpacing, 1.5);
 
@@ -57,6 +58,11 @@ void HoverClock::initializeSettings()
     settings.setValue("strokeThickness", settings.value("strokeThickness", 1.5).toFloat());
     settings.setValue("verticalPadding", settings.value("verticalPadding", 50).toInt());
     settings.setValue("horizontalPadding", settings.value("horizontalPadding", 50).toInt());
+
+    QStringList keys = settings.allKeys();
+
+    for (QString& key : keys)
+        settingsHash[key] = settings.value(key);
 }
 
 void HoverClock::updateClockPosition()
@@ -64,23 +70,23 @@ void HoverClock::updateClockPosition()
     int screenWidth = QGuiApplication::primaryScreen()->geometry().width();
     int screenHeight = QGuiApplication::primaryScreen()->geometry().height();
 
-    switch (settings.value("position").toInt())
+    switch (settingsHash["position"].toInt())
     {
         case ClockPosition::TOP_LEFT:
-            move(settings.value("horizontalPadding").toInt(),
-                 settings.value("verticalPadding").toInt());
+            move(settingsHash["horizontalPadding"].toInt(),
+                 settingsHash["verticalPadding"].toInt());
             break;
         case ClockPosition::TOP_RIGHT:
-            move(screenWidth - width() - settings.value("horizontalPadding").toInt(),
-                 settings.value("verticalPadding").toInt());
+            move(screenWidth - width() - settingsHash["horizontalPadding"].toInt(),
+                 settingsHash["verticalPadding"].toInt());
             break;
         case ClockPosition::BOTTOM_LEFT:
-            move(settings.value("horizontalPadding").toInt(),
-                 screenHeight - height() - settings.value("verticalPadding").toInt());
+            move(settingsHash["horizontalPadding"].toInt(),
+                 screenHeight - height() - settingsHash["verticalPadding"].toInt());
             break;
         case ClockPosition::BOTTOM_RIGHT:
-            move(screenWidth - width() - settings.value("horizontalPadding").toInt(),
-                 screenHeight - height() - settings.value("verticalPadding").toInt());
+            move(screenWidth - width() - settingsHash["horizontalPadding"].toInt(),
+                 screenHeight - height() - settingsHash["verticalPadding"].toInt());
             break;
     }
 }
@@ -119,7 +125,7 @@ void HoverClock::createSystemTray()
 
 void HoverClock::showOptions()
 {
-    SettingsDialog *settingsDialog = new SettingsDialog(nullptr, &settings);
+    SettingsDialog *settingsDialog = new SettingsDialog(nullptr, &settingsHash);
     settingsDialog->setModal(true);
 
     connect(settingsDialog, &SettingsDialog::updateClock, this, &HoverClock::updateClockPosition);
@@ -142,11 +148,11 @@ void HoverClock::paintEvent(QPaintEvent * event)
 {
     Q_UNUSED(event);
 
-    QString time = QTime::currentTime().toString(settings.value("timeFormat").toString());
-    QString date = QDate::currentDate().toString(settings.value("dateFormat").toString());
+    QString time = QTime::currentTime().toString(settingsHash["timeFormat"].toString());
+    QString date = QDate::currentDate().toString(settingsHash["dateFormat"].toString());
 
     QPainter painter(this);
-    painter.setOpacity(settings.value("opacity").toFloat());
+    painter.setOpacity(settingsHash["opacity"].toFloat());
     painter.setRenderHints(QPainter::Antialiasing |
                            QPainter::TextAntialiasing |
                            QPainter::SmoothPixmapTransform |
@@ -154,24 +160,24 @@ void HoverClock::paintEvent(QPaintEvent * event)
 
     QPainterPath path;
 
-    int timeStringWidth = getTextWidth(time, settings.value("timeFont").value<QFont>());
-    int dateStringWidth = getTextWidth(date, settings.value("dateFont").value<QFont>());
+    int timeStringWidth = getTextWidth(time, settingsHash["timeFont"].value<QFont>());
+    int dateStringWidth = getTextWidth(date, settingsHash["dateFont"].value<QFont>());
 
     int textPadding = qMax(timeStringWidth, dateStringWidth) + PAINT_OFFSET * 2;
 
     path.addText(textPadding  / 2 - timeStringWidth / 2,
-                 settings.value("timeFont").value<QFont>().pointSize() + PAINT_OFFSET,
-                 settings.value("timeFont").value<QFont>(),
+                 settingsHash["timeFont"].value<QFont>().pointSize() + PAINT_OFFSET,
+                 settingsHash["timeFont"].value<QFont>(),
                  time);
 
     path.addText(textPadding  / 2 - dateStringWidth / 2,
-                 settings.value("dateFont").value<QFont>().pointSize() * 3 + PAINT_OFFSET,
-                 settings.value("dateFont").value<QFont>(),
+                 settingsHash["dateFont"].value<QFont>().pointSize() * 3 + PAINT_OFFSET,
+                 settingsHash["dateFont"].value<QFont>(),
                  date);
 
-    painter.fillPath(path, QBrush(QColor(settings.value("fillColor").value<QColor>())));
-    painter.strokePath(path, QPen(QColor(settings.value("strokeColor").value<QColor>()),
-                                  settings.value("strokeThickness").toFloat()));
+    painter.fillPath(path, QBrush(QColor(settingsHash["fillColor"].value<QColor>())));
+    painter.strokePath(path, QPen(QColor(settingsHash["strokeColor"].value<QColor>()),
+                                  settingsHash["strokeThickness"].toFloat() + 0.0001));
 }
 
 float HoverClock::getTextWidth(QString text, QFont font)

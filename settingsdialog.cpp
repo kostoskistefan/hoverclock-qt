@@ -1,76 +1,83 @@
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
 
-SettingsDialog::SettingsDialog(QWidget *parent, QSettings *settings) :
+#include <QDebug>
+
+SettingsDialog::SettingsDialog(QWidget *parent, QHash<QString, QVariant> *settings) :
     QDialog(parent),
     ui(new Ui::SettingsDialog)
 {
     ui->setupUi(this);
+
     this->settings = settings;
 
     ui->saveButton->setIcon(QIcon(QApplication::style()->standardIcon(QStyle::SP_DialogApplyButton)));
     ui->cancelButton->setIcon(QIcon(QApplication::style()->standardIcon(QStyle::SP_DialogCancelButton)));
 
-    connect(ui->saveButton, &QPushButton::clicked, this, &QDialog::accept);
+    connect(ui->saveButton, &QPushButton::clicked, this, &SettingsDialog::save);
     connect(ui->cancelButton, &QPushButton::clicked, this, &SettingsDialog::cancel);
 
-    const QStringList keys = settings->allKeys();
+    setColorPickerPalette(ui->fillColorPicker, (*settings)["fillColor"].value<QColor>());
+    setColorPickerPalette(ui->strokeColorPicker, (*settings)["strokeColor"].value<QColor>());
 
-    Q_FOREACH(QString key, keys) {
-        settingsHash[key] = settings->value(key);
-    }
+    setFontPickerFont(ui->timeFontPicker, (*settings)["timeFont"].value<QFont>());
+    setFontPickerFont(ui->dateFontPicker, (*settings)["dateFont"].value<QFont>());
 
     ui->positionComboBox->addItem("Top Left");
     ui->positionComboBox->addItem("Top Right");
     ui->positionComboBox->addItem("Bottom Left");
     ui->positionComboBox->addItem("Bottom Right");
 
-//    ui->time (settings->value("timeFont").value<QFont>());
-//    ui-> (settings->value("dateFont").value<QFont>());
-//    ui->fillColorInput (settings->value("fillColor").value<QColor>());
-//    ui-> settings->value("strokeColor").value<QColor>());
-
-    ui->opacityDoubleSpinBox->setValue(settings->value("opacity").toFloat());
-    ui->positionComboBox->setCurrentIndex(settings->value("position").toInt());
-    ui->timeFormatLineEdit->setText(settings->value("timeFormat").toString());
-    ui->dateFormatLineEdit->setText(settings->value("dateFormat").toString());
-    ui->strokeThicknessSpinBox->setValue(settings->value("strokeThickness").toFloat());
-    ui->verticalPaddingSpinBox->setValue(settings->value("verticalPadding").toInt());
-    ui->horizontalPaddingSpinBox->setValue(settings->value("horizontalPadding").toInt());
+    ui->opacityDoubleSpinBox->setValue((*settings)["opacity"].toFloat());
+    ui->positionComboBox->setCurrentIndex((*settings)["position"].toInt());
+    ui->timeFormatLineEdit->setText((*settings)["timeFormat"].toString());
+    ui->dateFormatLineEdit->setText((*settings)["dateFormat"].toString());
+    ui->strokeThicknessSpinBox->setValue((*settings)["strokeThickness"].toFloat());
+    ui->verticalPaddingSpinBox->setValue((*settings)["verticalPadding"].toInt());
+    ui->horizontalPaddingSpinBox->setValue((*settings)["horizontalPadding"].toInt());
 
     connect(ui->opacityDoubleSpinBox, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [=](){
-        settings->setValue("opacity", ui->opacityDoubleSpinBox->value());
-        emit updateClock();
+        updateSetting("opacity", ui->opacityDoubleSpinBox->value());
     });
 
     connect(ui->positionComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](){
-        settings->setValue("position", static_cast<ClockPosition>(ui->positionComboBox->currentIndex()));
-        emit updateClock();
+        updateSetting("position", static_cast<ClockPosition>(ui->positionComboBox->currentIndex()));
     });
 
     connect(ui->timeFormatLineEdit, &QLineEdit::textChanged, this, [=](){
-        settings->setValue("timeFormat", ui->timeFormatLineEdit->text());
-        emit updateClock();
+        updateSetting("timeFormat", ui->timeFormatLineEdit->text());
     });
 
     connect(ui->dateFormatLineEdit, &QLineEdit::textChanged, this, [=](){
-        settings->setValue("dateFormat", ui->dateFormatLineEdit->text());
-        emit updateClock();
+        updateSetting("dateFormat", ui->dateFormatLineEdit->text());
     });
 
     connect(ui->strokeThicknessSpinBox, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [=](){
-        settings->setValue("strokeThickness", ui->strokeThicknessSpinBox->value());
-        emit updateClock();
+        updateSetting("strokeThickness", ui->strokeThicknessSpinBox->value());
     });
 
     connect(ui->verticalPaddingSpinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, [=](){
-        settings->setValue("verticalPadding", ui->verticalPaddingSpinBox->value());
-        emit updateClock();
+        updateSetting("verticalPadding", ui->verticalPaddingSpinBox->value());
     });
 
     connect(ui->horizontalPaddingSpinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, [=](){
-        settings->setValue("horizontalPadding", ui->horizontalPaddingSpinBox->value());
-        emit updateClock();
+        updateSetting("horizontalPadding", ui->horizontalPaddingSpinBox->value());
+    });
+
+    connect(ui->fillColorPicker, &QPushButton::clicked, this, [=](){
+        changeColorSetting(ui->strokeColorPicker, "fillColor");
+    });
+
+    connect(ui->strokeColorPicker, &QPushButton::clicked, this, [=](){
+        changeColorSetting(ui->strokeColorPicker, "strokeColor");
+    });
+
+    connect(ui->timeFontPicker, &QPushButton::clicked, this, [=](){
+        changeFontSetting(ui->timeFontPicker, "timeFont");
+    });
+
+    connect(ui->dateFontPicker, &QPushButton::clicked, this, [=](){
+        changeFontSetting(ui->dateFontPicker, "dateFont");
     });
 }
 
@@ -79,13 +86,70 @@ SettingsDialog::~SettingsDialog()
     delete ui;
 }
 
+void SettingsDialog::changeColorSetting(QPushButton *colorPicker, QString colorSettingName)
+{
+    QColor color = QColorDialog::getColor();
+    updateSetting(colorSettingName, color);
+    setColorPickerPalette(colorPicker, color);
+}
+
+void SettingsDialog::changeFontSetting(QPushButton *fontPicker, QString fontSettingName)
+{
+    bool fontFound;
+    QFont font = QFontDialog::getFont(&fontFound);
+
+    if (fontFound)
+    {
+        updateSetting(fontSettingName, font);
+        setFontPickerFont(fontPicker, font);
+    }
+}
+
+void SettingsDialog::setColorPickerPalette(QPushButton *colorPicker, QColor color)
+{
+    QPalette palette = colorPicker->palette();
+    palette.setColor(QPalette::Button, color);
+    colorPicker->setPalette(palette);
+    colorPicker->update();
+}
+
+void SettingsDialog::setFontPickerFont(QPushButton *fontPicker, QFont font)
+{
+    QString fontLabel = font.family();
+    fontLabel += " ";
+    fontLabel += QString::number(font.pointSize());
+    fontPicker->setText(fontLabel);
+}
+
+template <typename T>
+void SettingsDialog::updateSetting(QString settingName, T value)
+{
+    (*settings)[settingName] = value;
+    emit updateClock();
+}
+
+void SettingsDialog::save()
+{
+    QSettings configuration;
+
+    QStringList keys = settings->keys();
+
+    for (QString& key : keys)
+        configuration.setValue(key, (*settings)[key]);
+
+    emit updateClock();
+
+    accept();
+}
+
 void SettingsDialog::cancel()
 {
-    const QStringList keys = settingsHash.keys();
+    QSettings configuration;
 
-    Q_FOREACH(QString key, keys) {
-        settings->setValue(key, settingsHash[key]);
-    }
+    QStringList keys = configuration.allKeys();
+
+    for (QString& key : keys)
+        (*settings)[key] = configuration.value(key);
 
     emit updateClock();
 

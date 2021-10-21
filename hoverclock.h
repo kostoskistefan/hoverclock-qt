@@ -34,7 +34,8 @@ class HoverClock : public QMainWindow
         void paintEvent(QPaintEvent *event);
 
     private:
-        QSettings settings;
+//        QSettings settings;
+        QHash<QString, QVariant> settingsHash;
         Ui::HoverClock *ui;
 
         void showOptions();
