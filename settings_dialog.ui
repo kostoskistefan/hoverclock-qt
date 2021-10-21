@@ -39,34 +39,20 @@
        <property name="horizontalSpacing">
         <number>15</number>
        </property>
-       <item row="2" column="0">
-        <widget class="QLabel" name="fillColorLabel">
+       <item row="3" column="0">
+        <widget class="QLabel" name="strokeColorLabel">
          <property name="text">
-          <string>Fill color:</string>
+          <string>Stroke color:</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="timeFontLabel">
+       <item row="1" column="2">
+        <widget class="QPushButton" name="dateFontPicker">
          <property name="text">
-          <string>Time font:</string>
+          <string/>
          </property>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <widget class="QDoubleSpinBox" name="strokeThicknessSpinBox">
-         <property name="maximum">
-          <double>5.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.010000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="strokeThicknessLabel">
-         <property name="text">
-          <string>Stroke thickness:</string>
+         <property name="flat">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -83,13 +69,6 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="strokeColorLabel">
-         <property name="text">
-          <string>Stroke color:</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="2">
         <widget class="QPushButton" name="fillColorPicker">
          <property name="autoFillBackground">
@@ -103,20 +82,20 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="dateFontLabel">
+       <item row="2" column="0">
+        <widget class="QLabel" name="fillColorLabel">
          <property name="text">
-          <string>Date font:</string>
+          <string>Fill color:</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
-        <widget class="QPushButton" name="dateFontPicker">
-         <property name="text">
-          <string/>
+       <item row="4" column="2">
+        <widget class="QDoubleSpinBox" name="strokeThicknessSpinBox">
+         <property name="maximum">
+          <double>5.000000000000000</double>
          </property>
-         <property name="flat">
-          <bool>true</bool>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
          </property>
         </widget>
        </item>
@@ -129,6 +108,40 @@
           <bool>true</bool>
          </property>
         </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="timeFontLabel">
+         <property name="text">
+          <string>Time font:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="strokeThicknessLabel">
+         <property name="text">
+          <string>Stroke thickness:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="dateFontLabel">
+         <property name="text">
+          <string>Date font:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="3">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -154,19 +167,21 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="dateFormatLabel">
-         <property name="text">
-          <string>Date format:</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="0">
         <widget class="QLabel" name="opacityLabel">
          <property name="text">
           <string>Opacity:</string>
          </property>
         </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="dateFormatLineEdit"/>
+       </item>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="positionComboBox"/>
+       </item>
+       <item row="5" column="1">
+        <widget class="QSpinBox" name="horizontalPaddingSpinBox"/>
        </item>
        <item row="5" column="0">
         <widget class="QLabel" name="horizontalPaddingLabel">
@@ -175,27 +190,25 @@
          </property>
         </widget>
        </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="timeFormatLineEdit"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="dateFormatLabel">
+         <property name="text">
+          <string>Date format:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QSpinBox" name="verticalPaddingSpinBox"/>
+       </item>
        <item row="1" column="0">
         <widget class="QLabel" name="positionLabel">
          <property name="text">
           <string>Position:</string>
          </property>
         </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QSpinBox" name="horizontalPaddingSpinBox"/>
-       </item>
-       <item row="4" column="1">
-        <widget class="QSpinBox" name="verticalPaddingSpinBox"/>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="dateFormatLineEdit"/>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="timeFormatLineEdit"/>
-       </item>
-       <item row="1" column="1">
-        <widget class="QComboBox" name="positionComboBox"/>
        </item>
        <item row="0" column="1">
         <widget class="QDoubleSpinBox" name="opacityDoubleSpinBox">
@@ -206,6 +219,19 @@
           <double>0.050000000000000</double>
          </property>
         </widget>
+       </item>
+       <item row="6" column="0" colspan="2">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>

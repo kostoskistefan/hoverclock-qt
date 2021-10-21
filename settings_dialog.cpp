@@ -1,7 +1,5 @@
-#include "settingsdialog.h"
-#include "ui_settingsdialog.h"
-
-#include <QDebug>
+#include "settings_dialog.h"
+#include "ui_settings_dialog.h"
 
 SettingsDialog::SettingsDialog(QWidget *parent, QHash<QString, QVariant> *settings) :
     QDialog(parent),
@@ -13,6 +11,9 @@ SettingsDialog::SettingsDialog(QWidget *parent, QHash<QString, QVariant> *settin
 
     ui->saveButton->setIcon(QIcon(QApplication::style()->standardIcon(QStyle::SP_DialogApplyButton)));
     ui->cancelButton->setIcon(QIcon(QApplication::style()->standardIcon(QStyle::SP_DialogCancelButton)));
+
+    ui->verticalPaddingSpinBox->setMaximum(QGuiApplication::primaryScreen()->geometry().height());
+    ui->horizontalPaddingSpinBox->setMaximum(QGuiApplication::primaryScreen()->geometry().width());
 
     connect(ui->saveButton, &QPushButton::clicked, this, &SettingsDialog::save);
     connect(ui->cancelButton, &QPushButton::clicked, this, &SettingsDialog::cancel);
@@ -29,11 +30,11 @@ SettingsDialog::SettingsDialog(QWidget *parent, QHash<QString, QVariant> *settin
     ui->positionComboBox->addItem("Bottom Right");
 
     ui->opacityDoubleSpinBox->setValue((*settings)["opacity"].toFloat());
-    ui->positionComboBox->setCurrentIndex((*settings)["position"].toInt());
     ui->timeFormatLineEdit->setText((*settings)["timeFormat"].toString());
     ui->dateFormatLineEdit->setText((*settings)["dateFormat"].toString());
-    ui->strokeThicknessSpinBox->setValue((*settings)["strokeThickness"].toFloat());
+    ui->positionComboBox->setCurrentIndex((*settings)["position"].toInt());
     ui->verticalPaddingSpinBox->setValue((*settings)["verticalPadding"].toInt());
+    ui->strokeThicknessSpinBox->setValue((*settings)["strokeThickness"].toFloat());
     ui->horizontalPaddingSpinBox->setValue((*settings)["horizontalPadding"].toInt());
 
     connect(ui->opacityDoubleSpinBox, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [=](){

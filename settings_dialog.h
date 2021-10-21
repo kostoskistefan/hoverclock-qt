@@ -2,10 +2,11 @@
 #define SETTINGSDIALOG_H
 
 #include <QDialog>
+#include <QScreen>
 #include <QSettings>
 #include <QFontDialog>
 #include <QColorDialog>
-#include "clockPosition.h"
+#include "clock_position.h"
 
 namespace Ui {
 class SettingsDialog;

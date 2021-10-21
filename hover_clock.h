@@ -1,5 +1,5 @@
-#ifndef HOVERCLOCK_H
-#define HOVERCLOCK_H
+#ifndef HOVER_CLOCK_H
+#define HOVER_CLOCK_H
 
 #include <QMainWindow>
 #include <QTime>
@@ -12,8 +12,8 @@
 #include <QPainterPath>
 #include <QSystemTrayIcon>
 
-#include "clockPosition.h"
-#include "settingsdialog.h"
+#include "clock_position.h"
+#include "settings_dialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class HoverClock; }
@@ -34,10 +34,10 @@ class HoverClock : public QMainWindow
         void paintEvent(QPaintEvent *event);
 
     private:
-//        QSettings settings;
-        QHash<QString, QVariant> settingsHash;
         Ui::HoverClock *ui;
+        QHash<QString, QVariant> settings;
 
+        void resizeWindow();
         void showOptions();
         void createSystemTray();
         void initializeSettings();
@@ -48,4 +48,4 @@ class HoverClock : public QMainWindow
         void toggleVisibility();
 };
 
-#endif // HOVERCLOCK_H
+#endif // HOVER_CLOCK_H
