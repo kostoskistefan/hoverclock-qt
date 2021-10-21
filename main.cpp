@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     a.setOrganizationDomain("https://github.com/kostoskistefan/hoverclock");
     a.setOrganizationName("hoverclock");
     a.setApplicationName("hoverclock");
-    a.setApplicationVersion("version 0.0.1");
+    a.setApplicationVersion(APP_VERSION);
 
     HoverClock w;
     w.show();

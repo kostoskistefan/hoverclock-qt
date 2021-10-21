@@ -12,6 +12,13 @@ SettingsDialog::SettingsDialog(QWidget *parent, QHash<QString, QVariant> *settin
     ui->saveButton->setIcon(QIcon(QApplication::style()->standardIcon(QStyle::SP_DialogApplyButton)));
     ui->cancelButton->setIcon(QIcon(QApplication::style()->standardIcon(QStyle::SP_DialogCancelButton)));
 
+    QPixmap image(":/icons/resources/icon.svg");
+    ui->imageContainer->setPixmap(image.scaled(rect().width(), rect().height() / 3,
+                                               Qt::AspectRatioMode::KeepAspectRatio,
+                                               Qt::TransformationMode::SmoothTransformation));
+
+    ui->versionLabel->setText(QString("Version: ") + APP_VERSION);
+
     ui->verticalPaddingSpinBox->setMaximum(QGuiApplication::primaryScreen()->geometry().height());
     ui->horizontalPaddingSpinBox->setMaximum(QGuiApplication::primaryScreen()->geometry().width());
 
@@ -23,6 +30,9 @@ SettingsDialog::SettingsDialog(QWidget *parent, QHash<QString, QVariant> *settin
 
     setFontPickerFont(ui->timeFontPicker, (*settings)["timeFont"].value<QFont>());
     setFontPickerFont(ui->dateFontPicker, (*settings)["dateFont"].value<QFont>());
+
+    ui->showTimeCheckBox->setCheckState(static_cast<Qt::CheckState>((*settings)["showTime"].toInt()));
+    ui->showDateCheckBox->setCheckState(static_cast<Qt::CheckState>((*settings)["showDate"].toInt()));
 
     ui->positionComboBox->addItem("Top Left");
     ui->positionComboBox->addItem("Top Right");
@@ -79,6 +89,16 @@ SettingsDialog::SettingsDialog(QWidget *parent, QHash<QString, QVariant> *settin
 
     connect(ui->dateFontPicker, &QPushButton::clicked, this, [=](){
         changeFontSetting(ui->dateFontPicker, "dateFont");
+    });
+
+    connect(ui->showTimeCheckBox, &QCheckBox::clicked, this, [=](){
+        (*settings)["showTime"] = ui->showTimeCheckBox->checkState();
+        emit updateClock();
+    });
+
+    connect(ui->showDateCheckBox, &QCheckBox::clicked, this, [=](){
+        (*settings)["showDate"] = ui->showDateCheckBox->checkState();
+        emit updateClock();
     });
 }
 

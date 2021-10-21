@@ -46,15 +46,11 @@ void HoverClock::initializeSettings()
 {
     QSettings configuration;
 
-    QFont timeFont("Montserrat Medium", 12);
-    timeFont.setLetterSpacing(QFont::AbsoluteSpacing, 1.5);
-
-    QFont dateFont("Montserrat Medium", 7);
-    dateFont.setLetterSpacing(QFont::AbsoluteSpacing, 1.5);
-
     configuration.setValue("opacity", configuration.value("opacity", 0.5).toFloat());
-    configuration.setValue("timeFont", configuration.value("timeFont", timeFont).value<QFont>());
-    configuration.setValue("dateFont", configuration.value("dateFont", dateFont).value<QFont>());
+    configuration.setValue("showTime", configuration.value("showTime", 2).toInt());
+    configuration.setValue("showDate", configuration.value("showDate", 2).toInt());
+    configuration.setValue("timeFont", configuration.value("timeFont", QFont("Montserrat Medium", 12)).value<QFont>());
+    configuration.setValue("dateFont", configuration.value("dateFont", QFont("Montserrat Medium", 7)).value<QFont>());
     configuration.setValue("position", configuration.value("position", ClockPosition::BOTTOM_RIGHT).toInt());
     configuration.setValue("fillColor", configuration.value("fillColor", QColor("white")).value<QColor>());
     configuration.setValue("timeFormat", configuration.value("timeFormat", "hh:mm").toString());
@@ -96,6 +92,8 @@ void HoverClock::updateClockPosition()
                  screenHeight - height() - settings["verticalPadding"].toInt());
             break;
     }
+
+    repaint();
 }
 
 void HoverClock::createSystemTray()
@@ -167,19 +165,26 @@ void HoverClock::paintEvent(QPaintEvent * event)
 
     QPainterPath path;
 
-    int timeStringWidth = getTextWidth(time, settings["timeFont"].value<QFont>());
-    int dateStringWidth = getTextWidth(date, settings["dateFont"].value<QFont>());
+    if (settings["showTime"].toInt() == 2)
+    {
+        int timeStringWidth = getTextWidth(time, settings["timeFont"].value<QFont>());
 
-    path.addText((rect().width() - timeStringWidth) / 2,
-                 settings["timeFont"].value<QFont>().pointSize() + PAINT_OFFSET,
-                 settings["timeFont"].value<QFont>(),
-                 time);
+        path.addText((rect().width() - timeStringWidth) / 2,
+                     settings["timeFont"].value<QFont>().pointSize() + PAINT_OFFSET,
+                     settings["timeFont"].value<QFont>(),
+                     time);
+    }
 
-    path.addText((rect().width() - dateStringWidth) / 2,
-                 settings["timeFont"].value<QFont>().pointSize() +
-                 settings["dateFont"].value<QFont>().pointSize() + PAINT_OFFSET * 2,
-                 settings["dateFont"].value<QFont>(),
-                 date);
+    if (settings["showDate"].toInt() == 2)
+    {
+        int dateStringWidth = getTextWidth(date, settings["dateFont"].value<QFont>());
+
+        path.addText((rect().width() - dateStringWidth) / 2,
+                     settings["timeFont"].value<QFont>().pointSize() +
+                     settings["dateFont"].value<QFont>().pointSize() + PAINT_OFFSET * 2,
+                     settings["dateFont"].value<QFont>(),
+                     date);
+    }
 
     painter.fillPath(path, QBrush(QColor(settings["fillColor"].value<QColor>())));
     painter.strokePath(path, QPen(QColor(settings["strokeColor"].value<QColor>()),
