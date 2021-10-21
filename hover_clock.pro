@@ -9,16 +9,20 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    RunGuard.cpp \
+    hover_clock.cpp \
     main.cpp \
-    hoverclock.cpp
+    run_guard.cpp \
+    settings_dialog.cpp
 
 HEADERS += \
-    RunGuard.h \
-    hoverclock.h
+    clock_position.h \
+    hover_clock.h \
+    run_guard.h \
+    settings_dialog.h
 
 FORMS += \
-    hoverclock.ui
+    hover_clock.ui \
+    settings_dialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
