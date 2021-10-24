@@ -9,8 +9,8 @@ LINUX_DEPLOY_QT			:= /tmp/linuxdeploy-plugin-qt-x86_64.AppImage
 LINUX_DEPLOY_APP_DIR	:= --appdir=${OUTPUT_DIR}
 LINUX_DEPLOY_FLAGS		:= --plugin qt --output appimage
 
-MAKE_UTIL 	:= /usr/bin/make
-QMAKE_UTIL 	:= /usr/bin/qmake
+MAKE_UTIL 	:= make
+QMAKE_UTIL 	:= qmake
 
 THREADS := $(shell nproc)
 
