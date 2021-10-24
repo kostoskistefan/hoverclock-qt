@@ -1,4 +1,11 @@
-# Hoverclock [![GitHub release](https://img.shields.io/github/release/kostoskistefan/hoverclock?style=for-the-badge)](https://github.com/kostoskistefan/hoverclock/releases)
+<p align="center">
+    <img src="images/logo.png"/>
+    <a href="https://github.com/kostoskistefan/hoverclock/releases">
+        <img src="https://img.shields.io/github/release/kostoskistefan/hoverclock?style=for-the-badge"/>
+    </a>
+</p>
+
+# Hoverclock 
 
 Hoverclock is a simple, yet customizable floating clock for Linux created with QT. 
 
