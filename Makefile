@@ -5,8 +5,9 @@ BIN_DIR		:= /tmp/hoverclock_bin
 OUTPUT_DIR	:= /tmp/hoverclock
 
 LINUX_DEPLOY 			:= /tmp/linuxdeploy-x86_64.AppImage
-LINUX_DEPLOY_APP_DIR 	:= --appdir=${OUTPUT_DIR}
-LINUX_DEPLOY_FLAGS 		:= --plugin qt --output appimage
+LINUX_DEPLOY_QT			:= /tmp/linuxdeploy-plugin-qt-x86_64.AppImage
+LINUX_DEPLOY_APP_DIR	:= --appdir=${OUTPUT_DIR}
+LINUX_DEPLOY_FLAGS		:= --plugin qt --output appimage
 
 MAKE_UTIL 	:= /usr/bin/make
 QMAKE_UTIL 	:= /usr/bin/qmake
@@ -18,7 +19,7 @@ all: dir appimage
 dir: 
 	mkdir -p ${BUILD_DIR}
 
-appimage: hoverclock
+appimage: hoverclock appimage-fix
 	${LINUX_DEPLOY} ${LINUX_DEPLOY_APP_DIR}
 
 	cp ${BIN_DIR}/opt/hover_clock/bin/hover_clock ${OUTPUT_DIR}/usr/bin/
@@ -28,6 +29,10 @@ appimage: hoverclock
 	cd ${APP_DIR} && \
 	${LINUX_DEPLOY} ${LINUX_DEPLOY_APP_DIR} ${LINUX_DEPLOY_FLAGS}
 
+appimage-fix:
+	dd if=/dev/zero bs=1 count=3 seek=8 conv=notrunc of=${LINUX_DEPLOY}
+	dd if=/dev/zero bs=1 count=3 seek=8 conv=notrunc of=${LINUX_DEPLOY_QT}
+
 hoverclock:
 	cd ${BUILD_DIR} && \
 	${QMAKE_UTIL} ${SOURCE_DIR} && \
@@ -35,5 +40,5 @@ hoverclock:
 	${MAKE_UTIL} install INSTALL_ROOT=${BIN_DIR}
 
 clean:
-	rm -r /tmp/hoverclock*
+	rm -r /tmp/hoverclock*; \
 	rm ${APP_DIR}/*.AppImage

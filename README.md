@@ -21,7 +21,6 @@ Hoverclock is a simple, yet customizable floating clock for Linux created with Q
     * [Code conventions](#code-conventions)
 
 ## General info
-
 The main incentive for this project is having desktop panels that automatically hide, but still being able to see the time and date without moving your mouse to unhide the panel.
 
 ## Technologies
@@ -33,7 +32,7 @@ The main incentive for this project is having desktop panels that automatically 
 This project has only been tested on Arch Linux with KDE Plasma.
 
 ## Usage
-Head on to the [releases section](https://github.com/kostoskistefan/hoverclock/releases) of this repository and download the latest AppImage file. 
+Head on over to the [releases section](https://github.com/kostoskistefan/hoverclock/releases) of this repository and download the latest AppImage file. 
 
 Make the file executable by running `chmod u+x Hoverclock-x86_64.AppImage`.
 
@@ -68,9 +67,9 @@ After you are inside the container, run  `make` and the build process will begin
 When it finished building, you should have an AppImage in the project directory.
 
 ### Build dependencies
-To allow running AppImages inside the docker container, you must have FUSE installed on your host system and load the kernel module with the following command: `modprobe fuse`.
+To allow running AppImages inside the docker container, you must have FUSE installed on your host system and load the kernel module (before running docker) with the following command: `modprobe fuse`.
 
-After doing so, you can proceed to running the docker container with the above mentioned commands.
+After doing so, you can proceed to run the docker container with the above mentioned commands.
 
 ## Known issues
  * You must have at least one panel with a system tray to access the settings menu and configure Hoverclock to your liking.
