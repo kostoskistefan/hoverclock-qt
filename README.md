@@ -32,7 +32,7 @@ The main incentive for this project is having desktop panels that automatically 
 
 ## Technologies
  * C++
- * QT 5.15.2 with QT Creator
+ * QT 5.12 with QT Creator
  * [LinuxDeploy](https://github.com/linuxdeploy/linuxdeploy)
 
 ## Quick note
@@ -80,10 +80,12 @@ After doing so, you can proceed to run the docker container with the above menti
 
 ## Known issues
  * You must have at least one panel with a system tray to access the settings menu and configure Hoverclock to your liking.
+ * On multi-monitor setups, Hoverclock only uses the primary screen according to QT.
 
 ## Future work
 - [ ] Add terminal support to open and configure settings
-- [ ] Adding a feature that allows you to specify programs in which you want to hide the clock.
+- [ ] Add support for multi-monitor setups
+- [ ] Add a feature that allows you to specify programs in which you want to hide the clock.
 - [ ] Add Light and Dark mode icon support
 
 ## Getting help
