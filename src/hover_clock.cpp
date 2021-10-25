@@ -5,6 +5,8 @@ Hoverclock::Hoverclock(QWidget *parent) : QMainWindow(parent), ui(new Ui::Hoverc
 {
     ui->setupUi(this);
 
+    applicationBlacklist = new QStringList();
+
     initializeSettings();
 
     makeWindowTransparent();
@@ -15,6 +17,14 @@ Hoverclock::Hoverclock(QWidget *parent) : QMainWindow(parent), ui(new Ui::Hoverc
     createSystemTray();
 
     startTimer(1000);
+
+    process = new QProcess(this);
+
+    connect(process, &QProcess::readyReadStandardOutput, this, [=](){
+        checkBlacklistApplication(getFocusedApplicationName());
+    });
+
+    process->start("/usr/bin/xprop", QStringList() << "-spy" << "-root" << "_NET_ACTIVE_WINDOW");
 }
 
 Hoverclock::~Hoverclock()
@@ -33,6 +43,34 @@ void Hoverclock::makeWindowTransparent()
     setWindowFlags(Qt::FramelessWindowHint |
                    Qt::WindowStaysOnTopHint |
                    Qt::X11BypassWindowManagerHint);
+}
+
+QString Hoverclock::getFocusedApplicationName()
+{
+    Display *display;
+    Window focus;
+    int revert;
+
+    display = XOpenDisplay(NULL);
+    XGetInputFocus(display, &focus, &revert);
+
+    XClassHint classHint;
+    XGetClassHint(display, focus, &classHint);
+
+    QString windowName = reinterpret_cast<char *>(classHint.res_name);
+
+    return windowName;
+}
+
+void Hoverclock::checkBlacklistApplication(QString windowName)
+{
+    bool applicationInBlacklist = false;
+
+    for (QString& application : (*applicationBlacklist))
+        if(windowName.contains(application, Qt::CaseInsensitive))
+            applicationInBlacklist = true;
+
+    setVisible(!applicationInBlacklist);
 }
 
 void Hoverclock::resizeWindow()
@@ -113,8 +151,12 @@ void Hoverclock::createSystemTray()
     QAction *optionsAction = new QAction("Options", this);
     connect(optionsAction, &QAction::triggered, this, &Hoverclock::showOptions);
 
-
     QMenu *trayMenu = new QMenu(this);
+
+//    addActionToTrayMenu(trayMenu, "Toggle visibility", QFunctionPointer(&Hoverclock::toggleVisibility));
+//    addActionToTrayMenu(trayMenu, "Options", &Hoverclock::showOptions);
+//    addActionToTrayMenu(trayMenu, "Quit", &QCoreApplication::quit);
+
     trayMenu->addAction(hideAction);
     trayMenu->addAction(optionsAction);
     trayMenu->addSeparator();
