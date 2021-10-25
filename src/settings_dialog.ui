@@ -14,8 +14,8 @@
    <string>Settings</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/icons/resources/icon.png</normaloff>:/icons/resources/icon.png</iconset>
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/resources/icon_light.png</normaloff>:/icons/resources/icon_light.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="3" column="2">
@@ -40,7 +40,7 @@
 }</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="appearanceTab">
       <attribute name="title">
@@ -287,7 +287,7 @@
        <item row="7" column="0" colspan="2">
         <widget class="QLabel" name="appUrlLabel">
          <property name="text">
-          <string>&lt;a href=&quot;https://github.com/kostoskistefan/hoverclock&quot;&gt;HoverClock Github&lt;/a&gt;</string>
+          <string>&lt;a href=&quot;https://github.com/kostoskistefan/hoverclock&quot;&gt;Hoverclock Github&lt;/a&gt;</string>
          </property>
          <property name="textFormat">
           <enum>Qt::RichText</enum>

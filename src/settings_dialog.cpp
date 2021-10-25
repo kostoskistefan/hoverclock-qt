@@ -9,6 +9,18 @@ SettingsDialog::SettingsDialog(QWidget *parent, QHash<QString, QVariant> *settin
 
     this->settings = settings;
 
+    initializeSettingsDialog();
+
+    connectSignals();
+}
+
+SettingsDialog::~SettingsDialog()
+{
+    delete ui;
+}
+
+void SettingsDialog::initializeSettingsDialog()
+{
     ui->saveButton->setIcon(QIcon(QApplication::style()->standardIcon(QStyle::SP_DialogApplyButton)));
     ui->cancelButton->setIcon(QIcon(QApplication::style()->standardIcon(QStyle::SP_DialogCancelButton)));
 
@@ -21,15 +33,6 @@ SettingsDialog::SettingsDialog(QWidget *parent, QHash<QString, QVariant> *settin
 
     ui->verticalPaddingSpinBox->setMaximum(QGuiApplication::primaryScreen()->geometry().height());
     ui->horizontalPaddingSpinBox->setMaximum(QGuiApplication::primaryScreen()->geometry().width());
-
-    connect(ui->saveButton, &QPushButton::clicked, this, &SettingsDialog::save);
-    connect(ui->cancelButton, &QPushButton::clicked, this, &SettingsDialog::cancel);
-
-    setColorPickerPalette(ui->fillColorPicker, (*settings)["fillColor"].value<QColor>());
-    setColorPickerPalette(ui->strokeColorPicker, (*settings)["strokeColor"].value<QColor>());
-
-    setFontPickerFont(ui->timeFontPicker, (*settings)["timeFont"].value<QFont>());
-    setFontPickerFont(ui->dateFontPicker, (*settings)["dateFont"].value<QFont>());
 
     ui->showTimeCheckBox->setCheckState(static_cast<Qt::CheckState>((*settings)["showTime"].toInt()));
     ui->showDateCheckBox->setCheckState(static_cast<Qt::CheckState>((*settings)["showDate"].toInt()));
@@ -46,6 +49,18 @@ SettingsDialog::SettingsDialog(QWidget *parent, QHash<QString, QVariant> *settin
     ui->verticalPaddingSpinBox->setValue((*settings)["verticalPadding"].toInt());
     ui->strokeThicknessSpinBox->setValue((*settings)["strokeThickness"].toFloat());
     ui->horizontalPaddingSpinBox->setValue((*settings)["horizontalPadding"].toInt());
+
+    setColorPickerPalette(ui->fillColorPicker, (*settings)["fillColor"].value<QColor>());
+    setColorPickerPalette(ui->strokeColorPicker, (*settings)["strokeColor"].value<QColor>());
+
+    setFontPickerFont(ui->timeFontPicker, (*settings)["timeFont"].value<QFont>());
+    setFontPickerFont(ui->dateFontPicker, (*settings)["dateFont"].value<QFont>());
+}
+
+void SettingsDialog::connectSignals()
+{
+    connect(ui->saveButton, &QPushButton::clicked, this, &SettingsDialog::save);
+    connect(ui->cancelButton, &QPushButton::clicked, this, &SettingsDialog::cancel);
 
     connect(ui->opacityDoubleSpinBox, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [=](){
         updateSetting("opacity", ui->opacityDoubleSpinBox->value());
@@ -92,19 +107,12 @@ SettingsDialog::SettingsDialog(QWidget *parent, QHash<QString, QVariant> *settin
     });
 
     connect(ui->showTimeCheckBox, &QCheckBox::clicked, this, [=](){
-        (*settings)["showTime"] = ui->showTimeCheckBox->checkState();
-        emit updateClock();
+        updateSetting("showTime", ui->showTimeCheckBox->checkState());
     });
 
     connect(ui->showDateCheckBox, &QCheckBox::clicked, this, [=](){
-        (*settings)["showDate"] = ui->showDateCheckBox->checkState();
-        emit updateClock();
+        updateSetting("showDate", ui->showDateCheckBox->checkState());
     });
-}
-
-SettingsDialog::~SettingsDialog()
-{
-    delete ui;
 }
 
 void SettingsDialog::changeColorSetting(QPushButton *colorPicker, QString colorSettingName)
@@ -142,8 +150,8 @@ void SettingsDialog::setFontPickerFont(QPushButton *fontPicker, QFont font)
     fontPicker->setText(fontLabel);
 }
 
-template <typename T>
-void SettingsDialog::updateSetting(QString settingName, T value)
+template <typename SettingValue>
+void SettingsDialog::updateSetting(QString settingName, SettingValue value)
 {
     (*settings)[settingName] = value;
     emit updateClock();

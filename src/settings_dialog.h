@@ -27,8 +27,11 @@ private:
     Ui::SettingsDialog *ui;
     QHash<QString, QVariant> *settings;
 
-    template <typename T>
-    void updateSetting(QString settingName, T value);
+    template <typename SettingValue>
+    void updateSetting(QString settingName, SettingValue value);
+
+    void connectSignals();
+    void initializeSettingsDialog();
     void setFontPickerFont(QPushButton *fontPicker, QFont font);
     void setColorPickerPalette(QPushButton *colorPicker, QColor color);
     void changeFontSetting(QPushButton *fontPicker, QString fontSettingName);

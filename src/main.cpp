@@ -12,13 +12,13 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    a.setApplicationDisplayName("HoverClock");
+    a.setApplicationDisplayName("Hoverclock");
     a.setOrganizationDomain("https://github.com/kostoskistefan/hoverclock");
     a.setOrganizationName("hoverclock");
     a.setApplicationName("hoverclock");
     a.setApplicationVersion(APP_VERSION);
 
-    HoverClock w;
+    Hoverclock w;
     w.show();
 
     return a.exec();
