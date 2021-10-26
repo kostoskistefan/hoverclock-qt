@@ -12,6 +12,8 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
+    a.setWindowIcon(QIcon(":/resources/icons/icon.png"));
+
     a.setApplicationDisplayName("Hoverclock");
     a.setOrganizationDomain("https://github.com/kostoskistefan/hoverclock");
     a.setOrganizationName("hoverclock");

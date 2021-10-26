@@ -5,6 +5,8 @@ Hoverclock::Hoverclock(QWidget *parent) : QMainWindow(parent), ui(new Ui::Hoverc
 {
     ui->setupUi(this);
 
+    setWindowIcon(QIcon(":/resources/icons/icon.png"));
+
     initializeSettings();
 
     makeWindowTransparent();
@@ -138,8 +140,7 @@ void Hoverclock::createSystemTray()
     QSystemTrayIcon *tray = new QSystemTrayIcon(this);
     tray->setContextMenu(trayMenu);
 
-    QPixmap iconPixmap(":/icons/resources/icon.svg");
-    QIcon icon(iconPixmap);
+    QIcon icon(":/resources/icons/icon.png");
     icon.setIsMask(true);
 
     tray->setIcon(icon);
