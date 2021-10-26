@@ -1,5 +1,5 @@
-#include "hover_clock.h"
-#include "ui_hover_clock.h"
+#include "hoverclock.h"
+#include "ui_hoverclock.h"
 
 Hoverclock::Hoverclock(QWidget *parent) : QMainWindow(parent), ui(new Ui::Hoverclock)
 {

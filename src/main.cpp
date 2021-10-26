@@ -1,4 +1,4 @@
-#include "hover_clock.h"
+#include "hoverclock.h"
 
 #include <QApplication>
 #include "run_guard.h"

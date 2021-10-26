@@ -1,5 +1,5 @@
-#ifndef HOVER_CLOCK_H
-#define HOVER_CLOCK_H
+#ifndef HOVERCLOCK_H
+#define HOVERCLOCK_H
 
 #include <QTime>
 #include <QMenu>
@@ -49,4 +49,4 @@ class Hoverclock : public QMainWindow
         void toggleVisibility();
 };
 
-#endif // HOVER_CLOCK_H
+#endif // HOVERCLOCK_H
