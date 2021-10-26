@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="512"
+   height="512"
+   viewBox="0 0 135.46666 135.46667"
+   version="1.1"
+   id="svg5"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2" />
+  <g
+     id="layer1">
+    <g
+       id="g25228">
+      <path
+         id="path31"
+         style="fill:#ffffff;stroke:#b3b3b3;stroke-width:0.264067"
+         d="M 67.733075,0.13229166 A 67.601303,67.601303 0 0 0 0.13203455,67.733332 67.601303,67.601303 0 0 0 67.733075,135.33489 67.601303,67.601303 0 0 0 135.33463,67.733332 67.601303,67.601303 0 0 0 67.733075,0.13229166 Z m 0,6.88485094 A 60.716175,60.716175 0 0 1 128.44927,67.733332 60.716175,60.716175 0 0 1 67.733075,128.44952 60.716175,60.716175 0 0 1 7.0168854,67.733332 60.716175,60.716175 0 0 1 67.733075,7.0171426 Z" />
+      <path
+         id="rect1707"
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:3.17204;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 94.150364,19.766979 -9.592954,16.615484 1.914535,1.105357 9.592954,-16.615483 z m -45.155642,78.211866 -9.592954,16.615485 1.914536,1.10536 9.592954,-16.615488 z" />
+      <path
+         id="rect1707-3"
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:3.17204;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 20.872336,39.401767 -1.105358,1.914536 16.615484,9.592953 1.105358,-1.914535 z m 78.211865,45.155641 -1.105357,1.914536 16.615486,9.592954 1.10536,-1.914535 z" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:70.5556px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:2.64583;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+         x="46.096325"
+         y="84.697418"
+         id="text10731"
+         transform="rotate(6.2183267)"><tspan
+           id="tspan10729"
+           style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:70.5556px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Medium';fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:2.64583;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+           x="46.096325"
+           y="84.697418">H</tspan></text>
+    </g>
+  </g>
+</svg>
