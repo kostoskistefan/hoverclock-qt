@@ -1,2 +1,6 @@
-*.AppImage
+**/*.AppImage
 build*/
+pkg/
+hoverclock-*
+src/squashfs-root
+src/LICENSE
