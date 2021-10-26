@@ -35,7 +35,7 @@ class Hoverclock : public QMainWindow
 
     private:
         Ui::Hoverclock *ui;
-        SettingsDialog *settingsDialog;
+        SettingsDialog *settingsDialog = nullptr;
         QHash<QString, QVariant> settings;
 
         void showOptions();

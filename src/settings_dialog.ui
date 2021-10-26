@@ -317,7 +317,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Hover Clock</string>
+          <string>Hoverclock</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
