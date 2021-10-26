@@ -22,7 +22,7 @@ dir:
 appimage: hoverclock appimage-fix
 	${LINUX_DEPLOY} ${LINUX_DEPLOY_APP_DIR}
 
-	cp ${BIN_DIR}/opt/hover_clock/bin/hover_clock ${OUTPUT_DIR}/usr/bin/
+	cp ${BIN_DIR}/opt/hoverclock/bin/hoverclock ${OUTPUT_DIR}/usr/bin/
 	cp ${APP_DIR}/hoverclock.desktop ${OUTPUT_DIR}/usr/share/applications/hoverclock.desktop
 	cp ${SOURCE_DIR}/resources/icons/hoverclock.png ${OUTPUT_DIR}/usr/share/icons/hicolor/256x256/apps/hoverclock.png
 
