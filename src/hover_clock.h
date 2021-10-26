@@ -1,7 +1,6 @@
 #ifndef HOVER_CLOCK_H
 #define HOVER_CLOCK_H
 
-#include <QMainWindow>
 #include <QTime>
 #include <QMenu>
 #include <QTimer>
@@ -9,6 +8,7 @@
 #include <QPainter>
 #include <QPalette>
 #include <QSettings>
+#include <QMainWindow>
 #include <QPainterPath>
 #include <QSystemTrayIcon>
 
@@ -19,7 +19,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class Hoverclock; }
 QT_END_NAMESPACE
 
-#define PAINT_OFFSET 5
+#define PAINT_OFFSET 3
 
 class Hoverclock : public QMainWindow
 {

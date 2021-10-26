@@ -43,9 +43,24 @@ void Hoverclock::resizeWindow()
     int dateWidth = getTextWidth(QDate::currentDate().toString(settings["dateFormat"].toString()),
                                  settings["dateFont"].value<QFont>());
 
-    resize(qMax(timeWidth, dateWidth) + PAINT_OFFSET * 2,
-           settings["timeFont"].value<QFont>().pointSize() +
-           settings["dateFont"].value<QFont>().pointSize() + PAINT_OFFSET * 3);
+    int windowWidth = 0;
+    int windowHeight = 0;
+
+    if (settings["showTime"].toInt() == 2)
+    {
+        windowWidth += timeWidth + PAINT_OFFSET * 2;
+        windowHeight += settings["timeFont"].value<QFont>().pointSize() + PAINT_OFFSET * 2;
+    }
+
+    if (settings["showDate"].toInt() == 2)
+    {
+        if(windowWidth == 0 || dateWidth > timeWidth)
+            windowWidth = dateWidth + PAINT_OFFSET * 2;
+
+        windowHeight += settings["dateFont"].value<QFont>().pointSize() + PAINT_OFFSET * 2;
+    }
+
+    resize(windowWidth, windowHeight);
 }
 
 void Hoverclock::initializeSettings()
@@ -60,7 +75,7 @@ void Hoverclock::initializeSettings()
     configuration.setValue("position", configuration.value("position", ClockPosition::BOTTOM_RIGHT).toInt());
     configuration.setValue("fillColor", configuration.value("fillColor", QColor("white")).value<QColor>());
     configuration.setValue("timeFormat", configuration.value("timeFormat", "hh:mm").toString());
-    configuration.setValue("dateFormat", configuration.value("dateFormat", "dd.MM.yyyy").toString());
+    configuration.setValue("dateFormat", configuration.value("dateFormat", "dd MMM yyyy").toString());
     configuration.setValue("strokeColor", configuration.value("strokeColor", QColor("darkGray")).value<QColor>());
     configuration.setValue("strokeThickness", configuration.value("strokeThickness", 1.5).toFloat());
     configuration.setValue("verticalPadding", configuration.value("verticalPadding", 50).toInt());
@@ -172,23 +187,23 @@ void Hoverclock::paintEvent(QPaintEvent * event)
 
     QPainterPath canvas;
 
+    int dateVerticalAlignment = settings["dateFont"].value<QFont>().pointSize() + PAINT_OFFSET;
+
     if (settings["showTime"].toInt() == 2)
     {
-        int textWidth = getTextWidth(time, settings["timeFont"].value<QFont>());
-
-        canvas.addText((rect().width() - textWidth) / 2,
+        canvas.addText((rect().width() - getTextWidth(time, settings["timeFont"].value<QFont>())) / 2,
                      settings["timeFont"].value<QFont>().pointSize() + PAINT_OFFSET,
                      settings["timeFont"].value<QFont>(),
                      time);
+
+
+        dateVerticalAlignment += settings["timeFont"].value<QFont>().pointSize() + PAINT_OFFSET * 2;
     }
 
     if (settings["showDate"].toInt() == 2)
     {
-        int textWidth = getTextWidth(date, settings["dateFont"].value<QFont>());
-
-        canvas.addText((rect().width() - textWidth) / 2,
-                     settings["timeFont"].value<QFont>().pointSize() +
-                     settings["dateFont"].value<QFont>().pointSize() + PAINT_OFFSET * 2,
+        canvas.addText((rect().width() - getTextWidth(date, settings["dateFont"].value<QFont>())) / 2,
+                     dateVerticalAlignment,
                      settings["dateFont"].value<QFont>(),
                      date);
     }
