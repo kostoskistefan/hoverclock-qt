@@ -12,19 +12,19 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    hover_clock.cpp \
+    hoverclock.cpp \
     main.cpp \
     run_guard.cpp \
     settings_dialog.cpp
 
 HEADERS += \
     clock_position.h \
-    hover_clock.h \
+    hoverclock.h \
     run_guard.h \
     settings_dialog.h
 
 FORMS += \
-    hover_clock.ui \
+    hoverclock.ui \
     settings_dialog.ui
 
 # Default rules for deployment.

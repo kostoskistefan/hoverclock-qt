@@ -1,5 +1,5 @@
-#include "hover_clock.h"
-#include "ui_hover_clock.h"
+#include "hoverclock.h"
+#include "ui_hoverclock.h"
 
 Hoverclock::Hoverclock(QWidget *parent) : QMainWindow(parent), ui(new Ui::Hoverclock)
 {
@@ -130,7 +130,6 @@ void Hoverclock::createSystemTray()
     QAction *optionsAction = new QAction("Options", this);
     connect(optionsAction, &QAction::triggered, this, &Hoverclock::showOptions);
 
-
     QMenu *trayMenu = new QMenu(this);
     trayMenu->addAction(hideAction);
     trayMenu->addAction(optionsAction);
@@ -153,12 +152,16 @@ void Hoverclock::createSystemTray()
 
 void Hoverclock::showOptions()
 {
-    SettingsDialog *settingsDialog = new SettingsDialog(nullptr, &settings);
-    settingsDialog->setModal(true);
+    if (!settingsDialog->isVisible())
+    {
+        settingsDialog = new SettingsDialog(nullptr, &settings);
 
-    connect(settingsDialog, &SettingsDialog::updateClock, this, &Hoverclock::updateClockPosition);
+        connect(settingsDialog, &SettingsDialog::updateClock, this, &Hoverclock::updateClockPosition);
 
-    settingsDialog->exec();
+        settingsDialog->exec();
+    }
+
+    else settingsDialog->showNormal();
 }
 
 void Hoverclock::toggleVisibility()

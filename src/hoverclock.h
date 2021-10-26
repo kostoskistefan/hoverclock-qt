@@ -1,5 +1,5 @@
-#ifndef HOVER_CLOCK_H
-#define HOVER_CLOCK_H
+#ifndef HOVERCLOCK_H
+#define HOVERCLOCK_H
 
 #include <QTime>
 #include <QMenu>
@@ -35,6 +35,7 @@ class Hoverclock : public QMainWindow
 
     private:
         Ui::Hoverclock *ui;
+        SettingsDialog *settingsDialog;
         QHash<QString, QVariant> settings;
 
         void showOptions();
@@ -49,4 +50,4 @@ class Hoverclock : public QMainWindow
         void toggleVisibility();
 };
 
-#endif // HOVER_CLOCK_H
+#endif // HOVERCLOCK_H
