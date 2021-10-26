@@ -127,7 +127,7 @@ void SettingsDialog::changeColorSetting(QPushButton *colorPicker, QString colorS
 void SettingsDialog::changeFontSetting(QPushButton *fontPicker, QString fontSettingName)
 {
     bool fontFound;
-    QFont font = QFontDialog::getFont(&fontFound);
+    QFont font = QFontDialog::getFont(&fontFound, (*settings)[fontSettingName].value<QFont>());
 
     if (fontFound)
     {
