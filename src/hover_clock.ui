@@ -19,10 +19,6 @@
   <property name="windowTitle">
    <string>Hoverclock</string>
   </property>
-  <property name="windowIcon">
-   <iconset resource="resources.qrc">
-    <normaloff>:/icons/resources/icon_light.png</normaloff>:/icons/resources/icon_light.png</iconset>
-  </property>
   <property name="styleSheet">
    <string notr="true">border-radius: 5px;</string>
   </property>
@@ -52,8 +48,6 @@
    </layout>
   </widget>
  </widget>
- <resources>
-  <include location="resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
