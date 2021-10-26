@@ -93,7 +93,7 @@ void SettingsDialog::connectSignals()
     });
 
     connect(ui->fillColorPicker, &QPushButton::clicked, this, [=](){
-        changeColorSetting(ui->strokeColorPicker, "fillColor");
+        changeColorSetting(ui->fillColorPicker, "fillColor");
     });
 
     connect(ui->strokeColorPicker, &QPushButton::clicked, this, [=](){
@@ -119,7 +119,7 @@ void SettingsDialog::connectSignals()
 
 void SettingsDialog::changeColorSetting(QPushButton *colorPicker, QString colorSettingName)
 {
-    QColor color = QColorDialog::getColor();
+    QColor color = QColorDialog::getColor((*settings)[colorSettingName].value<QColor>());
     updateSetting(colorSettingName, color);
     setColorPickerPalette(colorPicker, color);
 }

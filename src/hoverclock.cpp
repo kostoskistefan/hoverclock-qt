@@ -152,7 +152,7 @@ void Hoverclock::createSystemTray()
 
 void Hoverclock::showOptions()
 {
-    if (!settingsDialog->isVisible())
+    if (settingsDialog == nullptr || !settingsDialog->isVisible())
     {
         settingsDialog = new SettingsDialog(nullptr, &settings);
 
