@@ -120,8 +120,12 @@ void SettingsDialog::connectSignals()
 void SettingsDialog::changeColorSetting(QPushButton *colorPicker, QString colorSettingName)
 {
     QColor color = QColorDialog::getColor((*settings)[colorSettingName].value<QColor>());
-    updateSetting(colorSettingName, color);
-    setColorPickerPalette(colorPicker, color);
+
+    if(color.isValid())
+    {
+        updateSetting(colorSettingName, color);
+        setColorPickerPalette(colorPicker, color);
+    }
 }
 
 void SettingsDialog::changeFontSetting(QPushButton *fontPicker, QString fontSettingName)
