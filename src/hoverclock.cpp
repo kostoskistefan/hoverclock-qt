@@ -1,6 +1,5 @@
 #include "hoverclock.h"
 #include "ui_hoverclock.h"
-#include <QDebug>
 
 Hoverclock::Hoverclock(QWidget *parent) : QMainWindow(parent), ui(new Ui::Hoverclock)
 {
@@ -23,11 +22,9 @@ Hoverclock::Hoverclock(QWidget *parent) : QMainWindow(parent), ui(new Ui::Hoverc
     x11Event = new X11Event();
     qApp->installNativeEventFilter(x11Event);
 
-    connect(x11Event, &X11Event::windowFocusChanged, this, [=]() {
-        checkBlacklistApplication(getFocusedApplicationName());
-    });
+    connect(x11Event, SIGNAL(windowFocusChanged(QString)), this, SLOT(checkBlacklistApplication(QString)));
 
-    applicationBlacklist->append("chrome");
+//    applicationBlacklist->append("chrome");
 }
 
 Hoverclock::~Hoverclock()
@@ -46,28 +43,6 @@ void Hoverclock::makeWindowTransparent()
     setWindowFlags(Qt::FramelessWindowHint |
                    Qt::WindowStaysOnTopHint |
                    Qt::X11BypassWindowManagerHint);
-}
-
-void Hoverclock::windowFocusChanged()
-{
-    checkBlacklistApplication(getFocusedApplicationName());
-}
-
-QString Hoverclock::getFocusedApplicationName()
-{
-    Display *display = XOpenDisplay(NULL);
-    Window window;
-
-    int revert;
-
-    XGetInputFocus(display, &window, &revert);
-
-    XClassHint classHint;
-    XGetClassHint(display, window, &classHint);
-
-    QString windowName = reinterpret_cast<char *>(classHint.res_name);
-
-    return windowName;
 }
 
 void Hoverclock::checkBlacklistApplication(QString windowName)

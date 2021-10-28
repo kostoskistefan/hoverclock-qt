@@ -1,20 +1,6 @@
 #ifndef HOVERCLOCK_H
 #define HOVERCLOCK_H
 
-#include <X11/Xutil.h>
-
-#undef Bool
-#undef CursorShape
-#undef Expose
-#undef KeyPress
-#undef KeyRelease
-#undef FocusIn
-#undef FocusOut
-#undef FontChange
-#undef None
-#undef Status
-#undef Unsorted
-
 #include <QTime>
 #include <QMenu>
 #include <QTimer>
@@ -23,16 +9,12 @@
 #include <QPalette>
 #include <QProcess>
 #include <QSettings>
+#include <x11event.h>
 #include <QMainWindow>
 #include <QPainterPath>
 #include <QSystemTrayIcon>
-#include <QAbstractNativeEventFilter>
-
-#include "clock_position.h"
-#include "settings_dialog.h"
-
-#include <x11event.h>
-#include <QDebug>
+#include <clock_position.h>
+#include <settings_dialog.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Hoverclock; }
@@ -56,8 +38,6 @@ class Hoverclock : public QMainWindow
         Ui::Hoverclock *ui;
 
         X11Event *x11Event;
-        QProcess *process;
-        bool started = false;
         QProcess *windowIdentifier;
         QString focusedApplicationTitle;
         QStringList *applicationBlacklist;
@@ -70,16 +50,12 @@ class Hoverclock : public QMainWindow
         void createSystemTray();
         void initializeSettings();
         void makeWindowTransparent();
-        QString getFocusedApplicationName();
         float getTextWidth(QString text, QFont font);
-        void checkBlacklistApplication(QString windowName);
 
 
     private slots:
         void toggleVisibility();
-
-    public slots:
-        void windowFocusChanged();
+        void checkBlacklistApplication(QString windowName);
 };
 
 #endif // HOVERCLOCK_H

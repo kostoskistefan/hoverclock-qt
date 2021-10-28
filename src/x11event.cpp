@@ -28,9 +28,26 @@ bool X11Event::nativeEventFilter(const QByteArray &eventType, void *message, lon
         {
             xcb_property_notify_event_t *notifyEvent = (xcb_property_notify_event_t*)event;
             if(notifyEvent->atom == focusChangeAtom)
-                emit windowFocusChanged();
+                emit windowFocusChanged(getFocusedApplicationName());
         }
     }
 
     return false;
+}
+
+QString X11Event::getFocusedApplicationName()
+{
+    Display *display = XOpenDisplay(NULL);
+    Window window;
+
+    int revert;
+
+    XGetInputFocus(display, &window, &revert);
+
+    XClassHint classHint;
+    XGetClassHint(display, window, &classHint);
+
+    QString windowName = reinterpret_cast<char *>(classHint.res_name);
+
+    return windowName;
 }
