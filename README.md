@@ -16,6 +16,8 @@ Hoverclock is a simple, yet customizable floating clock for Linux created with Q
 * [Technologies](#technologies)
 * [Quick note](#quick-note)
 * [Usage](#usage)
+  * [Arch based distro users](#arch-based-distro-users)
+  * [Other distros](#other-distros)
 * [Optional dependencies](#optional-dependencies)
 * [Configuration](#configuration)
 * [Building and deploying](#building-and-deploying)
@@ -39,6 +41,10 @@ The main incentive for this project is having desktop panels that automatically 
 This project has only been tested on Arch Linux with KDE Plasma.
 
 ## Usage
+### Arch based distro users
+You can download and install the app from the [AUR package](https://aur.archlinux.org/packages/hoverclock-appimage/).
+
+### Other distros
 Head on over to the [releases section](https://github.com/kostoskistefan/hoverclock/releases) of this repository and download the latest AppImage file. 
 
 Make the file executable by running `chmod u+x Hoverclock-x86_64.AppImage`.
@@ -55,8 +61,8 @@ As stated previously, Hoverclock is designed to be customizable.
 
 Once the software is running, right clicking on the system tray icon brings up a menu from which you can access the application settings.
 
-![Appearance settings screenshot](images/settings_appearance.jpg)
-![Text settings screenshot](images/settings_text.jpg)
+![Appearance settings screenshot](images/settings_appearance.png)
+![Text settings screenshot](images/settings_text.png)
 
 Left clicking the system tray icon will toggle the visibility of the clock.
 

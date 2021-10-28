@@ -1,7 +1,7 @@
-#include "hover_clock.h"
+#include "hoverclock.h"
 
 #include <QApplication>
-#include "run_guard.h"
+#include <run_guard.h>
 
 int main(int argc, char *argv[])
 {
@@ -11,6 +11,8 @@ int main(int argc, char *argv[])
         return 0;
 
     QApplication a(argc, argv);
+
+    a.setWindowIcon(QIcon(":/resources/icons/icon.png"));
 
     a.setApplicationDisplayName("Hoverclock");
     a.setOrganizationDomain("https://github.com/kostoskistefan/hoverclock");

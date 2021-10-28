@@ -1,11 +1,13 @@
-#include "hover_clock.h"
-#include "ui_hover_clock.h"
+#include "hoverclock.h"
+#include "ui_hoverclock.h"
+#include <QDebug>
 
 Hoverclock::Hoverclock(QWidget *parent) : QMainWindow(parent), ui(new Ui::Hoverclock)
 {
     ui->setupUi(this);
 
     applicationBlacklist = new QStringList();
+    setWindowIcon(QIcon(":/resources/icons/hoverclock.png"));
 
     initializeSettings();
 
@@ -13,18 +15,19 @@ Hoverclock::Hoverclock(QWidget *parent) : QMainWindow(parent), ui(new Ui::Hoverc
 
     resizeWindow();
 
-    updateClockPosition();
+    updateClock();
     createSystemTray();
 
     startTimer(1000);
 
-    process = new QProcess(this);
+    x11Event = new X11Event();
+    qApp->installNativeEventFilter(x11Event);
 
-    connect(process, &QProcess::readyReadStandardOutput, this, [=](){
+    connect(x11Event, &X11Event::windowFocusChanged, this, [=]() {
         checkBlacklistApplication(getFocusedApplicationName());
     });
 
-    process->start("/usr/bin/xprop", QStringList() << "-spy" << "-root" << "_NET_ACTIVE_WINDOW");
+    applicationBlacklist->append("chrome");
 }
 
 Hoverclock::~Hoverclock()
@@ -45,17 +48,22 @@ void Hoverclock::makeWindowTransparent()
                    Qt::X11BypassWindowManagerHint);
 }
 
+void Hoverclock::windowFocusChanged()
+{
+    checkBlacklistApplication(getFocusedApplicationName());
+}
+
 QString Hoverclock::getFocusedApplicationName()
 {
-    Display *display;
-    Window focus;
+    Display *display = XOpenDisplay(NULL);
+    Window window;
+
     int revert;
 
-    display = XOpenDisplay(NULL);
-    XGetInputFocus(display, &focus, &revert);
+    XGetInputFocus(display, &window, &revert);
 
     XClassHint classHint;
-    XGetClassHint(display, focus, &classHint);
+    XGetClassHint(display, window, &classHint);
 
     QString windowName = reinterpret_cast<char *>(classHint.res_name);
 
@@ -81,9 +89,24 @@ void Hoverclock::resizeWindow()
     int dateWidth = getTextWidth(QDate::currentDate().toString(settings["dateFormat"].toString()),
                                  settings["dateFont"].value<QFont>());
 
-    resize(qMax(timeWidth, dateWidth) + PAINT_OFFSET * 2,
-           settings["timeFont"].value<QFont>().pointSize() +
-           settings["dateFont"].value<QFont>().pointSize() + PAINT_OFFSET * 3);
+    int windowWidth = 0;
+    int windowHeight = 0;
+
+    if (settings["showTime"].toInt() == 2)
+    {
+        windowWidth += timeWidth + PAINT_OFFSET * 2;
+        windowHeight += settings["timeFont"].value<QFont>().pointSize() + PAINT_OFFSET * 2;
+    }
+
+    if (settings["showDate"].toInt() == 2)
+    {
+        if(windowWidth == 0 || dateWidth > timeWidth)
+            windowWidth = dateWidth + PAINT_OFFSET * 2;
+
+        windowHeight += settings["dateFont"].value<QFont>().pointSize() + PAINT_OFFSET * 2;
+    }
+
+    resize(windowWidth, windowHeight);
 }
 
 void Hoverclock::initializeSettings()
@@ -98,7 +121,7 @@ void Hoverclock::initializeSettings()
     configuration.setValue("position", configuration.value("position", ClockPosition::BOTTOM_RIGHT).toInt());
     configuration.setValue("fillColor", configuration.value("fillColor", QColor("white")).value<QColor>());
     configuration.setValue("timeFormat", configuration.value("timeFormat", "hh:mm").toString());
-    configuration.setValue("dateFormat", configuration.value("dateFormat", "dd.MM.yyyy").toString());
+    configuration.setValue("dateFormat", configuration.value("dateFormat", "dd MMM yyyy").toString());
     configuration.setValue("strokeColor", configuration.value("strokeColor", QColor("darkGray")).value<QColor>());
     configuration.setValue("strokeThickness", configuration.value("strokeThickness", 1.5).toFloat());
     configuration.setValue("verticalPadding", configuration.value("verticalPadding", 50).toInt());
@@ -110,7 +133,7 @@ void Hoverclock::initializeSettings()
         settings[key] = configuration.value(key);
 }
 
-void Hoverclock::updateClockPosition()
+void Hoverclock::updateClock()
 {
     resizeWindow();
 
@@ -153,10 +176,6 @@ void Hoverclock::createSystemTray()
 
     QMenu *trayMenu = new QMenu(this);
 
-//    addActionToTrayMenu(trayMenu, "Toggle visibility", QFunctionPointer(&Hoverclock::toggleVisibility));
-//    addActionToTrayMenu(trayMenu, "Options", &Hoverclock::showOptions);
-//    addActionToTrayMenu(trayMenu, "Quit", &QCoreApplication::quit);
-
     trayMenu->addAction(hideAction);
     trayMenu->addAction(optionsAction);
     trayMenu->addSeparator();
@@ -165,8 +184,7 @@ void Hoverclock::createSystemTray()
     QSystemTrayIcon *tray = new QSystemTrayIcon(this);
     tray->setContextMenu(trayMenu);
 
-    QPixmap iconPixmap(":/icons/resources/icon.svg");
-    QIcon icon(iconPixmap);
+    QIcon icon(":/resources/icons/hoverclock.png");
     icon.setIsMask(true);
 
     tray->setIcon(icon);
@@ -179,12 +197,16 @@ void Hoverclock::createSystemTray()
 
 void Hoverclock::showOptions()
 {
-    SettingsDialog *settingsDialog = new SettingsDialog(nullptr, &settings);
-    settingsDialog->setModal(true);
+    if (settingsDialog == nullptr || !settingsDialog->isVisible())
+    {
+        settingsDialog = new SettingsDialog(nullptr, &settings);
 
-    connect(settingsDialog, &SettingsDialog::updateClock, this, &Hoverclock::updateClockPosition);
+        connect(settingsDialog, &SettingsDialog::updateClock, this, &Hoverclock::updateClock);
 
-    settingsDialog->exec();
+        settingsDialog->exec();
+    }
+
+    else settingsDialog->showNormal();
 }
 
 void Hoverclock::toggleVisibility()
@@ -214,23 +236,23 @@ void Hoverclock::paintEvent(QPaintEvent * event)
 
     QPainterPath canvas;
 
+    int dateVerticalAlignment = settings["dateFont"].value<QFont>().pointSize() + PAINT_OFFSET;
+
     if (settings["showTime"].toInt() == 2)
     {
-        int textWidth = getTextWidth(time, settings["timeFont"].value<QFont>());
-
-        canvas.addText((rect().width() - textWidth) / 2,
+        canvas.addText((rect().width() - getTextWidth(time, settings["timeFont"].value<QFont>())) / 2,
                      settings["timeFont"].value<QFont>().pointSize() + PAINT_OFFSET,
                      settings["timeFont"].value<QFont>(),
                      time);
+
+
+        dateVerticalAlignment += settings["timeFont"].value<QFont>().pointSize() + PAINT_OFFSET * 2;
     }
 
     if (settings["showDate"].toInt() == 2)
     {
-        int textWidth = getTextWidth(date, settings["dateFont"].value<QFont>());
-
-        canvas.addText((rect().width() - textWidth) / 2,
-                     settings["timeFont"].value<QFont>().pointSize() +
-                     settings["dateFont"].value<QFont>().pointSize() + PAINT_OFFSET * 2,
+        canvas.addText((rect().width() - getTextWidth(date, settings["dateFont"].value<QFont>())) / 2,
+                     dateVerticalAlignment,
                      settings["dateFont"].value<QFont>(),
                      date);
     }

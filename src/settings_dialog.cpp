@@ -7,6 +7,8 @@ SettingsDialog::SettingsDialog(QWidget *parent, QHash<QString, QVariant> *settin
 {
     ui->setupUi(this);
 
+    setWindowIcon(QIcon(":/resources/icons/hoverclock.png"));
+
     this->settings = settings;
 
     initializeSettingsDialog();
@@ -24,7 +26,7 @@ void SettingsDialog::initializeSettingsDialog()
     ui->saveButton->setIcon(QIcon(QApplication::style()->standardIcon(QStyle::SP_DialogApplyButton)));
     ui->cancelButton->setIcon(QIcon(QApplication::style()->standardIcon(QStyle::SP_DialogCancelButton)));
 
-    QPixmap image(":/icons/resources/icon.svg");
+    QPixmap image(":/resources/icons/hoverclock.png");
     ui->imageContainer->setPixmap(image.scaled(rect().width(), rect().height() / 3,
                                                Qt::AspectRatioMode::KeepAspectRatio,
                                                Qt::TransformationMode::SmoothTransformation));
@@ -91,7 +93,7 @@ void SettingsDialog::connectSignals()
     });
 
     connect(ui->fillColorPicker, &QPushButton::clicked, this, [=](){
-        changeColorSetting(ui->strokeColorPicker, "fillColor");
+        changeColorSetting(ui->fillColorPicker, "fillColor");
     });
 
     connect(ui->strokeColorPicker, &QPushButton::clicked, this, [=](){
@@ -117,15 +119,19 @@ void SettingsDialog::connectSignals()
 
 void SettingsDialog::changeColorSetting(QPushButton *colorPicker, QString colorSettingName)
 {
-    QColor color = QColorDialog::getColor();
-    updateSetting(colorSettingName, color);
-    setColorPickerPalette(colorPicker, color);
+    QColor color = QColorDialog::getColor((*settings)[colorSettingName].value<QColor>());
+
+    if(color.isValid())
+    {
+        updateSetting(colorSettingName, color);
+        setColorPickerPalette(colorPicker, color);
+    }
 }
 
 void SettingsDialog::changeFontSetting(QPushButton *fontPicker, QString fontSettingName)
 {
     bool fontFound;
-    QFont font = QFontDialog::getFont(&fontFound);
+    QFont font = QFontDialog::getFont(&fontFound, (*settings)[fontSettingName].value<QFont>());
 
     if (fontFound)
     {
