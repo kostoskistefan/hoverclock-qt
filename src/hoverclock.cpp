@@ -5,26 +5,27 @@ Hoverclock::Hoverclock(QWidget *parent) : QMainWindow(parent), ui(new Ui::Hoverc
 {
     ui->setupUi(this);
 
-    applicationBlacklist = new QStringList();
     setWindowIcon(QIcon(":/resources/icons/hoverclock.png"));
 
     initializeSettings();
 
+    applicationBlacklist = new QStringList();
+
+    if(settings["enableBlacklist"].toInt() == 2)
+    {
+        x11Event = new X11Event();
+        qApp->installNativeEventFilter(x11Event);
+
+        connect(x11Event, SIGNAL(windowFocusChanged(QString)), this, SLOT(checkBlacklistApplication(QString)));
+    }
+
     makeWindowTransparent();
 
-    resizeWindow();
-
+    updateBlacklist();
     updateClock();
     createSystemTray();
 
     startTimer(1000);
-
-    x11Event = new X11Event();
-    qApp->installNativeEventFilter(x11Event);
-
-    connect(x11Event, SIGNAL(windowFocusChanged(QString)), this, SLOT(checkBlacklistApplication(QString)));
-
-    applicationBlacklist->append("chrome");
 }
 
 Hoverclock::~Hoverclock()
@@ -47,13 +48,16 @@ void Hoverclock::makeWindowTransparent()
 
 void Hoverclock::checkBlacklistApplication(QString windowName)
 {
-    bool applicationInBlacklist = false;
+    if(settings["enableBlacklist"].toInt() == 2)
+    {
+        bool applicationInBlacklist = false;
 
-    for (QString& application : (*applicationBlacklist))
-        if(windowName.contains(application, Qt::CaseInsensitive))
-            applicationInBlacklist = true;
+        for (QString& application : (*applicationBlacklist))
+            if(windowName.contains(application, Qt::CaseInsensitive))
+                applicationInBlacklist = true;
 
-    setVisible(!applicationInBlacklist);
+        setVisible(!applicationInBlacklist);
+    }
 }
 
 void Hoverclock::resizeWindow()
@@ -100,12 +104,29 @@ void Hoverclock::initializeSettings()
     configuration.setValue("strokeColor", configuration.value("strokeColor", QColor("darkGray")).value<QColor>());
     configuration.setValue("strokeThickness", configuration.value("strokeThickness", 1.5).toFloat());
     configuration.setValue("verticalPadding", configuration.value("verticalPadding", 50).toInt());
+    configuration.setValue("enableBlacklist", configuration.value("enableBlacklist", 0).toInt());
     configuration.setValue("horizontalPadding", configuration.value("horizontalPadding", 50).toInt());
+    configuration.setValue("applicationBlacklist", configuration.value("applicationBlacklist", "").toString());
 
     QStringList keys = configuration.allKeys();
 
     for (QString& key : keys)
         settings[key] = configuration.value(key);
+}
+
+void Hoverclock::updateBlacklist()
+{
+    applicationBlacklist->clear();
+
+    QString applications = settings["applicationBlacklist"].toString();
+
+    if(!applications.isEmpty())
+    {
+        QStringList applicationList = applications.split(",");
+
+        for (QString& application: applicationList)
+            applicationBlacklist->append(application.trimmed());
+    }
 }
 
 void Hoverclock::updateClock()
@@ -177,6 +198,7 @@ void Hoverclock::showOptions()
         settingsDialog = new SettingsDialog(nullptr, &settings);
 
         connect(settingsDialog, &SettingsDialog::updateClock, this, &Hoverclock::updateClock);
+        connect(settingsDialog, &SettingsDialog::updateBlacklist, this, &Hoverclock::updateBlacklist);
 
         settingsDialog->exec();
     }

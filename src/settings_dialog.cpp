@@ -38,6 +38,7 @@ void SettingsDialog::initializeSettingsDialog()
 
     ui->showTimeCheckBox->setCheckState(static_cast<Qt::CheckState>((*settings)["showTime"].toInt()));
     ui->showDateCheckBox->setCheckState(static_cast<Qt::CheckState>((*settings)["showDate"].toInt()));
+    ui->enableBlacklistCheckBox->setCheckState(static_cast<Qt::CheckState>((*settings)["enableBlacklist"].toInt()));
 
     ui->positionComboBox->addItem("Top Left");
     ui->positionComboBox->addItem("Top Right");
@@ -49,6 +50,7 @@ void SettingsDialog::initializeSettingsDialog()
     ui->dateFormatLineEdit->setText((*settings)["dateFormat"].toString());
     ui->positionComboBox->setCurrentIndex((*settings)["position"].toInt());
     ui->verticalPaddingSpinBox->setValue((*settings)["verticalPadding"].toInt());
+    ui->blacklistTextEdit->setText((*settings)["applicationBlacklist"].toString());
     ui->strokeThicknessSpinBox->setValue((*settings)["strokeThickness"].toFloat());
     ui->horizontalPaddingSpinBox->setValue((*settings)["horizontalPadding"].toInt());
 
@@ -115,6 +117,25 @@ void SettingsDialog::connectSignals()
     connect(ui->showDateCheckBox, &QCheckBox::clicked, this, [=](){
         updateSetting("showDate", ui->showDateCheckBox->checkState());
     });
+
+    connect(ui->enableBlacklistCheckBox, &QCheckBox::clicked, this, [=](){
+        updateSetting("enableBlacklist", ui->enableBlacklistCheckBox->checkState());
+    });
+
+    ui->blacklistTextEdit->installEventFilter(this);
+}
+
+bool SettingsDialog::eventFilter(QObject *watched, QEvent *event)
+{
+    Q_UNUSED(watched);
+
+    if(event->type() == QEvent::FocusOut)
+    {
+        (*settings)["applicationBlacklist"] = ui->blacklistTextEdit->toPlainText();
+        emit updateBlacklist();
+    }
+
+    return false;
 }
 
 void SettingsDialog::changeColorSetting(QPushButton *colorPicker, QString colorSettingName)

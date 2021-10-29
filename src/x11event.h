@@ -14,6 +14,7 @@ class X11Event : public QObject, public QAbstractNativeEventFilter
         ~X11Event();
 
         virtual bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
+        QString getFocusedApplicationName();
 
     signals:
         void windowFocusChanged(QString windowName);
@@ -21,8 +22,6 @@ class X11Event : public QObject, public QAbstractNativeEventFilter
     private:
         xcb_atom_t focusChangeAtom;
         xcb_connection_t* connection;
-
-        QString getFocusedApplicationName();
 };
 
 #endif // X11EVENT_H

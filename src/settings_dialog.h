@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QScreen>
 #include <QSettings>
+#include <QMessageBox>
 #include <QFontDialog>
 #include <QColorDialog>
 #include "clock_position.h"
@@ -22,6 +23,7 @@ public:
 
 signals:
     void updateClock();
+    void updateBlacklist();
 
 private:
     Ui::SettingsDialog *ui;
@@ -36,6 +38,8 @@ private:
     void setColorPickerPalette(QPushButton *colorPicker, QColor color);
     void changeFontSetting(QPushButton *fontPicker, QString fontSettingName);
     void changeColorSetting(QPushButton *colorPicker, QString colorSettingName);
+
+    virtual bool eventFilter(QObject *watched, QEvent *event) override;
 
 private slots:
     void save();

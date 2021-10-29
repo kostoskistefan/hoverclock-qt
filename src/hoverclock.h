@@ -36,7 +36,6 @@ class Hoverclock : public QMainWindow
 
     private:
         Ui::Hoverclock *ui;
-
         X11Event *x11Event;
         QProcess *windowIdentifier;
         QString focusedApplicationTitle;
@@ -47,6 +46,7 @@ class Hoverclock : public QMainWindow
         void updateClock();
         void showOptions();
         void resizeWindow();
+        void updateBlacklist();
         void createSystemTray();
         void initializeSettings();
         void makeWindowTransparent();
