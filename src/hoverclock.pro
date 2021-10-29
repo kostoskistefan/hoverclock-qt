@@ -1,4 +1,4 @@
-VERSION=0.0.3
+VERSION=0.0.4
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 QT       += core gui
