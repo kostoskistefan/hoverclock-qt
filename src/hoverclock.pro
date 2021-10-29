@@ -1,4 +1,4 @@
-VERSION=0.0.3
+VERSION=0.0.4
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 QT       += core gui
@@ -6,6 +6,8 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
+
+LIBS += -lxcb
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -15,13 +17,15 @@ SOURCES += \
     hoverclock.cpp \
     main.cpp \
     run_guard.cpp \
-    settings_dialog.cpp
+    settings_dialog.cpp \
+    x11event.cpp
 
 HEADERS += \
     clock_position.h \
     hoverclock.h \
     run_guard.h \
-    settings_dialog.h
+    settings_dialog.h \
+    x11event.h
 
 FORMS += \
     hoverclock.ui \

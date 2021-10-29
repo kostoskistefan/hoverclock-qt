@@ -1,7 +1,7 @@
 #include "hoverclock.h"
 
 #include <QApplication>
-#include "run_guard.h"
+#include <run_guard.h>
 
 int main(int argc, char *argv[])
 {

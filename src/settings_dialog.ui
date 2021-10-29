@@ -49,10 +49,30 @@
        <property name="horizontalSpacing">
         <number>15</number>
        </property>
-       <item row="3" column="0">
-        <widget class="QLabel" name="positionLabel">
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="timeFormatLineEdit"/>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="dateFormatLineEdit"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="timeFormatLabel">
          <property name="text">
-          <string>Position:</string>
+          <string>Time format:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="horizontalPaddingLabel">
+         <property name="text">
+          <string>Horizontal padding:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="verticalPaddingLabel">
+         <property name="text">
+          <string>Vertical padding:</string>
          </property>
         </widget>
        </item>
@@ -66,7 +86,17 @@
          </property>
         </widget>
        </item>
-       <item row="10" column="0" colspan="2">
+       <item row="3" column="0">
+        <widget class="QLabel" name="positionLabel">
+         <property name="text">
+          <string>Position:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QSpinBox" name="verticalPaddingSpinBox"/>
+       </item>
+       <item row="9" column="0" colspan="2">
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -79,12 +109,6 @@
          </property>
         </spacer>
        </item>
-       <item row="5" column="1">
-        <widget class="QLineEdit" name="dateFormatLineEdit"/>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLineEdit" name="timeFormatLineEdit"/>
-       </item>
        <item row="5" column="0">
         <widget class="QLabel" name="dateFormatLabel">
          <property name="text">
@@ -92,42 +116,8 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="verticalPaddingLabel">
-         <property name="text">
-          <string>Vertical padding:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <widget class="QCheckBox" name="showDateCheckBox">
-         <property name="text">
-          <string>Show date</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="timeFormatLabel">
-         <property name="text">
-          <string>Time format:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QSpinBox" name="verticalPaddingSpinBox"/>
-       </item>
        <item row="3" column="1">
         <widget class="QComboBox" name="positionComboBox"/>
-       </item>
-       <item row="7" column="1">
-        <widget class="QSpinBox" name="horizontalPaddingSpinBox"/>
-       </item>
-       <item row="9" column="0">
-        <widget class="QCheckBox" name="showTimeCheckBox">
-         <property name="text">
-          <string>Show time</string>
-         </property>
-        </widget>
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="opacityLabel">
@@ -136,12 +126,8 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="horizontalPaddingLabel">
-         <property name="text">
-          <string>Horizontal padding:</string>
-         </property>
-        </widget>
+       <item row="7" column="1">
+        <widget class="QSpinBox" name="horizontalPaddingSpinBox"/>
        </item>
       </layout>
      </widget>
@@ -254,6 +240,87 @@
          </property>
          <property name="flat">
           <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="visibilityTab">
+      <attribute name="title">
+       <string>Visibility</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="0">
+        <widget class="QCheckBox" name="showTimeCheckBox">
+         <property name="text">
+          <string>Show time</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="styleSheet">
+          <string notr="true">QGroupBox{border:1px solid gray;border-radius:5px;margin-top: 1ex;} QGroupBox::title{subcontrol-origin: margin;subcontrol-position:top center;padding:0 3px;}</string>
+         </property>
+         <property name="title">
+          <string>Application Blacklist</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <property name="topMargin">
+           <number>15</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>10</number>
+          </property>
+          <item row="2" column="1">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>List of comma separated applications:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QTextEdit" name="blacklistTextEdit"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_2">
+            <property name="font">
+             <font>
+              <italic>true</italic>
+              <underline>false</underline>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string>Note: Try to use generic app names. For example: instead of writing Google Chrome, write Chrome.</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+            <property name="indent">
+             <number>-1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QCheckBox" name="enableBlacklistCheckBox">
+            <property name="text">
+             <string>Enable blacklist (Requires restart)</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="showDateCheckBox">
+         <property name="text">
+          <string>Show date</string>
          </property>
         </widget>
        </item>
