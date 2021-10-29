@@ -52,7 +52,6 @@ class Hoverclock : public QMainWindow
         void makeWindowTransparent();
         float getTextWidth(QString text, QFont font);
 
-
     private slots:
         void toggleVisibility();
         void checkBlacklistApplication(QString windowName);
