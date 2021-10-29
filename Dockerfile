@@ -7,7 +7,7 @@ RUN apt-get update && \
     apt-get install -y software-properties-common && \
     add-apt-repository ppa:beineri/opt-qt-5.12.2-xenial && \
     apt-get update && \
-    apt-get -y install wget qt512-meta-minimal make g++ fuse libgl1-mesa-dev
+    apt-get -y install wget qt512-meta-minimal make g++ fuse libgl1-mesa-dev xcb
 
 ENV PATH="/opt/qt512:/opt/qt512/bin:${PATH}"
 
