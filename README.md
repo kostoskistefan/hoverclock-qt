@@ -19,6 +19,8 @@ Hoverclock is a simple, yet customizable floating clock for Linux created with Q
   * [Arch based distro users](#arch-based-distro-users)
   * [Other distros](#other-distros)
 * [Optional dependencies](#optional-dependencies)
+  * [AppImageLauncher](#appimagelauncher)
+  * [X Server](#x-server)
 * [Configuration](#configuration)
 * [Building and deploying](#building-and-deploying)
   * [Build dependencies](#build-dependencies)
@@ -52,9 +54,15 @@ Make the file executable by running `chmod u+x Hoverclock-x86_64.AppImage`.
 Double-click to run it or run it from a terminal using `/path/to/the/downloaded/file/Hoverclock-x86_64.AppImage`.
 
 ## Optional dependencies
+### AppImageLauncher
 If you are using an Arch based Linux distribution and you want to integrate this application in your system, a simple solution is to install [AppImageLauncher](https://aur.archlinux.org/packages/appimagelauncher/) from the AUR. 
 
 After installing it, double clicking the AppImage file will open up the AppImageLauncher and will offer an option to `Integrate and run`.
+
+### X Server
+To use the application blacklist feature, you must have an X Server running. If you are using Wayland, make sure you have XWayland installed.
+
+To support different systems, the blacklist feature is disabled by default and you need to enable it in the Visibility tab of the settings dialog to use it.
 
 ## Configuration
 As stated previously, Hoverclock is designed to be customizable. 
@@ -63,6 +71,7 @@ Once the software is running, right clicking on the system tray icon brings up a
 
 ![Appearance settings screenshot](images/settings_appearance.png)
 ![Text settings screenshot](images/settings_text.png)
+![Visibility settings screenshot](images/settings_visibility.png)
 
 Left clicking the system tray icon will toggle the visibility of the clock.
 
@@ -72,10 +81,8 @@ To make the build and deploy process as simple as possible, I have created a sim
 To build and run the docker container, use the following commands:
 ```
 $ docker build --network=host -t hoverclock /path/to/project/directory
-$ docker run --cap-add SYS_ADMIN --device /dev/fuse --rm -it -v /path/to/project/directory:/app hoverclock
+$ docker run --cap-add SYS_ADMIN --device /dev/fuse --rm -v /path/to/project/directory:/app hoverclock make
 ```
-
-After you are inside the container, run  `make` and the build process will begin. 
 
 When it finished building, you should have an AppImage in the project directory.
 
@@ -91,7 +98,7 @@ After doing so, you can proceed to run the docker container with the above menti
 ## Future work
 - [ ] Add terminal support to open and configure settings
 - [ ] Add support for multi-monitor setups
-- [ ] Add a feature that allows you to specify programs in which you want to hide the clock.
+- [x] Add a feature that allows you to specify programs in which you want to hide the clock.
 - [ ] Add Light and Dark mode icon support
 
 ## Getting help
