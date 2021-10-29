@@ -1,18 +1,28 @@
 #include "x11event.h"
-#include <QDebug>
 
 X11Event::X11Event()
 {
     const char* atom = "_NET_ACTIVE_WINDOW";
 
-    xcb_connection_t* conn = xcb_connect(NULL, NULL);
+    // Connect to the X Server
+    connection = xcb_connect(NULL, NULL);
 
-    xcb_intern_atom_reply_t *activeWindow = xcb_intern_atom_reply(conn, xcb_intern_atom(conn, 0, strlen(atom), atom), NULL);
+    if (!connection || xcb_connection_has_error(connection))
+    {
+        qFatal("Cannot open display");
+        exit(2);
+    }
+
+    // Get the active window atom from the X server
+    xcb_intern_atom_reply_t *activeWindow = xcb_intern_atom_reply(connection,
+                xcb_intern_atom(connection, 0, strlen(atom), atom), NULL);
 
     if(activeWindow)
         focusChangeAtom = activeWindow->atom;
 
+    // Free resources
     free(activeWindow);
+    xcb_flush(connection);
 }
 
 X11Event::~X11Event() {}
@@ -24,10 +34,16 @@ bool X11Event::nativeEventFilter(const QByteArray &eventType, void *message, lon
     if (eventType == "xcb_generic_event_t")
     {
         xcb_generic_event_t* event = static_cast<xcb_generic_event_t *>(message);
+
+        // Every event contains an 8-bit type code.
+        // The most significant bit in this code is set if the event was generated from a SendEvent request.
+        // That's why we need to AND it with either ~0x80 or 0x7F
+
         if ((event->response_type & ~0x80) == XCB_PROPERTY_NOTIFY)
         {
-            xcb_property_notify_event_t *notifyEvent = (xcb_property_notify_event_t*)event;
-            if(notifyEvent->atom == focusChangeAtom)
+            xcb_property_notify_event_t *propertyEvent = (xcb_property_notify_event_t*)event;
+
+            if(propertyEvent->atom == focusChangeAtom)
                 emit windowFocusChanged(getFocusedApplicationName());
         }
     }
@@ -37,17 +53,28 @@ bool X11Event::nativeEventFilter(const QByteArray &eventType, void *message, lon
 
 QString X11Event::getFocusedApplicationName()
 {
-    Display *display = XOpenDisplay(NULL);
-    Window window;
+    xcb_get_property_reply_t *wmClass = NULL;
+    xcb_get_input_focus_reply_t *inputFocus = NULL;
 
-    int revert;
+    inputFocus = xcb_get_input_focus_reply(connection, xcb_get_input_focus(connection), NULL);
 
-    XGetInputFocus(display, &window, &revert);
+    xcb_get_property_cookie_t classCookie =
+            xcb_get_property(connection,
+                             false,
+                             inputFocus->focus,
+                             XCB_ATOM_WM_CLASS,
+                             XCB_GET_PROPERTY_TYPE_ANY,
+                             0,
+                             32);
 
-    XClassHint classHint;
-    XGetClassHint(display, window, &classHint);
+    wmClass = xcb_get_property_reply(connection, classCookie, NULL);
 
-    QString windowName = reinterpret_cast<char *>(classHint.res_name);
+    QString windowName = reinterpret_cast<char *>(xcb_get_property_value(wmClass));
+
+    // Free resources
+    free(wmClass);
+    free(inputFocus);
+    xcb_flush(connection);
 
     return windowName;
 }

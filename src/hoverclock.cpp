@@ -24,7 +24,7 @@ Hoverclock::Hoverclock(QWidget *parent) : QMainWindow(parent), ui(new Ui::Hoverc
 
     connect(x11Event, SIGNAL(windowFocusChanged(QString)), this, SLOT(checkBlacklistApplication(QString)));
 
-//    applicationBlacklist->append("chrome");
+    applicationBlacklist->append("chrome");
 }
 
 Hoverclock::~Hoverclock()
