@@ -11,7 +11,7 @@ Hoverclock::Hoverclock(QWidget *parent) : QMainWindow(parent), ui(new Ui::Hoverc
 
     applicationBlacklist = new QStringList();
 
-    if(settings["enableBlacklist"].toInt() == 2)
+    if(settings["enableBlacklist"].toInt() == Qt::CheckState::Checked)
     {
         x11Event = new X11Event();
         qApp->installNativeEventFilter(x11Event);
@@ -48,7 +48,7 @@ void Hoverclock::makeWindowTransparent()
 
 void Hoverclock::checkBlacklistApplication(QString windowName)
 {
-    if(settings["enableBlacklist"].toInt() == 2)
+    if(settings["enableBlacklist"].toInt() == Qt::CheckState::Checked)
     {
         bool applicationInBlacklist = false;
 
@@ -71,13 +71,13 @@ void Hoverclock::resizeWindow()
     int windowWidth = 0;
     int windowHeight = 0;
 
-    if (settings["showTime"].toInt() == 2)
+    if (settings["showTime"].toInt() == Qt::CheckState::Checked)
     {
         windowWidth += timeWidth + PAINT_OFFSET * 2;
         windowHeight += settings["timeFont"].value<QFont>().pointSize() + PAINT_OFFSET * 2;
     }
 
-    if (settings["showDate"].toInt() == 2)
+    if (settings["showDate"].toInt() == Qt::CheckState::Checked)
     {
         if(windowWidth == 0 || dateWidth > timeWidth)
             windowWidth = dateWidth + PAINT_OFFSET * 2;
@@ -235,7 +235,7 @@ void Hoverclock::paintEvent(QPaintEvent * event)
 
     int dateVerticalAlignment = settings["dateFont"].value<QFont>().pointSize() + PAINT_OFFSET;
 
-    if (settings["showTime"].toInt() == 2)
+    if (settings["showTime"].toInt() == Qt::CheckState::Checked)
     {
         canvas.addText((rect().width() - getTextWidth(time, settings["timeFont"].value<QFont>())) / 2,
                      settings["timeFont"].value<QFont>().pointSize() + PAINT_OFFSET,
@@ -246,7 +246,7 @@ void Hoverclock::paintEvent(QPaintEvent * event)
         dateVerticalAlignment += settings["timeFont"].value<QFont>().pointSize() + PAINT_OFFSET * 2;
     }
 
-    if (settings["showDate"].toInt() == 2)
+    if (settings["showDate"].toInt() == Qt::CheckState::Checked)
     {
         canvas.addText((rect().width() - getTextWidth(date, settings["dateFont"].value<QFont>())) / 2,
                      dateVerticalAlignment,

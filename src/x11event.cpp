@@ -56,6 +56,8 @@ QString X11Event::getFocusedApplicationName()
     xcb_get_property_reply_t *wmClass = NULL;
     xcb_get_input_focus_reply_t *inputFocus = NULL;
 
+    xcb_grab_server(connection);
+
     inputFocus = xcb_get_input_focus_reply(connection, xcb_get_input_focus(connection), NULL);
 
     xcb_get_property_cookie_t classCookie =
@@ -72,9 +74,10 @@ QString X11Event::getFocusedApplicationName()
     QString windowName = reinterpret_cast<char *>(xcb_get_property_value(wmClass));
 
     // Free resources
+    xcb_ungrab_server(connection);
+    xcb_flush(connection);
     free(wmClass);
     free(inputFocus);
-    xcb_flush(connection);
 
     return windowName;
 }

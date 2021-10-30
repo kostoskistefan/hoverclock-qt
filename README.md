@@ -1,8 +1,13 @@
 <p align="center">
     <img src="images/logo.png"/>
-    <a href="https://github.com/kostoskistefan/hoverclock/releases">
-        <img src="https://img.shields.io/github/release/kostoskistefan/hoverclock?style=for-the-badge"/>
-    </a>
+    <p align="center" style="display:flex;justify-content:space-between;">
+		<a href="https://github.com/kostoskistefan/hoverclock/releases">
+            <img src="https://img.shields.io/github/release/kostoskistefan/hoverclock?style=for-the-badge"/>
+        </a>
+        <a href="https://aur.archlinux.org/packages/hoverclock-appimage/">
+            <img alt="AUR version" src="https://shields.api-test.nl/aur/version/hoverclock-appimage?style=for-the-badge">
+        </a>
+	</p>
 </p>
 
 # Hoverclock 
