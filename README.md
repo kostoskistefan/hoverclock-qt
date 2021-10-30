@@ -26,10 +26,12 @@ Hoverclock is a simple, yet customizable floating clock for Linux created with Q
 * [Optional dependencies](#optional-dependencies)
   * [AppImageLauncher](#appimagelauncher)
   * [X Server](#x-server)
+  * [Font](#font)
 * [Configuration](#configuration)
 * [Building and deploying](#building-and-deploying)
   * [Build dependencies](#build-dependencies)
 * [Known issues](#known-issues)
+* [Future work](#future-work)
 * [Getting help](#getting-help)
 * [Getting involved](#getting-involved)
   * [Using the issue tracker](#using-the-issue-tracker)
@@ -68,6 +70,13 @@ After installing it, double clicking the AppImage file will open up the AppImage
 To use the application blacklist feature, you must have an X Server running. If you are using Wayland, make sure you have XWayland installed.
 
 To support different systems, the blacklist feature is disabled by default and you need to enable it in the Visibility tab of the settings dialog to use it.
+
+### Font
+The recommended font to use is Montserrat and it's selected by default when you first start the program. 
+
+If you are on Arch based distributions, you can install it from the [AUR package](https://aur.archlinux.org/packages/montserrat-ttf/).
+
+Of course, if you wish to use a different font, you can. Change it in the settings dialog in the Appearance tab.
 
 ## Configuration
 As stated previously, Hoverclock is designed to be customizable. 
