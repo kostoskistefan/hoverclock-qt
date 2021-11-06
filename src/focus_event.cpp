@@ -1,6 +1,6 @@
-#include "x11event.h"
+#include "focus_event.h"
 
-X11Event::X11Event()
+FocusEvent::FocusEvent()
 {
     const char* atom = "_NET_ACTIVE_WINDOW";
 
@@ -21,13 +21,13 @@ X11Event::X11Event()
         focusChangeAtom = activeWindow->atom;
 
     // Free resources
-    free(activeWindow);
     xcb_flush(connection);
+    free(activeWindow);
 }
 
-X11Event::~X11Event() {}
+FocusEvent::~FocusEvent() {}
 
-bool X11Event::nativeEventFilter(const QByteArray &eventType, void *message, long *result)
+bool FocusEvent::nativeEventFilter(const QByteArray &eventType, void *message, long *result)
 {
     Q_UNUSED(result);
 
@@ -51,8 +51,10 @@ bool X11Event::nativeEventFilter(const QByteArray &eventType, void *message, lon
     return false;
 }
 
-QString X11Event::getFocusedApplicationName()
+QString FocusEvent::getFocusedApplicationName()
 {
+    QString windowName = "";
+
     xcb_get_property_reply_t *wmClass = NULL;
     xcb_get_input_focus_reply_t *inputFocus = NULL;
 
@@ -65,13 +67,19 @@ QString X11Event::getFocusedApplicationName()
                              false,
                              inputFocus->focus,
                              XCB_ATOM_WM_CLASS,
-                             XCB_GET_PROPERTY_TYPE_ANY,
+                             XCB_ATOM_STRING,
                              0,
-                             32);
+                             2048L);
 
-    wmClass = xcb_get_property_reply(connection, classCookie, NULL);
+    xcb_generic_error_t *err;
 
-    QString windowName = reinterpret_cast<char *>(xcb_get_property_value(wmClass));
+    wmClass = xcb_get_property_reply(connection, classCookie, &err);
+
+    if(wmClass && wmClass->type == XCB_ATOM_STRING && xcb_get_property_value_length(wmClass) > 0 && !err)
+    {
+        free(err);
+        windowName = reinterpret_cast<char *>(xcb_get_property_value(wmClass));
+    }
 
     // Free resources
     xcb_ungrab_server(connection);

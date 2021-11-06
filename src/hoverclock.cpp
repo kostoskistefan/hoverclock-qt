@@ -13,10 +13,10 @@ Hoverclock::Hoverclock(QWidget *parent) : QMainWindow(parent), ui(new Ui::Hoverc
 
     if(settings["enableBlacklist"].toInt() == Qt::CheckState::Checked)
     {
-        x11Event = new X11Event();
-        qApp->installNativeEventFilter(x11Event);
+        focusEvent = new FocusEvent();
+        qApp->installNativeEventFilter(focusEvent);
 
-        connect(x11Event, SIGNAL(windowFocusChanged(QString)), this, SLOT(checkBlacklistApplication(QString)));
+        connect(focusEvent, SIGNAL(windowFocusChanged(QString)), this, SLOT(checkBlacklistApplication(QString)));
     }
 
     makeWindowTransparent();

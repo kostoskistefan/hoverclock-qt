@@ -9,9 +9,9 @@
 #include <QPalette>
 #include <QProcess>
 #include <QSettings>
-#include <x11event.h>
 #include <QMainWindow>
 #include <QPainterPath>
+#include <focus_event.h>
 #include <QSystemTrayIcon>
 #include <clock_position.h>
 #include <settings_dialog.h>
@@ -36,7 +36,7 @@ class Hoverclock : public QMainWindow
 
     private:
         Ui::Hoverclock *ui;
-        X11Event *x11Event;
+        FocusEvent *focusEvent;
         QProcess *windowIdentifier;
         QString focusedApplicationTitle;
         QStringList *applicationBlacklist;

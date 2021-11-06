@@ -18,14 +18,14 @@ SOURCES += \
     main.cpp \
     run_guard.cpp \
     settings_dialog.cpp \
-    x11event.cpp
+    focus_event.cpp
 
 HEADERS += \
     clock_position.h \
     hoverclock.h \
     run_guard.h \
     settings_dialog.h \
-    x11event.h
+    focus_event.h
 
 FORMS += \
     hoverclock.ui \

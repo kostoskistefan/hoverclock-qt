@@ -5,13 +5,13 @@
 #include <QObject>
 #include <QAbstractNativeEventFilter>
 
-class X11Event : public QObject, public QAbstractNativeEventFilter
+class FocusEvent : public QObject, public QAbstractNativeEventFilter
 {
     Q_OBJECT
 
     public:
-        X11Event();
-        ~X11Event();
+        FocusEvent();
+        ~FocusEvent();
 
         virtual bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
         QString getFocusedApplicationName();
