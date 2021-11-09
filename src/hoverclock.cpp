@@ -98,6 +98,7 @@ void Hoverclock::initializeSettings()
     configuration.setValue("timeFont", configuration.value("timeFont", QFont("Montserrat Medium", 12)).value<QFont>());
     configuration.setValue("dateFont", configuration.value("dateFont", QFont("Montserrat Medium", 7)).value<QFont>());
     configuration.setValue("position", configuration.value("position", ClockPosition::BOTTOM_RIGHT).toInt());
+    configuration.setValue("timeZone", configuration.value("timeZone", QTimeZone::systemTimeZoneId()).toByteArray());
     configuration.setValue("fillColor", configuration.value("fillColor", QColor("white")).value<QColor>());
     configuration.setValue("timeFormat", configuration.value("timeFormat", "hh:mm").toString());
     configuration.setValue("dateFormat", configuration.value("dateFormat", "dd MMM yyyy").toString());
@@ -221,8 +222,14 @@ void Hoverclock::paintEvent(QPaintEvent * event)
 {
     Q_UNUSED(event);
 
-    QString time = QTime::currentTime().toString(settings["timeFormat"].toString());
-    QString date = QDate::currentDate().toString(settings["dateFormat"].toString());
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+
+    QTimeZone timeZone(settings["timeZone"].toByteArray());
+
+    QDateTime dateTimeInTimeZone = currentDateTime.toTimeZone(timeZone);
+
+    QString time = dateTimeInTimeZone.time().toString(settings["timeFormat"].toString()); // QTime::currentTime().toString(settings["timeFormat"].toString());
+    QString date = dateTimeInTimeZone.date().toString(settings["dateFormat"].toString()); //QDate::currentDate().toString(settings["dateFormat"].toString());
 
     QPainter painter(this);
     painter.setOpacity(settings["opacity"].toFloat());

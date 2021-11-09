@@ -83,9 +83,9 @@ As stated previously, Hoverclock is designed to be customizable.
 
 Once the software is running, right clicking on the system tray icon brings up a menu from which you can access the application settings.
 
+![Time and Date settings screenshot](images/settings_timedate.png)
 ![Appearance settings screenshot](images/settings_appearance.png)
-![Text settings screenshot](images/settings_text.png)
-![Visibility settings screenshot](images/settings_visibility.png)
+![Visibility settings screenshot](images/settings_misc.png)
 
 Left clicking the system tray icon will toggle the visibility of the clock.
 

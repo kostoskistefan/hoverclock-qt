@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>400</height>
+    <width>649</width>
+    <height>448</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,45 +38,83 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="appearanceTab">
+     <widget class="QWidget" name="timeDateTab">
       <attribute name="title">
-       <string>Appearance</string>
+       <string>Time and Date</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetDefaultConstraint</enum>
-       </property>
-       <property name="horizontalSpacing">
-        <number>15</number>
-       </property>
-       <item row="4" column="1">
-        <widget class="QLineEdit" name="timeFormatLineEdit"/>
+      <layout class="QFormLayout" name="formLayout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="timeZoneLabel">
+         <property name="text">
+          <string>Time zone:</string>
+         </property>
+        </widget>
        </item>
-       <item row="5" column="1">
-        <widget class="QLineEdit" name="dateFormatLineEdit"/>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="timeZoneComboBox"/>
        </item>
-       <item row="4" column="0">
+       <item row="1" column="0">
         <widget class="QLabel" name="timeFormatLabel">
          <property name="text">
           <string>Time format:</string>
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="horizontalPaddingLabel">
-         <property name="text">
-          <string>Horizontal padding:</string>
-         </property>
-        </widget>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="timeFormatLineEdit"/>
        </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="verticalPaddingLabel">
+       <item row="2" column="0">
+        <widget class="QLabel" name="dateFormatLabel">
          <property name="text">
-          <string>Vertical padding:</string>
+          <string>Date format:</string>
          </property>
         </widget>
        </item>
        <item row="2" column="1">
+        <widget class="QLineEdit" name="dateFormatLineEdit"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QCheckBox" name="showTimeCheckBox">
+         <property name="text">
+          <string>Show time</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QCheckBox" name="showDateCheckBox">
+         <property name="text">
+          <string>Show date</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="2">
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="appearanceTab">
+      <attribute name="title">
+       <string>Appearance</string>
+      </attribute>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="opacityLabel">
+         <property name="text">
+          <string>Opacity:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
         <widget class="QDoubleSpinBox" name="opacityDoubleSpinBox">
          <property name="maximum">
           <double>1.000000000000000</double>
@@ -86,15 +124,120 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="1" column="0">
         <widget class="QLabel" name="positionLabel">
          <property name="text">
           <string>Position:</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="1" column="1">
+        <widget class="QComboBox" name="positionComboBox"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="verticalPaddingLabel">
+         <property name="text">
+          <string>Vertical padding:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
         <widget class="QSpinBox" name="verticalPaddingSpinBox"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="horizontalPaddingLabel">
+         <property name="text">
+          <string>Horizontal padding:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="horizontalPaddingSpinBox"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="timeFontLabel">
+         <property name="text">
+          <string>Time font:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QPushButton" name="timeFontPicker">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="dateFontLabel">
+         <property name="text">
+          <string>Date font:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QPushButton" name="dateFontPicker">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="fillColorLabel">
+         <property name="text">
+          <string>Fill color:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QPushButton" name="fillColorPicker">
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="strokeColorLabel">
+         <property name="text">
+          <string>Stroke color:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QPushButton" name="strokeColorPicker">
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="strokeThicknessLabel">
+         <property name="text">
+          <string>Stroke thickness:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QDoubleSpinBox" name="strokeThicknessSpinBox">
+         <property name="maximum">
+          <double>5.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
        </item>
        <item row="9" column="0" colspan="2">
         <spacer name="verticalSpacer_2">
@@ -109,158 +252,17 @@
          </property>
         </spacer>
        </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="dateFormatLabel">
-         <property name="text">
-          <string>Date format:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QComboBox" name="positionComboBox"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="opacityLabel">
-         <property name="text">
-          <string>Opacity:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QSpinBox" name="horizontalPaddingSpinBox"/>
-       </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="textTab">
+     <widget class="QWidget" name="miscTab">
       <attribute name="title">
-       <string>Text</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout">
-       <property name="horizontalSpacing">
-        <number>15</number>
-       </property>
-       <item row="3" column="0">
-        <widget class="QLabel" name="strokeColorLabel">
-         <property name="text">
-          <string>Stroke color:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="fillColorLabel">
-         <property name="text">
-          <string>Fill color:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="timeFontLabel">
-         <property name="text">
-          <string>Time font:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="strokeThicknessLabel">
-         <property name="text">
-          <string>Stroke thickness:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="dateFontLabel">
-         <property name="text">
-          <string>Date font:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="3">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="4" column="1" colspan="2">
-        <widget class="QDoubleSpinBox" name="strokeThicknessSpinBox">
-         <property name="maximum">
-          <double>5.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.010000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1" colspan="2">
-        <widget class="QPushButton" name="strokeColorPicker">
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1" colspan="2">
-        <widget class="QPushButton" name="fillColorPicker">
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1" colspan="2">
-        <widget class="QPushButton" name="dateFontPicker">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1" colspan="2">
-        <widget class="QPushButton" name="timeFontPicker">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="visibilityTab">
-      <attribute name="title">
-       <string>Visibility</string>
+       <string>Misc</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_4">
        <item row="0" column="0">
-        <widget class="QCheckBox" name="showTimeCheckBox">
-         <property name="text">
-          <string>Show time</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
         <widget class="QGroupBox" name="groupBox">
          <property name="styleSheet">
-          <string notr="true">QGroupBox{border:1px solid gray;border-radius:5px;margin-top: 1ex;} QGroupBox::title{subcontrol-origin: margin;subcontrol-position:top center;padding:0 3px;}</string>
+          <string notr="true"/>
          </property>
          <property name="title">
           <string>Application Blacklist</string>
@@ -276,7 +278,7 @@
            <number>10</number>
           </property>
           <item row="2" column="1">
-           <widget class="QLabel" name="label_3">
+           <widget class="QLabel" name="blacklistLabel">
             <property name="text">
              <string>List of comma separated applications:</string>
             </property>
@@ -286,7 +288,7 @@
            <widget class="QTextEdit" name="blacklistTextEdit"/>
           </item>
           <item row="1" column="1">
-           <widget class="QLabel" name="label_2">
+           <widget class="QLabel" name="blacklistNoteLabel">
             <property name="font">
              <font>
               <italic>true</italic>
@@ -315,13 +317,6 @@
            </widget>
           </item>
          </layout>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QCheckBox" name="showDateCheckBox">
-         <property name="text">
-          <string>Show date</string>
-         </property>
         </widget>
        </item>
       </layout>
@@ -422,15 +417,24 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
-  <tabstop>strokeThicknessSpinBox</tabstop>
-  <tabstop>opacityDoubleSpinBox</tabstop>
-  <tabstop>positionComboBox</tabstop>
+  <tabstop>timeZoneComboBox</tabstop>
   <tabstop>timeFormatLineEdit</tabstop>
   <tabstop>dateFormatLineEdit</tabstop>
-  <tabstop>verticalPaddingSpinBox</tabstop>
-  <tabstop>horizontalPaddingSpinBox</tabstop>
+  <tabstop>showTimeCheckBox</tabstop>
+  <tabstop>showDateCheckBox</tabstop>
   <tabstop>saveButton</tabstop>
   <tabstop>cancelButton</tabstop>
+  <tabstop>opacityDoubleSpinBox</tabstop>
+  <tabstop>positionComboBox</tabstop>
+  <tabstop>verticalPaddingSpinBox</tabstop>
+  <tabstop>horizontalPaddingSpinBox</tabstop>
+  <tabstop>timeFontPicker</tabstop>
+  <tabstop>dateFontPicker</tabstop>
+  <tabstop>fillColorPicker</tabstop>
+  <tabstop>strokeColorPicker</tabstop>
+  <tabstop>strokeThicknessSpinBox</tabstop>
+  <tabstop>enableBlacklistCheckBox</tabstop>
+  <tabstop>blacklistTextEdit</tabstop>
  </tabstops>
  <resources/>
  <connections/>

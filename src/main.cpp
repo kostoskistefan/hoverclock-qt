@@ -10,18 +10,18 @@ int main(int argc, char *argv[])
     if (!guard.tryToRun())
         return 0;
 
-    QApplication a(argc, argv);
+    QApplication application(argc, argv);
 
-    a.setWindowIcon(QIcon(":/resources/icons/icon.png"));
+    application.setWindowIcon(QIcon(":/resources/icons/icon.png"));
 
-    a.setApplicationDisplayName("Hoverclock");
-    a.setOrganizationDomain("https://github.com/kostoskistefan/hoverclock");
-    a.setOrganizationName("hoverclock");
-    a.setApplicationName("hoverclock");
-    a.setApplicationVersion(APP_VERSION);
+    application.setApplicationDisplayName("Hoverclock");
+    application.setOrganizationDomain("https://github.com/kostoskistefan/hoverclock");
+    application.setOrganizationName("hoverclock");
+    application.setApplicationName("hoverclock");
+    application.setApplicationVersion(APP_VERSION);
 
     Hoverclock w;
     w.show();
 
-    return a.exec();
+    return application.exec();
 }
