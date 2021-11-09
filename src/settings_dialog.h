@@ -3,11 +3,12 @@
 
 #include <QDialog>
 #include <QScreen>
+#include <QTimeZone>
 #include <QSettings>
 #include <QMessageBox>
 #include <QFontDialog>
 #include <QColorDialog>
-#include "clock_position.h"
+#include <clock_position.h>
 
 namespace Ui {
 class SettingsDialog;

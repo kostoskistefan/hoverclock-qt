@@ -44,11 +44,19 @@ void SettingsDialog::initializeSettingsDialog()
     ui->positionComboBox->addItem("Top Right");
     ui->positionComboBox->addItem("Bottom Left");
     ui->positionComboBox->addItem("Bottom Right");
+    ui->positionComboBox->setCurrentIndex((*settings)["position"].toInt());
+
+    QList<QByteArray> availableTimeZones = QTimeZone::availableTimeZoneIds();
+    QStringList timeZones;
+    for (QByteArray& timeZoneId : availableTimeZones)
+        timeZones.append(timeZoneId);
+
+    ui->timeZoneComboBox->addItems(timeZones);
+    ui->timeZoneComboBox->setCurrentIndex(timeZones.indexOf((*settings)["timeZone"].toByteArray()));
 
     ui->opacityDoubleSpinBox->setValue((*settings)["opacity"].toFloat());
     ui->timeFormatLineEdit->setText((*settings)["timeFormat"].toString());
     ui->dateFormatLineEdit->setText((*settings)["dateFormat"].toString());
-    ui->positionComboBox->setCurrentIndex((*settings)["position"].toInt());
     ui->verticalPaddingSpinBox->setValue((*settings)["verticalPadding"].toInt());
     ui->blacklistTextEdit->setText((*settings)["applicationBlacklist"].toString());
     ui->strokeThicknessSpinBox->setValue((*settings)["strokeThickness"].toFloat());
@@ -72,6 +80,10 @@ void SettingsDialog::connectSignals()
 
     connect(ui->positionComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](){
         updateSetting("position", static_cast<ClockPosition>(ui->positionComboBox->currentIndex()));
+    });
+
+    connect(ui->timeZoneComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](){
+        updateSetting("timeZone", QTimeZone::availableTimeZoneIds().at(ui->timeZoneComboBox->currentIndex()));
     });
 
     connect(ui->timeFormatLineEdit, &QLineEdit::textChanged, this, [=](){

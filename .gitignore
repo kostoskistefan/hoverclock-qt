@@ -1,2 +1,3 @@
 *.AppImage
 build*/
+src/hoverclock.pro.user

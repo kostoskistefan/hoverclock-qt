@@ -8,6 +8,7 @@
 #include <QPainter>
 #include <QPalette>
 #include <QProcess>
+#include <QTimeZone>
 #include <QSettings>
 #include <QMainWindow>
 #include <QPainterPath>
