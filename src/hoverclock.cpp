@@ -178,7 +178,7 @@ void Hoverclock::createSystemTray()
     trayMenu->addSeparator();
     trayMenu->addAction(exitAction);
 
-    QSystemTrayIcon *tray = new QSystemTrayIcon(this);
+    tray = new QSystemTrayIcon(this);
     tray->setContextMenu(trayMenu);
 
     QIcon icon(":/resources/icons/hoverclock.png");
@@ -187,9 +187,7 @@ void Hoverclock::createSystemTray()
     tray->setIcon(icon);
     tray->show();
 
-    connect(tray, &QSystemTrayIcon::activated, this, [=]() {
-        setVisible(!isVisible());
-    });
+    connect(tray, &QSystemTrayIcon::activated, this, &Hoverclock::toggleVisibility);
 }
 
 void Hoverclock::showOptions()
@@ -207,9 +205,32 @@ void Hoverclock::showOptions()
     else settingsDialog->showNormal();
 }
 
+void Hoverclock::updateTrayIcon()
+{
+    QPixmap iconPixmap(":/resources/icons/hoverclock.png");
+
+    if(!isVisible())
+    {
+        QPixmap disabledIconPixmap(iconPixmap.size());
+        disabledIconPixmap.fill(Qt::transparent);
+
+        QPainter painter(&disabledIconPixmap);
+
+        painter.setOpacity(0.4);
+        painter.drawPixmap(0, 0, iconPixmap);
+
+        painter.end();
+
+        tray->setIcon(disabledIconPixmap);
+    }
+
+    else tray->setIcon(iconPixmap);
+}
+
 void Hoverclock::toggleVisibility()
 {
     setVisible(!isVisible());
+    updateTrayIcon();
 }
 
 void Hoverclock::timerEvent(QTimerEvent * event)

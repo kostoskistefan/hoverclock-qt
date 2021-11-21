@@ -37,6 +37,7 @@ class Hoverclock : public QMainWindow
 
     private:
         Ui::Hoverclock *ui;
+        QSystemTrayIcon *tray;
         FocusEvent *focusEvent;
         QProcess *windowIdentifier;
         QString focusedApplicationTitle;
@@ -49,6 +50,7 @@ class Hoverclock : public QMainWindow
         void resizeWindow();
         void updateBlacklist();
         void createSystemTray();
+        void updateTrayIcon();
         void initializeSettings();
         void makeWindowTransparent();
         float getTextWidth(QString text, QFont font);
