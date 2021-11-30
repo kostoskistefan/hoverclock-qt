@@ -39,6 +39,7 @@ void SettingsDialog::initializeSettingsDialog()
     ui->showTimeCheckBox->setCheckState(static_cast<Qt::CheckState>((*settings)["showTime"].toInt()));
     ui->showDateCheckBox->setCheckState(static_cast<Qt::CheckState>((*settings)["showDate"].toInt()));
     ui->enableBlacklistCheckBox->setCheckState(static_cast<Qt::CheckState>((*settings)["enableBlacklist"].toInt()));
+    ui->showCalendarCheckBox->setCheckState(static_cast<Qt::CheckState>((*settings)["enableCalendar"].toInt()));
 
     ui->positionComboBox->addItem("Top Left");
     ui->positionComboBox->addItem("Top Right");
@@ -135,6 +136,10 @@ void SettingsDialog::connectSignals()
     });
 
     ui->blacklistTextEdit->installEventFilter(this);
+
+    connect(ui->showCalendarCheckBox, &QCheckBox::clicked, this, [=](){
+        updateSetting("enableCalendar", ui->showCalendarCheckBox->checkState());
+    });
 }
 
 bool SettingsDialog::eventFilter(QObject *watched, QEvent *event)

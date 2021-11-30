@@ -3,6 +3,7 @@
 
 #include <QTime>
 #include <QMenu>
+#include <QStyle>
 #include <QTimer>
 #include <QScreen>
 #include <QPainter>
@@ -11,8 +12,10 @@
 #include <QTimeZone>
 #include <QSettings>
 #include <QMainWindow>
+#include <QMouseEvent>
 #include <QPainterPath>
 #include <focus_event.h>
+#include <QCalendarWidget>
 #include <QSystemTrayIcon>
 #include <clock_position.h>
 #include <settings_dialog.h>
@@ -34,6 +37,7 @@ class Hoverclock : public QMainWindow
     protected:
         void timerEvent(QTimerEvent *event);
         void paintEvent(QPaintEvent *event);
+        void mousePressEvent(QMouseEvent *event);
 
     private:
         Ui::Hoverclock *ui;
@@ -44,6 +48,7 @@ class Hoverclock : public QMainWindow
         QStringList *applicationBlacklist;
         QHash<QString, QVariant> settings;
         SettingsDialog *settingsDialog = nullptr;
+        QCalendarWidget *calendarDialog = nullptr;
 
         void updateClock();
         void showOptions();

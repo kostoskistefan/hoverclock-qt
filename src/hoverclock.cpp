@@ -19,6 +19,9 @@ Hoverclock::Hoverclock(QWidget *parent) : QMainWindow(parent), ui(new Ui::Hoverc
         connect(focusEvent, SIGNAL(windowFocusChanged(QString)), this, SLOT(checkBlacklistApplication(QString)));
     }
 
+    if(settings["enableCalendar"].toInt() == Qt::CheckState::Checked)
+        calendarDialog = new QCalendarWidget();
+
     makeWindowTransparent();
 
     updateBlacklist();
@@ -33,11 +36,27 @@ Hoverclock::~Hoverclock()
     delete ui;
 }
 
+void Hoverclock::mousePressEvent(QMouseEvent *event)
+{
+    if(event->button() == Qt::LeftButton)
+    {
+        calendarDialog->show();
+        calendarDialog->setGeometry(
+                    QStyle::alignedRect(
+                        Qt::LeftToRight,
+                        Qt::AlignCenter,
+                        calendarDialog->size(),
+                        QGuiApplication::primaryScreen()->availableGeometry()));
+    }
+}
+
 void Hoverclock::makeWindowTransparent()
 {
     setStyleSheet("background:transparent;");
 
-    setAttribute(Qt::WA_TransparentForMouseEvents);
+    if(settings["enableCalendar"].toInt() == Qt::CheckState::Unchecked)
+        setAttribute(Qt::WA_TransparentForMouseEvents);
+
     setAttribute(Qt::WA_TranslucentBackground, true);
 
     setWindowFlags(Qt::FramelessWindowHint);
@@ -103,9 +122,10 @@ void Hoverclock::initializeSettings()
     configuration.setValue("timeFormat", configuration.value("timeFormat", "hh:mm").toString());
     configuration.setValue("dateFormat", configuration.value("dateFormat", "dd MMM yyyy").toString());
     configuration.setValue("strokeColor", configuration.value("strokeColor", QColor("darkGray")).value<QColor>());
+    configuration.setValue("enableCalendar", configuration.value("enableCalendar", Qt::CheckState::Unchecked).toInt());
     configuration.setValue("strokeThickness", configuration.value("strokeThickness", 1.5).toFloat());
     configuration.setValue("verticalPadding", configuration.value("verticalPadding", 50).toInt());
-    configuration.setValue("enableBlacklist", configuration.value("enableBlacklist", 0).toInt());
+    configuration.setValue("enableBlacklist", configuration.value("enableBlacklist", Qt::CheckState::Unchecked).toInt());
     configuration.setValue("horizontalPadding", configuration.value("horizontalPadding", 50).toInt());
     configuration.setValue("applicationBlacklist", configuration.value("applicationBlacklist", "").toString());
 
