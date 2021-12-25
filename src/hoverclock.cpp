@@ -40,13 +40,18 @@ void Hoverclock::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton)
     {
-        calendarDialog->show();
-        calendarDialog->setGeometry(
-                    QStyle::alignedRect(
-                        Qt::LeftToRight,
-                        Qt::AlignCenter,
-                        calendarDialog->size(),
-                        QGuiApplication::primaryScreen()->availableGeometry()));
+        if(!calendarDialog->isVisible())
+        {
+            calendarDialog->show();
+            calendarDialog->setGeometry(
+                        QStyle::alignedRect(
+                            Qt::LeftToRight,
+                            Qt::AlignCenter,
+                            calendarDialog->size(),
+                            QGuiApplication::primaryScreen()->availableGeometry()));
+        }
+
+        else calendarDialog->close();
     }
 }
 
