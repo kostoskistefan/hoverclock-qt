@@ -43,6 +43,7 @@ class Hoverclock : public QMainWindow
         Ui::Hoverclock *ui;
         QSystemTrayIcon *tray;
         FocusEvent *focusEvent;
+        bool clockIsVisible = true;
         QProcess *windowIdentifier;
         QString focusedApplicationTitle;
         QStringList *applicationBlacklist;
