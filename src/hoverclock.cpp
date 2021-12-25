@@ -74,13 +74,21 @@ void Hoverclock::checkBlacklistApplication(QString windowName)
 {
     if(settings["enableBlacklist"].toInt() == Qt::CheckState::Checked)
     {
-        bool applicationInBlacklist = false;
+        if(clockIsVisible)
+        {
+            bool applicationInBlacklist = false;
 
-        for (QString& application : (*applicationBlacklist))
-            if(windowName.contains(application, Qt::CaseInsensitive))
-                applicationInBlacklist = true;
+            for (QString& application : (*applicationBlacklist))
+            {
+                if(windowName.contains(application, Qt::CaseInsensitive))
+                {
+                    applicationInBlacklist = true;
+                    break;
+                }
+            }
 
-        setVisible(!applicationInBlacklist);
+            setVisible(!applicationInBlacklist);
+        }
     }
 }
 
@@ -255,6 +263,7 @@ void Hoverclock::updateTrayIcon()
 void Hoverclock::toggleVisibility()
 {
     setVisible(!isVisible());
+    clockIsVisible = isVisible();
     updateTrayIcon();
 }
 
