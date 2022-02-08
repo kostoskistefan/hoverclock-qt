@@ -22,6 +22,8 @@ Hoverclock::Hoverclock(QWidget *parent) : QMainWindow(parent), ui(new Ui::Hoverc
     if(settings["enableCalendar"].toInt() == Qt::CheckState::Checked)
         calendarDialog = new QCalendarWidget();
 
+    connect(QGuiApplication::primaryScreen(), &QScreen::geometryChanged, this, &Hoverclock::updateClock);
+
     makeWindowTransparent();
 
     updateBlacklist();
