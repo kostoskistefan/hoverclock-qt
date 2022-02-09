@@ -35,6 +35,7 @@ private:
 
     void connectSignals();
     void initializeSettingsDialog();
+    void updateSelectedScreenComboBox();
     void setFontPickerFont(QPushButton *fontPicker, QFont font);
     void setColorPickerPalette(QPushButton *colorPicker, QColor color);
     void changeFontSetting(QPushButton *fontPicker, QString fontSettingName);

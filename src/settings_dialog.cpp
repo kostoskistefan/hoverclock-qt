@@ -68,6 +68,14 @@ void SettingsDialog::initializeSettingsDialog()
 
     setFontPickerFont(ui->timeFontPicker, (*settings)["timeFont"].value<QFont>());
     setFontPickerFont(ui->dateFontPicker, (*settings)["dateFont"].value<QFont>());
+
+    updateSelectedScreenComboBox();
+}
+
+void SettingsDialog::updateSelectedScreenComboBox()
+{
+    for(int i = 0; i < QGuiApplication::screens().count(); i++)
+        ui->selectedScreenComboBox->addItem(QString("Screen %1").arg(i));
 }
 
 void SettingsDialog::connectSignals()
@@ -140,6 +148,13 @@ void SettingsDialog::connectSignals()
     connect(ui->showCalendarCheckBox, &QCheckBox::clicked, this, [=](){
         updateSetting("enableCalendar", ui->showCalendarCheckBox->checkState());
     });
+
+    connect(ui->selectedScreenComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](){
+        updateSetting("selectedScreen", ui->selectedScreenComboBox->currentIndex());
+    });
+
+    connect(qApp, &QGuiApplication::screenAdded, this, &SettingsDialog::updateSelectedScreenComboBox);
+    connect(qApp, &QGuiApplication::screenRemoved, this, &SettingsDialog::updateSelectedScreenComboBox);
 }
 
 bool SettingsDialog::eventFilter(QObject *watched, QEvent *event)
