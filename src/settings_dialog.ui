@@ -36,7 +36,7 @@
 }</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="timeDateTab">
       <attribute name="title">
@@ -265,8 +265,15 @@
       <attribute name="title">
        <string>Misc</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_4">
+      <layout class="QFormLayout" name="formLayout_3">
        <item row="0" column="0">
+        <widget class="QLabel" name="selectedScreenLabel">
+         <property name="text">
+          <string>Selected screen:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
         <widget class="QGroupBox" name="groupBox">
          <property name="styleSheet">
           <string notr="true"/>
@@ -326,6 +333,9 @@
          </layout>
         </widget>
        </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="selectedScreenComboBox"/>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="aboutTab">
@@ -381,7 +391,6 @@
           <font>
            <family>Montserrat</family>
            <pointsize>24</pointsize>
-           <weight>75</weight>
            <bold>true</bold>
           </font>
          </property>

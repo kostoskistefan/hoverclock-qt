@@ -48,12 +48,14 @@ class Hoverclock : public QMainWindow
         QString focusedApplicationTitle;
         QStringList *applicationBlacklist;
         QHash<QString, QVariant> settings;
+        QScreen *selectedScreen = nullptr;
         SettingsDialog *settingsDialog = nullptr;
         QCalendarWidget *calendarDialog = nullptr;
 
         void updateClock();
         void showOptions();
         void resizeWindow();
+        void setSelectedScreen();
         void updateBlacklist();
         void createSystemTray();
         void updateTrayIcon();
