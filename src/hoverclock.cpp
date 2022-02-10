@@ -23,10 +23,12 @@ Hoverclock::Hoverclock(QWidget *parent) : QMainWindow(parent), ui(new Ui::Hoverc
     if(settings["enableCalendar"].toInt() == Qt::CheckState::Checked)
         calendarDialog = new QCalendarWidget();
 
-    setSelectedScreen();
+    QGuiApplication *application = qobject_cast<QGuiApplication *>(qApp);
 
-    connect(qApp, &QGuiApplication::screenAdded, this, &Hoverclock::setSelectedScreen);
-    connect(qApp, &QGuiApplication::screenRemoved, this, &Hoverclock::setSelectedScreen);
+    connect(application, &QGuiApplication::screenAdded, this, &Hoverclock::setSelectedScreen);
+    connect(application, &QGuiApplication::screenRemoved, this, &Hoverclock::setSelectedScreen);
+
+    setSelectedScreen();
 
     makeWindowTransparent();
 
@@ -48,7 +50,6 @@ void Hoverclock::setSelectedScreen()
         disconnect(selectedScreen, &QScreen::geometryChanged, this, &Hoverclock::updateClock);
 
     int screenCount = QGuiApplication::screens().count();
-    qDebug() << screenCount;
     int selectedScreenIndex = settings["selectedScreen"].toInt();
 
     if(selectedScreenIndex < screenCount)
@@ -60,6 +61,8 @@ void Hoverclock::setSelectedScreen()
     else selectedScreen = QGuiApplication::primaryScreen();
 
     connect(selectedScreen, &QScreen::geometryChanged, this, &Hoverclock::updateClock);
+
+    updateClock();
 }
 
 void Hoverclock::mousePressEvent(QMouseEvent *event)
@@ -194,26 +197,26 @@ void Hoverclock::updateClock()
 {
     resizeWindow();
 
-    int screenWidth = selectedScreen->geometry().width();
-    int screenHeight = selectedScreen->geometry().height();
+    int screenWidth = selectedScreen->geometry().width() + selectedScreen->geometry().x();
+    int screenHeight = selectedScreen->geometry().height() + selectedScreen->geometry().y();
 
-    QPoint *position = new QPoint(
-                    settings["horizontalPadding"].toInt() + selectedScreen->geometry().x(),
-                    settings["verticalPadding"].toInt() + selectedScreen->geometry().y());
+    QPoint *position = new QPoint(settings["horizontalPadding"].toInt(), settings["verticalPadding"].toInt());
 
     switch (settings["position"].toInt())
     {
         case ClockPosition::TOP_LEFT:
+            position->setX(selectedScreen->geometry().x() + settings["horizontalPadding"].toInt());
             break;
         case ClockPosition::TOP_RIGHT:
-            position->setX(screenWidth - width() - position->x());
+            position->setX(screenWidth - width() - settings["horizontalPadding"].toInt());
             break;
         case ClockPosition::BOTTOM_LEFT:
-            position->setY(screenHeight - height() - position->y());
+            position->setX(selectedScreen->geometry().x() + settings["horizontalPadding"].toInt());
+            position->setY(screenHeight - height() - settings["verticalPadding"].toInt());
             break;
         case ClockPosition::BOTTOM_RIGHT:
-            position->setX(screenWidth - width() - position->x());
-            position->setY(screenHeight - height() - position->y());
+            position->setX(screenWidth - width() - settings["horizontalPadding"].toInt());
+            position->setY(screenHeight - height() - settings["verticalPadding"].toInt());
             break;
     }
 
@@ -259,6 +262,7 @@ void Hoverclock::showOptions()
         settingsDialog = new SettingsDialog(nullptr, &settings);
 
         connect(settingsDialog, &SettingsDialog::updateClock, this, &Hoverclock::updateClock);
+        connect(settingsDialog, &SettingsDialog::updateSelectedScreen, this, &Hoverclock::setSelectedScreen);
         connect(settingsDialog, &SettingsDialog::updateBlacklist, this, &Hoverclock::updateBlacklist);
 
         settingsDialog->exec();

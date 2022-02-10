@@ -24,6 +24,7 @@ public:
 
 signals:
     void updateClock();
+    void updateSelectedScreen();
     void updateBlacklist();
 
 private:
