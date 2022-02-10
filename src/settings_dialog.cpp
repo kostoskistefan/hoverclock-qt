@@ -76,6 +76,10 @@ void SettingsDialog::updateSelectedScreenComboBox()
 {
     for(int i = 0; i < QGuiApplication::screens().count(); i++)
         ui->selectedScreenComboBox->addItem(QString("Screen %1").arg(i));
+
+    ui->selectedScreenComboBox->setCurrentIndex((*settings)["selectedScreen"].toInt());
+
+    emit updateSelectedScreen();
 }
 
 void SettingsDialog::connectSignals()
@@ -151,10 +155,13 @@ void SettingsDialog::connectSignals()
 
     connect(ui->selectedScreenComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](){
         updateSetting("selectedScreen", ui->selectedScreenComboBox->currentIndex());
+        emit updateSelectedScreen();
     });
 
-    connect(qApp, &QGuiApplication::screenAdded, this, &SettingsDialog::updateSelectedScreenComboBox);
-    connect(qApp, &QGuiApplication::screenRemoved, this, &SettingsDialog::updateSelectedScreenComboBox);
+    QGuiApplication *application = qobject_cast<QGuiApplication *>(qApp);
+
+    connect(application, &QGuiApplication::screenAdded, this, &SettingsDialog::updateSelectedScreenComboBox);
+    connect(application, &QGuiApplication::screenRemoved, this, &SettingsDialog::updateSelectedScreenComboBox);
 }
 
 bool SettingsDialog::eventFilter(QObject *watched, QEvent *event)
