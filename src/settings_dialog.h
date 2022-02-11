@@ -24,8 +24,8 @@ public:
 
 signals:
     void updateClock();
-    void updateSelectedScreen();
     void updateBlacklist();
+    void updateSelectedScreen();
 
 private:
     Ui::SettingsDialog *ui;

@@ -36,7 +36,7 @@
 }</string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="timeDateTab">
       <attribute name="title">
@@ -343,20 +343,30 @@
        <string>About</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_6">
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="imageContainer">
-         <property name="text">
-          <string/>
+       <item row="2" column="0" colspan="2">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-         <property name="scaledContents">
-          <bool>false</bool>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="8" column="0" colspan="2">
+        <widget class="QLabel" name="authorLabel">
+         <property name="text">
+          <string>Author: Kostoski Stefan</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
-       <item row="7" column="0" colspan="2">
+       <item row="9" column="0" colspan="2">
         <widget class="QLabel" name="appUrlLabel">
          <property name="text">
           <string>&lt;a href=&quot;https://github.com/kostoskistefan/hoverclock&quot;&gt;Hoverclock Github&lt;/a&gt;</string>
@@ -375,17 +385,43 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="0" colspan="2">
-        <widget class="QLabel" name="authorLabel">
+       <item row="4" column="0" colspan="2">
+        <widget class="QLabel" name="versionLabel">
          <property name="text">
-          <string>Author: Kostoski Stefan</string>
+          <string>Version</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
+       <item row="5" column="0" colspan="2">
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="1" column="0" colspan="2">
+        <widget class="QLabel" name="imageContainer">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
         <widget class="QLabel" name="label">
          <property name="font">
           <font>
@@ -402,18 +438,8 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="2">
-        <widget class="QLabel" name="versionLabel">
-         <property name="text">
-          <string>Version</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0" colspan="2">
-        <spacer name="verticalSpacer_3">
+       <item row="0" column="0" colspan="2">
+        <spacer name="verticalSpacer_5">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>

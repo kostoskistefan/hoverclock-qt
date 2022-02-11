@@ -7,7 +7,7 @@ OUTPUT_DIR	:= /tmp/hoverclock
 LINUX_DEPLOY 			:= /tmp/linuxdeploy-x86_64.AppImage
 LINUX_DEPLOY_QT			:= /tmp/linuxdeploy-plugin-qt-x86_64.AppImage
 LINUX_DEPLOY_APP_DIR	:= --appdir=${OUTPUT_DIR}
-LINUX_DEPLOY_FLAGS		:= --plugin qt --output appimage
+LINUX_DEPLOY_FLAGS		:= --plugin qt --output appimage --desktop-file=${APP_DIR}/hoverclock.desktop
 
 MAKE_UTIL 	:= make
 QMAKE_UTIL 	:= qmake
@@ -24,7 +24,7 @@ appimage: hoverclock appimage-fix
 
 	cp ${BIN_DIR}/opt/hoverclock/bin/hoverclock ${OUTPUT_DIR}/usr/bin/
 	cp ${APP_DIR}/hoverclock.desktop ${OUTPUT_DIR}/usr/share/applications/hoverclock.desktop
-	cp ${SOURCE_DIR}/resources/icons/hoverclock.png ${OUTPUT_DIR}/usr/share/icons/hicolor/256x256/apps/hoverclock.png
+	cp ${SOURCE_DIR}/resources/icons/hoverclock.svg ${OUTPUT_DIR}/usr/share/icons/hicolor/scalable/apps/hoverclock.svg
 
 	cd ${APP_DIR} && \
 	${LINUX_DEPLOY} ${LINUX_DEPLOY_APP_DIR} ${LINUX_DEPLOY_FLAGS}

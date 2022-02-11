@@ -7,7 +7,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, QHash<QString, QVariant> *settin
 {
     ui->setupUi(this);
 
-    setWindowIcon(QIcon(":/resources/icons/hoverclock.png"));
+    setWindowIcon(QPixmap(":/resources/icons/hoverclock.svg"));
 
     this->settings = settings;
 
@@ -26,7 +26,7 @@ void SettingsDialog::initializeSettingsDialog()
     ui->saveButton->setIcon(QIcon(QApplication::style()->standardIcon(QStyle::SP_DialogApplyButton)));
     ui->cancelButton->setIcon(QIcon(QApplication::style()->standardIcon(QStyle::SP_DialogCancelButton)));
 
-    QPixmap image(":/resources/icons/hoverclock.png");
+    QPixmap image(":/resources/icons/hoverclock.svg");
     ui->imageContainer->setPixmap(image.scaled(rect().width(), rect().height() / 3,
                                                Qt::AspectRatioMode::KeepAspectRatio,
                                                Qt::TransformationMode::SmoothTransformation));
@@ -49,6 +49,7 @@ void SettingsDialog::initializeSettingsDialog()
 
     QList<QByteArray> availableTimeZones = QTimeZone::availableTimeZoneIds();
     QStringList timeZones;
+
     for (QByteArray& timeZoneId : availableTimeZones)
         timeZones.append(timeZoneId);
 
