@@ -1,7 +1,7 @@
-VERSION=0.0.8
+VERSION=0.0.9
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
-QT       += core gui
+QT       += core gui svg
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

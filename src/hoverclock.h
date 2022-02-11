@@ -55,10 +55,10 @@ class Hoverclock : public QMainWindow
         void updateClock();
         void showOptions();
         void resizeWindow();
-        void setSelectedScreen();
+        void updateTrayIcon();
         void updateBlacklist();
         void createSystemTray();
-        void updateTrayIcon();
+        void setSelectedScreen();
         void initializeSettings();
         void makeWindowTransparent();
         float getTextWidth(QString text, QFont font);

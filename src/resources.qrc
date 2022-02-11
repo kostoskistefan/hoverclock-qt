@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/icons/hoverclock.svg</file>
-        <file>resources/icons/hoverclock.png</file>
+        <file>resources/icons/hoverclock-tray.svg</file>
     </qresource>
 </RCC>
