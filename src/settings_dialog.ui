@@ -13,9 +13,27 @@
   <property name="windowTitle">
    <string>Settings</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="3" column="2">
     <widget class="QPushButton" name="cancelButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="text">
       <string>Cancel</string>
      </property>
@@ -23,17 +41,46 @@
    </item>
    <item row="3" column="1">
     <widget class="QPushButton" name="saveButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="text">
       <string>Save</string>
      </property>
+     <property name="default">
+      <bool>false</bool>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
     </widget>
    </item>
-   <item row="0" column="1" colspan="2">
+   <item row="3" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="0" colspan="3">
     <widget class="QTabWidget" name="tabWidget">
      <property name="styleSheet">
-      <string notr="true">QTabWidget::tab-bar {
-    left: 0; 
-}</string>
+      <string notr="true"/>
      </property>
      <property name="currentIndex">
       <number>0</number>
@@ -51,7 +98,11 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QComboBox" name="timeZoneComboBox"/>
+        <widget class="QComboBox" name="timeZoneComboBox">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="timeFormatLabel">
@@ -139,7 +190,11 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QComboBox" name="positionComboBox"/>
+        <widget class="QComboBox" name="positionComboBox">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="verticalPaddingLabel">
@@ -200,6 +255,9 @@
         <widget class="QPushButton" name="fillColorPicker">
          <property name="autoFillBackground">
           <bool>true</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
          </property>
          <property name="text">
           <string/>
@@ -266,6 +324,9 @@
        <string>Misc</string>
       </attribute>
       <layout class="QFormLayout" name="formLayout_3">
+       <property name="verticalSpacing">
+        <number>15</number>
+       </property>
        <item row="0" column="0">
         <widget class="QLabel" name="selectedScreenLabel">
          <property name="text">
@@ -273,68 +334,73 @@
          </property>
         </widget>
        </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="selectedScreenComboBox">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="0" colspan="2">
         <widget class="QGroupBox" name="groupBox">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
          <property name="title">
-          <string>Application Blacklist</string>
+          <string>Enable blacklist (Requires restart)</string>
          </property>
-         <property name="flat">
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
           <bool>false</bool>
          </property>
          <layout class="QGridLayout" name="gridLayout_5">
+          <property name="leftMargin">
+           <number>6</number>
+          </property>
           <property name="topMargin">
-           <number>15</number>
+           <number>6</number>
           </property>
-          <property name="verticalSpacing">
-           <number>10</number>
+          <property name="rightMargin">
+           <number>6</number>
           </property>
-          <item row="2" column="1">
+          <property name="bottomMargin">
+           <number>6</number>
+          </property>
+          <item row="0" column="1">
+           <widget class="QLabel" name="blacklistNoteLabel">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="font">
+             <font>
+              <italic>true</italic>
+             </font>
+            </property>
+            <property name="text">
+             <string>Note: Try to use generic app names. Ex. instead of writing Google Chrome, write chrome.</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
            <widget class="QLabel" name="blacklistLabel">
             <property name="text">
              <string>List of comma separated applications:</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
+          <item row="3" column="1">
            <widget class="QTextEdit" name="blacklistTextEdit"/>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="blacklistNoteLabel">
-            <property name="font">
-             <font>
-              <italic>true</italic>
-              <underline>false</underline>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="text">
-             <string>Note: Try to use generic app names. For example: instead of writing Google Chrome, write Chrome.</string>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-            <property name="indent">
-             <number>-1</number>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QCheckBox" name="enableBlacklistCheckBox">
-            <property name="text">
-             <string>Enable blacklist (Requires restart)</string>
-            </property>
-           </widget>
           </item>
          </layout>
         </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="selectedScreenComboBox"/>
        </item>
       </layout>
      </widget>
@@ -475,7 +541,6 @@
   <tabstop>fillColorPicker</tabstop>
   <tabstop>strokeColorPicker</tabstop>
   <tabstop>strokeThicknessSpinBox</tabstop>
-  <tabstop>enableBlacklistCheckBox</tabstop>
   <tabstop>blacklistTextEdit</tabstop>
  </tabstops>
  <resources/>

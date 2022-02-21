@@ -1,0 +1,209 @@
+/*================================================================================
+  This file was compiled using Dynamiqss.
+  For more information, check out https://github.com/kostoskistefan/dynamiqss
+  ================================================================================*/
+
+* {
+    outline: none;
+}
+
+QComboBox {
+    combobox-popup: 0;
+}
+
+QComboBox::drop-down {
+    background-color: transparent;
+    border: none;
+    color: white;
+    image: url(:/resources/icons/down_arrow.svg);
+    subcontrol-position: center right;
+    width: 16px;
+}
+
+QComboBox::item {
+    background-color: #222;
+    color: white;
+    selection-background-color: #6495ed;
+}
+
+QDialog,
+QTabWidget:pane,
+QGroupBox QTextEdit:disabled {
+    background-color: #222;
+    border: none;
+}
+
+QFontDialog QListView {
+    border: none;
+}
+
+QGroupBox QTextEdit:disabled {
+    border: 2px solid #555;
+}
+
+QGroupBox QTextEdit:disabled,
+QGroupBox QLabel:disabled {
+    color: #999;
+}
+
+QGroupBox::indicator,
+QCheckBox::indicator {
+    border: 2px solid #555;
+    border-radius: 3px;
+    color: white;
+}
+
+QGroupBox::title {
+    margin-left: 5px;
+    margin-right: 5px;
+    subcontrol-origin: margin;
+    subcontrol-position: top center;
+}
+
+QGroupBox::title,
+QGroupBox QLabel:enabled {
+    color: white;
+}
+
+QLabel,
+QCheckBox {
+    color: white;
+    padding: 0.3em;
+}
+
+QListView {
+    background-color: #222;
+    border: 2px solid #555;
+    color: white;
+    padding: 0.3em;
+}
+
+QListView::item {
+    border-radius: 0;
+}
+
+QListView::item:hover,
+QComboBox::drop-down:hover,
+QSpinBox::up-button:hover,
+QSpinBox::down-button:hover,
+QDoubleSpinBox::up-button:hover,
+QDoubleSpinBox::down-button:hover,
+QTabBar::tab:hover,
+QGroupBox::indicator:disabled,
+QCheckBox::indicator:disabled,
+QPushButton[flat="false"]:hover {
+    background-color: #555;
+}
+
+QListView::item:selected,
+QTabBar::tab:selected,
+QGroupBox::indicator:checked,
+QCheckBox::indicator:checked,
+QPushButton[flat="false"]:pressed {
+    background-color: #6495ed;
+}
+
+QPushButton[flat="false"] {
+    background-color: #353535;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    padding: 0.3em;
+}
+
+QScrollBar::add-line,
+QScrollBar::sub-line {
+    height: 0;
+    width: 0;
+}
+
+QScrollBar::handle:horizontal {
+    background: #6495ed;
+    margin: 3px 0;
+    min-width: 10px;
+}
+
+QScrollBar::handle:vertical {
+    background: #6495ed;
+    margin: 0 3px;
+    min-height: 10px;
+}
+
+QScrollBar:vertical,
+QScrollBar:horizontal {
+    background: #353535;
+    border: none;
+}
+QScrollBar:horizontal {
+    height: 10px;
+    padding: 0 2px;
+    margin-right: 10px;
+}
+
+QScrollBar:vertical {
+    width: 10px;
+    padding: 2px 0;
+}
+
+QSpinBox,
+QComboBox,
+QTextEdit,
+QLineEdit,
+QDoubleSpinBox {
+    background-color: #353535;
+    border: 2px solid #555;
+    border-radius: 3px;
+    color: white;
+    padding: 0.15em;
+}
+
+QSpinBox::down-button,
+QDoubleSpinBox::down-button {
+    image: url(:/resources/icons/down_arrow.svg);
+    subcontrol-position: bottom right;
+}
+
+QSpinBox::up-button,
+QDoubleSpinBox::up-button {
+    image: url(:/resources/icons/up_arrow.svg);
+    subcontrol-position: top right;
+}
+
+QSpinBox::up-button,
+QSpinBox::down-button,
+QDoubleSpinBox::up-button,
+QDoubleSpinBox::down-button {
+    border: none;
+    height: 14px;
+}
+
+QSpinBox:focus,
+QComboBox:focus,
+QTextEdit:focus,
+QLineEdit:focus,
+QDoubleSpinBox:focus {
+    border-color: #6495ed;
+}
+
+QTabBar::tab {
+    background-color: #353535;
+    color: white;
+    margin-bottom: 0.5em;
+    padding: 0.3em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+QTabBar::tab:first {
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+QTabBar::tab:last {
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+QTabWidget::tab-bar {
+    subcontrol-position: top center;
+}

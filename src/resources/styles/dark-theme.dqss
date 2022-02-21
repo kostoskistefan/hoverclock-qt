@@ -1,0 +1,221 @@
+@variables
+    $text_color: white;
+    $text_muted_color: #999;
+    $dark_gray: #222;
+    $mid_gray: #353535;
+    $light_gray: #555;
+    $accent_color: #6495ed;
+    $padding_large: 0.5em;
+    $padding_medium: 0.3em;
+    $padding_small: 0.15em;
+    $border_thickness: 2px;
+    $rounded_corners: 3px;
+    $scrollbar_size: 10px;
+    $arrow_height: 14px;
+    $arrow_width: 16px; /* arrow_height + border_thickness */
+@endvariables 
+
+* {
+    outline: none;
+}
+
+QComboBox {
+    combobox-popup: 0;
+}
+
+QComboBox::drop-down {
+    background-color: transparent;
+    border: none;
+    color: $text_color;
+    image: url(:/resources/icons/down_arrow.svg);
+    subcontrol-position: center right;
+    width: $arrow_width;
+}
+
+QComboBox::item {
+    background-color: $dark_gray;
+    color: $text_color;
+    selection-background-color: $accent_color;
+}
+
+QDialog,
+QTabWidget:pane,
+QGroupBox QTextEdit:disabled {
+    background-color: $dark_gray;
+    border: none;
+}
+
+QFontDialog QListView {
+    border: none;
+}
+
+QGroupBox QTextEdit:disabled {
+    border: $border_thickness solid $light_gray;
+}
+
+QGroupBox QTextEdit:disabled,
+QGroupBox QLabel:disabled {
+    color: $text_muted_color;
+}
+
+QGroupBox::indicator,
+QCheckBox::indicator {
+    border: $border_thickness solid $light_gray;
+    border-radius: $rounded_corners;
+    color: $text_color;
+}
+
+QGroupBox::title {
+    margin-left: 5px;
+    margin-right: 5px;
+    subcontrol-origin: margin;
+    subcontrol-position: top center;
+}
+
+QGroupBox::title,
+QGroupBox QLabel:enabled {
+    color: $text_color;
+}
+
+QLabel,
+QCheckBox {
+    color: $text_color;
+    padding: $padding_medium;
+}
+
+QListView {
+    background-color: $dark_gray;
+    border: $border_thickness solid $light_gray;
+    color: $text_color;
+    padding: $padding_medium;
+}
+
+QListView::item {
+    border-radius: 0;
+}
+
+QListView::item:hover,
+QComboBox::drop-down:hover,
+QSpinBox::up-button:hover,
+QSpinBox::down-button:hover,
+QDoubleSpinBox::up-button:hover,
+QDoubleSpinBox::down-button:hover,
+QTabBar::tab:hover,
+QGroupBox::indicator:disabled,
+QCheckBox::indicator:disabled,
+QPushButton[flat="false"]:hover {
+    background-color: $light_gray;
+}
+
+QListView::item:selected,
+QTabBar::tab:selected,
+QGroupBox::indicator:checked,
+QCheckBox::indicator:checked,
+QPushButton[flat="false"]:pressed {
+    background-color: $accent_color;
+}
+
+QPushButton[flat="false"] {
+    background-color: $mid_gray;
+    border: none;
+    border-radius: $rounded_corners;
+    color: $text_color;
+    padding: $padding_medium;
+}
+
+QScrollBar::add-line,
+QScrollBar::sub-line {
+    height: 0;
+    width: 0;
+}
+
+QScrollBar::handle:horizontal {
+    background: $accent_color;
+    margin: $rounded_corners 0;
+    min-width: $scrollbar_size;
+}
+
+QScrollBar::handle:vertical {
+    background: $accent_color;
+    margin: 0 $rounded_corners;
+    min-height: $scrollbar_size;
+}
+
+QScrollBar:vertical,
+QScrollBar:horizontal {
+    background: $mid_gray;
+    border: none;
+}
+QScrollBar:horizontal {
+    height: $scrollbar_size;
+    padding: 0 $border_thickness;
+    margin-right: $scrollbar_size;
+}
+
+QScrollBar:vertical {
+    width: $scrollbar_size;
+    padding: $border_thickness 0;
+}
+
+QSpinBox,
+QComboBox,
+QTextEdit,
+QLineEdit,
+QDoubleSpinBox {
+    background-color: $mid_gray;
+    border: $border_thickness solid $light_gray;
+    border-radius: $rounded_corners;
+    color: $text_color;
+    padding: $padding_small;
+}
+
+QSpinBox::down-button,
+QDoubleSpinBox::down-button {
+    image: url(:/resources/icons/down_arrow.svg);
+    subcontrol-position: bottom right;
+}
+
+QSpinBox::up-button,
+QDoubleSpinBox::up-button {
+    image: url(:/resources/icons/up_arrow.svg);
+    subcontrol-position: top right;
+}
+
+QSpinBox::up-button,
+QSpinBox::down-button,
+QDoubleSpinBox::up-button,
+QDoubleSpinBox::down-button {
+    border: none;
+    height: $arrow_height;
+}
+
+QSpinBox:focus,
+QComboBox:focus,
+QTextEdit:focus,
+QLineEdit:focus,
+QDoubleSpinBox:focus {
+    border-color: $accent_color;
+}
+
+QTabBar::tab {
+    background-color: $mid_gray;
+    color: $text_color;
+    margin-bottom: $padding_large;
+    padding: $padding_medium;
+    padding-left: $padding_large;
+    padding-right: $padding_large;
+}
+
+QTabBar::tab:first {
+    border-bottom-left-radius: $rounded_corners;
+    border-top-left-radius: $rounded_corners;
+}
+
+QTabBar::tab:last {
+    border-bottom-right-radius: $rounded_corners;
+    border-top-right-radius: $rounded_corners;
+}
+
+QTabWidget::tab-bar {
+    subcontrol-position: top center;
+}

@@ -2,5 +2,8 @@
     <qresource prefix="/">
         <file>resources/icons/hoverclock.svg</file>
         <file>resources/icons/hoverclock-tray.svg</file>
+        <file>resources/icons/down_arrow.svg</file>
+        <file>resources/icons/up_arrow.svg</file>
+        <file>resources/styles/dark-theme.qss</file>
     </qresource>
 </RCC>

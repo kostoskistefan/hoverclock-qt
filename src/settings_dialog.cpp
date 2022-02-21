@@ -38,7 +38,7 @@ void SettingsDialog::initializeSettingsDialog()
 
     ui->showTimeCheckBox->setCheckState(static_cast<Qt::CheckState>((*settings)["showTime"].toInt()));
     ui->showDateCheckBox->setCheckState(static_cast<Qt::CheckState>((*settings)["showDate"].toInt()));
-    ui->enableBlacklistCheckBox->setCheckState(static_cast<Qt::CheckState>((*settings)["enableBlacklist"].toInt()));
+    ui->groupBox->setChecked((*settings)["enableBlacklist"].toInt() == Qt::CheckState::Checked ? 1 : 0);
     ui->showCalendarCheckBox->setCheckState(static_cast<Qt::CheckState>((*settings)["enableCalendar"].toInt()));
 
     ui->positionComboBox->addItem("Top Left");
@@ -46,6 +46,7 @@ void SettingsDialog::initializeSettingsDialog()
     ui->positionComboBox->addItem("Bottom Left");
     ui->positionComboBox->addItem("Bottom Right");
     ui->positionComboBox->setCurrentIndex((*settings)["position"].toInt());
+    ui->positionComboBox->view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
     QList<QByteArray> availableTimeZones = QTimeZone::availableTimeZoneIds();
     QStringList timeZones;
@@ -55,6 +56,7 @@ void SettingsDialog::initializeSettingsDialog()
 
     ui->timeZoneComboBox->addItems(timeZones);
     ui->timeZoneComboBox->setCurrentIndex(timeZones.indexOf((*settings)["timeZone"].toByteArray()));
+    ui->timeZoneComboBox->view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
     ui->opacityDoubleSpinBox->setValue((*settings)["opacity"].toFloat());
     ui->timeFormatLineEdit->setText((*settings)["timeFormat"].toString());
@@ -71,6 +73,9 @@ void SettingsDialog::initializeSettingsDialog()
     setFontPickerFont(ui->dateFontPicker, (*settings)["dateFont"].value<QFont>());
 
     updateSelectedScreenComboBox();
+
+    ui->saveButton->setIcon(QIcon());
+    ui->cancelButton->setIcon(QIcon());
 }
 
 void SettingsDialog::updateSelectedScreenComboBox()
@@ -79,6 +84,7 @@ void SettingsDialog::updateSelectedScreenComboBox()
         ui->selectedScreenComboBox->addItem(QString("Screen %1").arg(i));
 
     ui->selectedScreenComboBox->setCurrentIndex((*settings)["selectedScreen"].toInt());
+    ui->selectedScreenComboBox->view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
     emit updateSelectedScreen();
 }
@@ -144,8 +150,9 @@ void SettingsDialog::connectSignals()
         updateSetting("showDate", ui->showDateCheckBox->checkState());
     });
 
-    connect(ui->enableBlacklistCheckBox, &QCheckBox::clicked, this, [=](){
-        updateSetting("enableBlacklist", ui->enableBlacklistCheckBox->checkState());
+    connect(ui->groupBox, &QGroupBox::clicked, this, [=](){
+        int checked = ui->groupBox->isChecked() ? Qt::CheckState::Checked : Qt::CheckState::Unchecked;
+        updateSetting("enableBlacklist", checked);
     });
 
     ui->blacklistTextEdit->installEventFilter(this);

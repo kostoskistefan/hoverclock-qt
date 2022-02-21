@@ -20,7 +20,7 @@ Hoverclock is a simple, yet customizable floating clock for Linux created with Q
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Quick note](#quick-note)
-* [Usage](#usage)
+* [Installation](#installation)
   * [Arch based distro users](#arch-based-distro-users)
   * [Other distros](#other-distros)
 * [Optional dependencies](#optional-dependencies)
@@ -107,11 +107,11 @@ After doing so, you can proceed to run the docker container with the above menti
 
 ## Known issues
  * You must have at least one panel with a system tray to access the settings menu and configure Hoverclock to your liking.
- * On multi-monitor setups, Hoverclock only uses the primary screen according to QT.
+ * The font and color picker do not fully use the custom theme resource.
 
 ## Future work
 - [ ] Add terminal support to open and configure settings
-- [ ] Add support for multi-monitor setups
+- [x] Add support for multi-monitor setups
 - [x] Add a feature that allows you to specify programs in which you want to hide the clock.
 - [ ] Add Light and Dark mode icon support
 
