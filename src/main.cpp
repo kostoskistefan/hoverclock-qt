@@ -2,6 +2,7 @@
 
 #include <QApplication>
 #include <run_guard.h>
+#include <QFile>
 
 int main(int argc, char *argv[])
 {
@@ -19,6 +20,11 @@ int main(int argc, char *argv[])
     application.setOrganizationName("hoverclock");
     application.setApplicationName("hoverclock");
     application.setApplicationVersion(APP_VERSION);
+
+    QFile themeFile(":/resources/styles/dark-theme.qss");
+    themeFile.open(QFile::ReadOnly);
+    QString theme = QLatin1String(themeFile.readAll());
+    application.setStyleSheet(theme);
 
     Hoverclock w;
     w.show();

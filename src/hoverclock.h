@@ -24,7 +24,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class Hoverclock; }
 QT_END_NAMESPACE
 
-#define PAINT_OFFSET 3
+#define PAINT_OFFSET 5
 
 class Hoverclock : public QMainWindow
 {

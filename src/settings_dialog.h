@@ -9,6 +9,7 @@
 #include <QFontDialog>
 #include <QColorDialog>
 #include <clock_position.h>
+#include <QAbstractItemView>
 
 namespace Ui {
 class SettingsDialog;
