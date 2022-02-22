@@ -81,13 +81,12 @@ Of course, if you wish to use a different font, you can. Change it in the settin
 ## Configuration
 As stated previously, Hoverclock is designed to be customizable. 
 
-Once the software is running, right clicking on the system tray icon brings up a menu from which you can access the application settings.
+Left clicking the system tray icon will toggle the visibility of the clock, while right clicking brings up a menu from which you can access the application settings.
 
 ![Time and Date settings screenshot](images/settings_timedate.png)
 ![Appearance settings screenshot](images/settings_appearance.png)
 ![Visibility settings screenshot](images/settings_misc.png)
 
-Left clicking the system tray icon will toggle the visibility of the clock.
 
 ## Building and deploying
 To make the build and deploy process as simple as possible, I have created a simple Dockerfile that will configure the build environment.
