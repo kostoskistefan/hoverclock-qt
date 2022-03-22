@@ -337,7 +337,7 @@ void Hoverclock::paintEvent(QPaintEvent * event)
                      time);
 
 
-        dateVerticalAlignment += settings["timeFont"].value<QFont>().pointSize() + PAINT_OFFSET * 2;
+        dateVerticalAlignment += settings["timeFont"].value<QFont>().pointSize() + PAINT_OFFSET * 1.5;
     }
 
     if (settings["showDate"].toInt() == Qt::CheckState::Checked)
