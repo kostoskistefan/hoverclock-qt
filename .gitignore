@@ -1,3 +1,4 @@
 *.AppImage
 build*/
+DistributionKit/
 src/hoverclock.pro.user

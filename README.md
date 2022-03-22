@@ -24,12 +24,10 @@ Hoverclock is a simple, yet customizable floating clock for Linux created with Q
   * [Arch based distro users](#arch-based-distro-users)
   * [Other distros](#other-distros)
 * [Optional dependencies](#optional-dependencies)
-  * [AppImageLauncher](#appimagelauncher)
   * [X Server](#x-server)
   * [Font](#font)
 * [Configuration](#configuration)
 * [Building and deploying](#building-and-deploying)
-  * [Build dependencies](#build-dependencies)
 * [Known issues](#known-issues)
 * [Future work](#future-work)
 * [Getting help](#getting-help)
@@ -39,32 +37,27 @@ Hoverclock is a simple, yet customizable floating clock for Linux created with Q
     * [Code conventions](#code-conventions)
 
 ## General info
-The main incentive for this project is having desktop panels that automatically hide, but still being able to see the time and date without moving your mouse to unhide the panel.
+The main incentive for this project is having a desktop panel (system tray) that automatically hides, but still being able to see the time and date without moving your mouse to unhide the panel.
 
 ## Technologies
  * C++
- * QT 5.12 with QT Creator
- * [LinuxDeploy](https://github.com/linuxdeploy/linuxdeploy)
+ * QT 5.15 with QT Creator
+ * [CQtDeployer](https://github.com/QuasarApp/CQtDeployer)
 
-## Quick note
-This project has only been tested on Arch Linux with KDE Plasma.
+## Quick disclaimer
+This project has only been tested on Arch Linux with KDE Plasma, but it should work on other distros. 
 
 ## Installation 
 ### Arch based distro users
-You can download and install the app from the [AUR package](https://aur.archlinux.org/packages/hoverclock-appimage/).
+You can download and install the app from the [AUR package](https://aur.archlinux.org/packages/hoverclock-bin/).
 
 ### Other distros
-Head on over to the [releases section](https://github.com/kostoskistefan/hoverclock/releases) of this repository and download the latest AppImage file. 
-
-Make the file executable by running `chmod u+x Hoverclock-x86_64.AppImage`.
-
-Double-click to run it or run it from a terminal using `/path/to/the/downloaded/file/Hoverclock-x86_64.AppImage`.
+Head on over to the [releases section](https://github.com/kostoskistefan/hoverclock/releases) of this repository and download the latest release. 
+ * If you are running on a Debian based distribution, use the .deb package. 
+ * If you want to use a GUI installer which will configure everything for you, use the .run file. **(Recommended for non-debian distributions)**
+ * If you wish to manually install everything, extract the .zip file to a location of your choosing. Then you can run the hoverclock.sh file to launch the clock. (You'll also need to copy the icons and desktop file manually, as well as creating a symlink of the hoverclock.sh in /usr/bin/hoverclock)
 
 ## Optional dependencies
-### AppImageLauncher
-If you are using an Arch based Linux distribution and you want to integrate this application in your system, a simple solution is to install [AppImageLauncher](https://aur.archlinux.org/packages/appimagelauncher/) from the AUR. 
-
-After installing it, double clicking the AppImage file will open up the AppImageLauncher and will offer an option to `Integrate and run`.
 
 ### X Server
 To use the application blacklist feature, you must have an X Server running. If you are using Wayland, make sure you have XWayland installed.
@@ -82,11 +75,11 @@ Of course, if you wish to use a different font, you can. Change it in the settin
 As stated previously, Hoverclock is designed to be customizable. 
 
 Left clicking the system tray icon will toggle the visibility of the clock, while right clicking brings up a menu from which you can access the application settings.
+If you do not have a system tray, the application settings can be accessed by launching hoverclock from a terminal and passing the `-c/--configure` flag. There's also a `-h` flag which will bring up a help menu.
 
 ![Time and Date settings screenshot](images/settings_timedate.png)
 ![Appearance settings screenshot](images/settings_appearance.png)
 ![Visibility settings screenshot](images/settings_misc.png)
-
 
 ## Building and deploying
 To make the build and deploy process as simple as possible, I have created a simple Dockerfile that will configure the build environment.
@@ -94,18 +87,12 @@ To make the build and deploy process as simple as possible, I have created a sim
 To build and run the docker container, use the following commands:
 ```
 $ docker build --network=host -t hoverclock /path/to/project/directory
-$ docker run --cap-add SYS_ADMIN --device /dev/fuse --rm -v /path/to/project/directory:/app hoverclock make
+$ docker run -u $(id -u):$(id -g) --rm -v /path/to/project/directory:/app hoverclock make
 ```
 
-When it finished building, you should have an AppImage in the project directory.
-
-### Build dependencies
-To allow running AppImages inside the docker container, you must have FUSE installed on your host system and load the kernel module (before running docker) with the following command: `modprobe fuse`.
-
-After doing so, you can proceed to run the docker container with the above mentioned commands.
+When it finishes building, you should have a directory called DistributionKit containing a .deb, .zip and a .run files. 
 
 ## Known issues
- * You must have at least one panel with a system tray to access the settings menu and configure Hoverclock to your liking.
  * The font and color picker do not fully use the custom theme resource.
 
 ## Future work
