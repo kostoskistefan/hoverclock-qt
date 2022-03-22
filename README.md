@@ -4,8 +4,8 @@
 		<a href="https://github.com/kostoskistefan/hoverclock/releases">
             <img src="https://img.shields.io/github/release/kostoskistefan/hoverclock?style=for-the-badge"/>
         </a>
-        <a href="https://aur.archlinux.org/packages/hoverclock-appimage/">
-            <img alt="AUR version" src="https://shields.api-test.nl/aur/version/hoverclock-appimage?style=for-the-badge">
+        <a href="https://aur.archlinux.org/packages/hoverclock-bin/">
+            <img alt="AUR version" src="https://shields.api-test.nl/aur/version/hoverclock-bin?style=for-the-badge">
         </a>
 	</p>
 </p>
