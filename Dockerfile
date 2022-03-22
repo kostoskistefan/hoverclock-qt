@@ -5,15 +5,15 @@ WORKDIR /tmp
 
 RUN apt-get update && \
     apt-get install -y software-properties-common && \
-    add-apt-repository ppa:beineri/opt-qt-5.12.2-xenial && \
+    add-apt-repository ppa:beineri/opt-qt-5.15.2-xenial && \
     apt-get update && \
-    apt-get -y install wget qt512-meta-minimal make g++ fuse libgl1-mesa-dev xcb qt512svg
+    apt-get -y install wget qt515base make g++ libgl1-mesa-dev xcb qt515svg
 
-ENV PATH="/opt/qt512:/opt/qt512/bin:${PATH}"
+ENV PATH="/opt/qt515:/opt/qt515/bin:${PATH}"
 
-RUN wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage && \
-    wget https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage && \
-    chmod +x linuxdeploy*.AppImage
+RUN wget https://github.com/QuasarApp/CQtDeployer/releases/download/v1.5.4.14/CQtDeployer_1.5.4.14_Linux_x86_64.deb && \
+    chmod +x CQtDeployer_1.5.4.14_Linux_x86_64.deb && \
+    dpkg -i CQtDeployer_1.5.4.14_Linux_x86_64.deb
 
 VOLUME /app
 WORKDIR /app

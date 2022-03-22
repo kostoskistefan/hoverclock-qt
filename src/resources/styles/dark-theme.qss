@@ -7,6 +7,11 @@
     outline: none;
 }
 
+.QWindow {
+    background-color: #222;
+    color: white;
+}
+
 QComboBox {
     combobox-popup: 0;
 }
