@@ -33,6 +33,7 @@ class Hoverclock : public QMainWindow
     public:
         Hoverclock(QWidget *parent = nullptr);
         ~Hoverclock();
+        void showOptions();
 
     protected:
         void timerEvent(QTimerEvent *event);
@@ -53,7 +54,6 @@ class Hoverclock : public QMainWindow
         QCalendarWidget *calendarDialog = nullptr;
 
         void updateClock();
-        void showOptions();
         void resizeWindow();
         void updateTrayIcon();
         void updateBlacklist();

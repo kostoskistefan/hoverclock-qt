@@ -1,15 +1,22 @@
 #include "hoverclock.h"
+#include "settings_dialog.h"
 
 #include <QApplication>
 #include <run_guard.h>
 #include <QFile>
+#include <QDebug>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
 
 int main(int argc, char *argv[])
 {
     RunGuard guard("hoverclock");
 
     if (!guard.tryToRun())
-        return 0;
+    {
+        qCritical() << "An instance is already running.";
+        return 2;
+    }
 
     QApplication application(argc, argv);
 
@@ -26,8 +33,21 @@ int main(int argc, char *argv[])
     QString theme = QLatin1String(themeFile.readAll());
     application.setStyleSheet(theme);
 
-    Hoverclock w;
-    w.show();
+    QCommandLineParser parser;
+    QCommandLineOption settings(QStringList() << "c" << "configure", "Launches Hoverclock's configuration window.");
+
+    parser.addHelpOption();
+    parser.addVersionOption();
+    parser.addOption(settings);
+
+    parser.process(application);
+
+    Hoverclock hoverclock;
+
+    if (parser.isSet("configure"))
+        hoverclock.showOptions();
+
+    else hoverclock.show();
 
     return application.exec();
 }

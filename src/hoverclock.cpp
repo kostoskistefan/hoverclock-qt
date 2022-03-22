@@ -226,29 +226,32 @@ void Hoverclock::updateClock()
 
 void Hoverclock::createSystemTray()
 {
-    QAction *exitAction = new QAction("Quit", this);
-    connect(exitAction, &QAction::triggered, this, &QCoreApplication::quit);
-
-    QAction *hideAction = new QAction("Toggle visibility", this);
-    connect(hideAction, &QAction::triggered, this, &Hoverclock::toggleVisibility);
-
-    QAction *optionsAction = new QAction("Options", this);
-    connect(optionsAction, &QAction::triggered, this, &Hoverclock::showOptions);
-
-    QMenu *trayMenu = new QMenu(this);
-
-    trayMenu->addAction(hideAction);
-    trayMenu->addAction(optionsAction);
-    trayMenu->addSeparator();
-    trayMenu->addAction(exitAction);
-
-    tray = new QSystemTrayIcon(this);
-    tray->setContextMenu(trayMenu);
-
-    tray->setIcon(QPixmap(":/resources/icons/hoverclock-tray.svg"));
-    tray->show();
-
-    connect(tray, &QSystemTrayIcon::activated, this, &Hoverclock::toggleVisibility);
+    if (QSystemTrayIcon::isSystemTrayAvailable())
+    {
+        QAction *exitAction = new QAction("Quit", this);
+        connect(exitAction, &QAction::triggered, this, &QCoreApplication::quit);
+        
+        QAction *hideAction = new QAction("Toggle visibility", this);
+        connect(hideAction, &QAction::triggered, this, &Hoverclock::toggleVisibility);
+        
+        QAction *optionsAction = new QAction("Options", this);
+        connect(optionsAction, &QAction::triggered, this, &Hoverclock::showOptions);
+        
+        QMenu *trayMenu = new QMenu(this);
+        
+        trayMenu->addAction(hideAction);
+        trayMenu->addAction(optionsAction);
+        trayMenu->addSeparator();
+        trayMenu->addAction(exitAction);
+        
+        tray = new QSystemTrayIcon(this);
+        tray->setContextMenu(trayMenu);
+        
+        tray->setIcon(QPixmap(":/resources/icons/hoverclock-tray.svg"));
+        tray->show();
+        
+        connect(tray, &QSystemTrayIcon::activated, this, &Hoverclock::toggleVisibility);
+    }
 }
 
 void Hoverclock::showOptions()
@@ -334,7 +337,7 @@ void Hoverclock::paintEvent(QPaintEvent * event)
                      time);
 
 
-        dateVerticalAlignment += settings["timeFont"].value<QFont>().pointSize() + PAINT_OFFSET * 2;
+        dateVerticalAlignment += settings["timeFont"].value<QFont>().pointSize() + PAINT_OFFSET * 1.5;
     }
 
     if (settings["showDate"].toInt() == Qt::CheckState::Checked)

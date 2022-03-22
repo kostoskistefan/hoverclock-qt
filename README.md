@@ -49,7 +49,7 @@ The main incentive for this project is having desktop panels that automatically 
 ## Quick note
 This project has only been tested on Arch Linux with KDE Plasma.
 
-## Usage
+## Installation 
 ### Arch based distro users
 You can download and install the app from the [AUR package](https://aur.archlinux.org/packages/hoverclock-appimage/).
 
@@ -109,7 +109,7 @@ After doing so, you can proceed to run the docker container with the above menti
  * The font and color picker do not fully use the custom theme resource.
 
 ## Future work
-- [ ] Add terminal support to open and configure settings
+- [x] Add terminal support to open and configure settings
 - [x] Add support for multi-monitor setups
 - [x] Add a feature that allows you to specify programs in which you want to hide the clock.
 - [ ] Add Light and Dark mode icon support
