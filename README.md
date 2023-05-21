@@ -1,8 +1,8 @@
 <p align="center">
     <img src="images/logo.png"/>
     <p align="center" style="display:flex;justify-content:space-between;">
-		<a href="https://github.com/kostoskistefan/hoverclock/releases">
-            <img src="https://img.shields.io/github/release/kostoskistefan/hoverclock?style=for-the-badge"/>
+		<a href="https://github.com/kostoskistefan/hoverclock-qt/releases">
+            <img src="https://img.shields.io/github/release/kostoskistefan/hoverclock-qt?style=for-the-badge"/>
         </a>
         <a href="https://aur.archlinux.org/packages/hoverclock-bin/">
             <img alt="AUR version" src="https://shields.api-test.nl/aur/version/hoverclock-bin?style=for-the-badge">
@@ -10,16 +10,18 @@
 	</p>
 </p>
 
-# Hoverclock 
+# Hoverclock-QT
 
-Hoverclock is a simple, yet customizable floating clock for Linux created with QT. 
+Hoverclock-QT is a simple, yet customizable floating clock for Linux created with QT. 
+
+> **NOTE:** For a more lightweight alternative, see [Hoverclock](https://github.com/kostoskistefan/hoverclock).
 
 ![Clock Screenshot](images/clock.jpg)
 
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
-* [Quick note](#quick-note)
+* [Quick disclaimer](#quick-disclaimer)
 * [Installation](#installation)
   * [Arch based distro users](#arch-based-distro-users)
   * [Other distros](#other-distros)
@@ -52,7 +54,7 @@ This project has only been tested on Arch Linux with KDE Plasma, but it should w
 You can download and install the app from the [AUR package](https://aur.archlinux.org/packages/hoverclock-bin/).
 
 ### Other distros
-Head on over to the [releases section](https://github.com/kostoskistefan/hoverclock/releases) of this repository and download the latest release. 
+Head on over to the [releases section](https://github.com/kostoskistefan/hoverclock-qt/releases) of this repository and download the latest release. 
  * If you are running on a Debian based distribution, use the .deb package. 
  * If you want to use a GUI installer which will configure everything for you, use the .run file. **(Recommended for non-debian distributions)**
  * If you wish to manually install everything, extract the .zip file to a location of your choosing. Then you can run the hoverclock.sh file to launch the clock. (You'll also need to copy the icons and desktop file manually, as well as creating a symlink of the hoverclock.sh in /usr/bin/hoverclock)
@@ -72,7 +74,7 @@ If you are on Arch based distributions, you can install it from the [AUR package
 Of course, if you wish to use a different font, you can. Change it in the settings dialog in the Appearance tab.
 
 ## Configuration
-As stated previously, Hoverclock is designed to be customizable. 
+As stated previously, Hoverclock-QT is designed to be customizable. 
 
 Left clicking the system tray icon will toggle the visibility of the clock, while right clicking brings up a menu from which you can access the application settings.
 If you do not have a system tray, the application settings can be accessed by launching hoverclock from a terminal and passing the `-c/--configure` flag. There's also a `-h` flag which will bring up a help menu.
@@ -102,7 +104,7 @@ When it finishes building, you should have a directory called DistributionKit co
 - [ ] Add Light and Dark mode icon support
 
 ## Getting help
-If you have questions, concerns, bug reports, etc, please file an issue in this repository's [Issue Tracker](https://github.com/kostoskistefan/hoverclock/issues).
+If you have questions, concerns, bug reports, etc, please file an issue in this repository's [Issue Tracker](https://github.com/kostoskistefan/hoverclock-qt/issues).
 
 ## Getting involved
 There are two primary ways to help:
@@ -111,7 +113,7 @@ There are two primary ways to help:
 * Changing the code-base.
 
 ### Using the issue tracker
-Use the [issue tracker](https://github.com/kostoskistefan/hoverclock/issues) to suggest feature requests, report bugs, and ask questions. Any feedback is greatly appreciated.
+Use the [issue tracker](https://github.com/kostoskistefan/hoverclock-qt/issues) to suggest feature requests, report bugs, and ask questions. Any feedback is greatly appreciated.
 
 ### Changing the code-base
 If you want to directly affect the code, you should fork this repository, make changes on your own fork, then submit a pull request. 
