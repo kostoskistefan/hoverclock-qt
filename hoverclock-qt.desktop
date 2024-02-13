@@ -1,14 +1,14 @@
 [Desktop Entry]
-Name=Hoverclock
+Name=Hoverclock QT
 Comment=A simple floating clock for Linux
-GenericName=Hoverclock
+GenericName=Hoverclock QT
 Categories=Utility;
-Icon=hoverclock
-Exec=hoverclock
+Icon=hoverclock-qt
+Exec=hoverclock-qt
 Terminal=false
 Type=Application
 X-DBUS-StartupType=unique
 X-KDE-PluginInfo-Author=Kostoski Stefan
 X-KDE-PluginInfo-Email=kostoski.stefan90@gmail.com
-X-KDE-PluginInfo-Version=1.0.0
-X-KDE-PluginInfo-Website=https://github.com/kostoskistefan/hoverclock
+X-KDE-PluginInfo-Version=1.0.1
+X-KDE-PluginInfo-Website=https://github.com/kostoskistefan/hoverclock-qt

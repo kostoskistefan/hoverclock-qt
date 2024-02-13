@@ -4,8 +4,8 @@
 		<a href="https://github.com/kostoskistefan/hoverclock-qt/releases">
             <img src="https://img.shields.io/github/release/kostoskistefan/hoverclock-qt?style=for-the-badge"/>
         </a>
-        <a href="https://aur.archlinux.org/packages/hoverclock-bin/">
-            <img alt="AUR version" src="https://shields.api-test.nl/aur/version/hoverclock-bin?style=for-the-badge">
+        <a href="https://aur.archlinux.org/packages/hoverclock-qt-bin/">
+            <img alt="AUR version" src="https://shields.api-test.nl/aur/version/hoverclock-qt-bin?style=for-the-badge">
         </a>
 	</p>
 </p>
@@ -51,13 +51,13 @@ This project has only been tested on Arch Linux with KDE Plasma, but it should w
 
 ## Installation 
 ### Arch based distro users
-You can download and install the app from the [AUR package](https://aur.archlinux.org/packages/hoverclock-bin/).
+You can download and install the app from the [AUR package](https://aur.archlinux.org/packages/hoverclock-qt-bin/).
 
 ### Other distros
 Head on over to the [releases section](https://github.com/kostoskistefan/hoverclock-qt/releases) of this repository and download the latest release. 
  * If you are running on a Debian based distribution, use the .deb package. 
  * If you want to use a GUI installer which will configure everything for you, use the .run file. **(Recommended for non-debian distributions)**
- * If you wish to manually install everything, extract the .zip file to a location of your choosing. Then you can run the hoverclock.sh file to launch the clock. (You'll also need to copy the icons and desktop file manually, as well as creating a symlink of the hoverclock.sh in /usr/bin/hoverclock)
+ * If you wish to manually install everything, extract the .zip file to a location of your choosing. Then you can run the hoverclock-qt.sh file to launch the clock. (You'll also need to copy the icons and desktop file manually, as well as creating a symlink of the hoverclock-qt.sh in /usr/bin/hoverclock-qt)
 
 ## Optional dependencies
 
@@ -77,7 +77,7 @@ Of course, if you wish to use a different font, you can. Change it in the settin
 As stated previously, Hoverclock-QT is designed to be customizable. 
 
 Left clicking the system tray icon will toggle the visibility of the clock, while right clicking brings up a menu from which you can access the application settings.
-If you do not have a system tray, the application settings can be accessed by launching hoverclock from a terminal and passing the `-c/--configure` flag. There's also a `-h` flag which will bring up a help menu.
+If you do not have a system tray, the application settings can be accessed by launching hoverclock-qt from a terminal and passing the `-c/--configure` flag. There's also a `-h` flag which will bring up a help menu.
 
 ![Time and Date settings screenshot](images/settings_timedate.png)
 ![Appearance settings screenshot](images/settings_appearance.png)
@@ -88,8 +88,8 @@ To make the build and deploy process as simple as possible, I have created a sim
 
 To build and run the docker container, use the following commands:
 ```
-$ docker build --network=host -t hoverclock /path/to/project/directory
-$ docker run -u $(id -u):$(id -g) --rm -v /path/to/project/directory:/app hoverclock make
+$ docker build --network=host -t hoverclock-qt /path/to/project/directory
+$ docker run -u $(id -u):$(id -g) --rm -v /path/to/project/directory:/app hoverclock-qt make
 ```
 
 When it finishes building, you should have a directory called DistributionKit containing a .deb, .zip and a .run files. 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>Hoverclock</class>
- <widget class="QMainWindow" name="Hoverclock">
+ <widget class="QMainWindow" name="Hoverclock QT">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Hoverclock</string>
+   <string>Hoverclock QT</string>
   </property>
   <property name="styleSheet">
    <string notr="true">border-radius: 5px;</string>

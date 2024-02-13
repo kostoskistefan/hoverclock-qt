@@ -7,7 +7,7 @@
    viewBox="0 0 135.46666 135.46667"
    version="1.1"
    id="svg5"
-   sodipodi:docname="hoverclock-window-icon.svg"
+   sodipodi:docname="hoverclock-qt-tray.svg"
    inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20, custom)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -35,7 +35,7 @@
      id="defs2" />
   <g
      id="g855"
-     transform="translate(2.2499993e-7,-2.5833e-4)">
+     transform="matrix(0.82031228,0,0,0.82031248,12.170848,12.170623)">
     <path
        id="path31"
        style="fill:#ffffff;stroke:#b3b3b3;stroke-width:0.264067"

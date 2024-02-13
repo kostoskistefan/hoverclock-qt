@@ -7,7 +7,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, QHash<QString, QVariant> *settin
 {
     ui->setupUi(this);
 
-    setWindowIcon(QPixmap(":/resources/icons/hoverclock.svg"));
+    setWindowIcon(QPixmap(":/resources/icons/hoverclock-qt.svg"));
 
     this->settings = settings;
 
@@ -26,7 +26,7 @@ void SettingsDialog::initializeSettingsDialog()
     ui->saveButton->setIcon(QIcon(QApplication::style()->standardIcon(QStyle::SP_DialogApplyButton)));
     ui->cancelButton->setIcon(QIcon(QApplication::style()->standardIcon(QStyle::SP_DialogCancelButton)));
 
-    QPixmap image(":/resources/icons/hoverclock.svg");
+    QPixmap image(":/resources/icons/hoverclock-qt.svg");
     ui->imageContainer->setPixmap(image.scaled(rect().width(), rect().height() / 3,
                                                Qt::AspectRatioMode::KeepAspectRatio,
                                                Qt::TransformationMode::SmoothTransformation));

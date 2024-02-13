@@ -1,4 +1,4 @@
-#include "hoverclock.h"
+#include "hoverclock-qt.h"
 #include "settings_dialog.h"
 
 #include <QApplication>
@@ -10,7 +10,7 @@
 
 int main(int argc, char *argv[])
 {
-    RunGuard guard("hoverclock");
+    RunGuard guard("hoverclock-qt");
 
     if (!guard.tryToRun())
     {
@@ -20,12 +20,12 @@ int main(int argc, char *argv[])
 
     QApplication application(argc, argv);
 
-    application.setWindowIcon(QIcon(":/resources/icons/hoverclock.svg"));
+    application.setWindowIcon(QIcon(":/resources/icons/hoverclock-qt.svg"));
 
-    application.setApplicationDisplayName("Hoverclock");
-    application.setOrganizationDomain("https://github.com/kostoskistefan/hoverclock");
-    application.setOrganizationName("hoverclock");
-    application.setApplicationName("hoverclock");
+    application.setApplicationDisplayName("Hoverclock QT");
+    application.setOrganizationDomain("https://github.com/kostoskistefan/hoverclock-qt");
+    application.setOrganizationName("hoverclock-qt");
+    application.setApplicationName("hoverclock-qt");
     application.setApplicationVersion(APP_VERSION);
 
     QFile themeFile(":/resources/styles/dark-theme.qss");

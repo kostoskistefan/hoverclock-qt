@@ -1,11 +1,11 @@
-#include "hoverclock.h"
-#include "ui_hoverclock.h"
+#include "hoverclock-qt.h"
+#include "ui_hoverclock-qt.h"
 
 Hoverclock::Hoverclock(QWidget *parent) : QMainWindow(parent), ui(new Ui::Hoverclock)
 {
     ui->setupUi(this);
 
-    setWindowIcon(QPixmap(":/resources/icons/hoverclock.svg"));
+    setWindowIcon(QPixmap(":/resources/icons/hoverclock-qt.svg"));
 
     initializeSettings();
 
@@ -247,7 +247,7 @@ void Hoverclock::createSystemTray()
         tray = new QSystemTrayIcon(this);
         tray->setContextMenu(trayMenu);
         
-        tray->setIcon(QPixmap(":/resources/icons/hoverclock-tray.svg"));
+        tray->setIcon(QPixmap(":/resources/icons/hoverclock-qt-tray.svg"));
         tray->show();
         
         connect(tray, &QSystemTrayIcon::activated, this, &Hoverclock::toggleVisibility);
@@ -272,7 +272,7 @@ void Hoverclock::showOptions()
 
 void Hoverclock::updateTrayIcon()
 {
-    QPixmap iconPixmap(":/resources/icons/hoverclock-tray.svg");
+    QPixmap iconPixmap(":/resources/icons/hoverclock-qt-tray.svg");
 
     if(!isVisible())
     {

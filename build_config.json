@@ -1,18 +1,18 @@
 {
-    "name": "Hoverclock",
+    "name": "Hoverclock-QT",
     "description": "A simple floating clock for Linux",
-    "deployVersion": "1.0.0",
-    "releaseDate": "2022-03-22",
+    "deployVersion": "1.0.1",
+    "releaseDate": "2024-02-13",
     "publisher": "Kostoski Stefan",
     "clear": true,
-    "bin": "/tmp/hoverclock_build/hoverclock",
+    "bin": "/tmp/hoverclock_qt_build/hoverclock-qt",
     "deb": true,
     "zip": true,
     "qif": true,
     "qifStyle": "quasarDark",
-    "qifLogo": "./src/resources/icons/hoverclock.svg",
+    "qifLogo": "./src/resources/icons/hoverclock-qt.svg",
     "platform": "linux_x86_64",
     "extraLibs": "libxcb,qt5-svg,glibc",
-    "extraData": "./hoverclock.desktop,./LICENSE",
-    "icon": "./src/resources/icons/hoverclock.svg"
+    "extraData": "./hoverclock-qt.desktop,./LICENSE",
+    "icon": "./src/resources/icons/hoverclock-qt.svg"
 }
